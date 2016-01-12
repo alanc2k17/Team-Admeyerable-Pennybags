@@ -4,6 +4,18 @@ Preliminary UML Diagrams
 - private
 o protected
 
+Player
+----------------------
++ int _coordinate
++ String _name
++ int[] _propertiesOwned
++ Player()
++ Player(String newName)
++ getCoords()
++ pay(Player other)
++ move()
++ requestTrade()
+
 Landable (abstract)
 ----------------------
 o int _coordinate
