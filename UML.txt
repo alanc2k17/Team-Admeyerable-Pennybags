@@ -6,14 +6,19 @@ o protected
 
 Player
 ----------------------
-+ int _coordinate
-+ String _name
-+ ArrayList<Property>[] _propertiesOwned
+- int _coordinate
+- String _name
+- ArrayList<Property>[] _propertiesOwned
+- int _cash
 + Player()
 + Player(String newName)
 + getCoords()
++ getCash()
 + pay(Player other)
 + move()
++ buildHouse(Property p)
++ buildHotel(Property p)
++ mortgage(Propert p)
 + requestTrade()
 
 Landable (abstract)
