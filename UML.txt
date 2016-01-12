@@ -4,3 +4,42 @@ Preliminary UML Diagrams
 - private
 o protected
 
+Landable (abstract)
+----------------------
+o int _coordinate
+o String _name
+o String _initials
+o ArrayList<Player> _playersOnSquare
++ abstract String toString() ????
++ int getCoordinate()
++ void setPlayerOnSquare(Player p) 
++ void removePlayerOnSquare(Player p)
+
+Tax
+----------------------
+o int _payAmount
++ Tax()
++ Tax(String name, String initials, int payAmount, int coordinate)
++ String toString()
++ int getAmount()
+
+Property extends Landable (abstract)
+------------------------------------
+o int _buyPrice
+o Player _owner
+o ArrayList<Property> _groupMembers
+o boolean _monopoly
++ Property()
++ Property(String name, int coordinate, int buyPrice) 
++ toString()
++ int getHouses()
++ int getBuyPrice()
++ Player getOwner()
++ void addMembers()
++ abstract int getRent()
++ boolean checkMonopoly()
++ int mortage()
+
+NormalProperty extends Property
+------------------------------------
+
