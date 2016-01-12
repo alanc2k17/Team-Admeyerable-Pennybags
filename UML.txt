@@ -8,7 +8,7 @@ Player
 ----------------------
 + int _coordinate
 + String _name
-+ int[] _propertiesOwned
++ ArrayList<Property>[] _propertiesOwned
 + Player()
 + Player(String newName)
 + getCoords()
@@ -28,6 +28,7 @@ o ArrayList<Player> _playersOnSquare
 + int getCoordinate()
 + void setPlayerOnSquare(Player p) 
 + void removePlayerOnSquare(Player p)
++ Property buy(Property p)
 
 Tax
 ----------------------
@@ -54,6 +55,7 @@ o boolean _mortgage
 + abstract int getRent()
 + boolean checkMonopoly()
 + int mortage()
+
 
 NormalProperty extends Property
 ------------------------------------
