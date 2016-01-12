@@ -10,6 +10,8 @@ o int _coordinate
 o String _name
 o String _initials
 o ArrayList<Player> _playersOnSquare
++ Landable()
++ Landable(String name, String initials, int coordinate)
 + abstract String toString() ????
 + int getCoordinate()
 + void setPlayerOnSquare(Player p) 
@@ -19,7 +21,7 @@ Tax
 ----------------------
 o int _payAmount
 + Tax()
-+ Tax(String name, String initials, int payAmount, int coordinate)
++ Tax(int payAmount)
 + String toString()
 + int getAmount()
 
@@ -29,17 +31,46 @@ o int _buyPrice
 o Player _owner
 o ArrayList<Property> _groupMembers
 o boolean _monopoly
+o boolean _mortgage
 + Property()
-+ Property(String name, int coordinate, int buyPrice) 
++ Property(int buyPrice) 
 + toString()
 + int getHouses()
 + int getBuyPrice()
 + Player getOwner()
-+ void addMembers()
++ void addMembers(Property p)
 + abstract int getRent()
 + boolean checkMonopoly()
 + int mortage()
 
 NormalProperty extends Property
 ------------------------------------
+o int[5] _rent1 //rent prices for cheaper properties
+o int[5] _rent2 //rent prices for expensive property
+o int _houses
+o int _houseCost
++ NormalProperty()
++ NormalProperty(int[] rent1, int[] rent2, int houseCost)
++ int getRent()
++ buildHouses(int n)
++ sellHouses(int n)
 
+Railroad extends Property
+------------------------------------
+o int[4] _rent
++ Railroad()
++ Railroad(int[] rent)
++ int getRent()
+
+Utility extends Property
+------------------------------------
+o int[2] _rent
++ Utility()
++ Utility(int[] rent)
++ int getRent()
+
+<Color>Property extends NormalProperty
+------------------------------------
+//nothing new, just specify var values in constructor
++ <Color>Property()
++ <Color>Property(int[] rent1, int[] rent2, int houseCost)
