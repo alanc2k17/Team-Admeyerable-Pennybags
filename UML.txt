@@ -3,6 +3,7 @@ Preliminary UML Diagrams
 + public
 - private
 o protected
+FINAL value of var pre-built into class definition
 
 Player
 ----------------------
@@ -28,7 +29,7 @@ o String _name
 o String _initials
 o ArrayList<Player> _playersOnSquare
 + Landable()
-+ Landable(String name, String initials, int coordinate)
++ Landable(String name, String initials, String coordinate)
 + abstract String toString() ????
 + int getCoordinate()
 + void setPlayerOnSquare(Player p) 
@@ -51,7 +52,7 @@ o ArrayList<Property> _groupMembers
 o boolean _monopoly
 o boolean _mortgage
 + Property()
-+ Property(int buyPrice) 
++ Property(String name, String initials, String coordinate, int buyPrice) 
 + toString()
 + int getHouses()
 + int getBuyPrice()
@@ -64,32 +65,42 @@ o boolean _mortgage
 
 NormalProperty extends Property
 ------------------------------------
-o int[5] _rent1 //rent prices for cheaper properties
-o int[5] _rent2 //rent prices for expensive property
-o int _houses
+o int[6] RENT1 //rent prices for cheaper properties
+o int[6] RENT2 //rent prices for expensive property
+  = index 0 == rent w/ no houses, index 1 = rent w/ 1 house, etc.
+o int BUYPRICE1; //buy prices for cheaper properties
+o int BUYPRICE2; //buy prices for expensive property
+o boolean EXPENSIVE; //true if more expensive than other two properties
 o int _houseCost
+o int _houses
 + NormalProperty()
-+ NormalProperty(int[] rent1, int[] rent2, int houseCost)
++ NormalProperty(String name, String initials, String coordinate)
 + int getRent()
 + buildHouses(int n)
 + sellHouses(int n)
 
 Railroad extends Property
 ------------------------------------
-o int[4] _rent
+o FINAL int[4] _rent
 + Railroad()
-+ Railroad(int[] rent)
++ Railroad(String name, String initials, String coordinate)
 + int getRent()
 
 Utility extends Property
 ------------------------------------
-o int[2] _rent
+o FINAL int[2] _rent
 + Utility()
-+ Utility(int[] rent)
++ Utility(String name, String initials, String coordinate)
 + int getRent()
 
 <Color>Property extends NormalProperty
 ------------------------------------
-//nothing new, just specify var values in constructor
+//below vars are already inherited, but you define them in class definition
+o FINAL int[6] RENT1 //rent prices for cheaper properties
+o FINAL int[6] RENT2 //rent prices for expensive property
+o FINAL int BUYPRICE1; //buy prices for cheaper properties
+o FINAL int BUYPRICE2; //buy prices for expensive property
+o FINAL boolean EXPENSIVE; //true if more expensive than other two properties
+o FINAL int HOUSECOST
 + <Color>Property()
-+ <Color>Property(int[] rent1, int[] rent2, int houseCost)
++ <Color>Property(String name, String initials, String coordiate)
