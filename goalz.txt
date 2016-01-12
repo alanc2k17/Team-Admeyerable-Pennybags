@@ -1,0 +1,4 @@
+#1 MOST IMPORTANTS
+- overhaul board architecture
+  = easily allows player to move; allows easy linkage between player and property
+  
