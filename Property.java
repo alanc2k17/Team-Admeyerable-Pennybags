@@ -5,6 +5,8 @@ public abstract class Property extends Landable {
   protected boolean _mortgage;
   
   public Property() {
+    super()
+    _owner = 
   }
   
   public Property(String name, String initials, String coordiante) {
