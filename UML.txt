@@ -62,20 +62,19 @@ o boolean _mortgage
 + int mortage()
 
 
-NormalProperty extends Property
+NormalProperty extends Property (abstract???)
 ------------------------------------
-//block of vars below are not 
-o int[6] RENT1 //rent prices for cheaper properties
-o int[6] RENT2 //rent prices for expensive property
+o int[6] _rent1 //rent prices for cheaper properties
+o int[6] _rent2 //rent prices for expensive property
   = index 0 == rent w/ no houses, index 1 = rent w/ 1 house, etc.
-o int BUYPRICE1; //buy prices for cheaper properties
-o int BUYPRICE2; //buy prices for expensive property
-o int MORTGAGEVALUE1 //for cheaper
-o int MORTGAGEVALUE2 //for expensive
-o int HOUSECOST
+o int _buyPrice1; //buy prices for cheaper properties
+o int _buyPrice2; //buy prices for expensive property
+o int _houseCost
 
 o boolean expensive; //true if more expensive than other two properties
 o int _houses
+o int _mortgageValue1
+o int _mortgageValue2
 + NormalProperty()
 + NormalProperty(String name, String initials, String coordinate, boolean expensive)
 + toString()
@@ -86,15 +85,6 @@ o int _houses
 
 <Color>Property extends NormalProperty
 ------------------------------------
-//below vars are already inherited, but you define them in class definition
-o FINAL int[6] RENT1 //rent prices for cheaper properties
-o FINAL int[6] RENT2 //rent prices for expensive property
-o FINAL int BUYPRICE1; //buy prices for cheaper properties
-o FINAL int BUYPRICE2; //buy prices for expensive property
-o FINAL int HOUSECOST
-o FINAL int MORTGAGEVALUE1 //for cheaper
-o FINAL int MORTGAGEVALUE2 //for expensive
-
 + <Color>Property()
 + <Color>Property(String name, String initials, String coordiate, boolean expensive)
 
@@ -102,7 +92,7 @@ Railroad extends Property
 ------------------------------------
 o FINAL int[4] _rent
 o FINAL BUYPRICE
-o int MORTGAGEVALUE
+o int _mortgageValue
 + Railroad()
 + Railroad(String name, String initials, String coordinate)
 + int getRent()
@@ -112,7 +102,7 @@ Utility extends Property
 ------------------------------------
 o FINAL int[2] _rent
 o FINAL BUYPRICE
-o int MORTGAGEVALUE
+o int _mortgageValue
 + Utility()
 + Utility(String name, String initials, String coordinate)
 + int getRent()
