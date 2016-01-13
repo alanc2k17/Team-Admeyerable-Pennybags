@@ -22,10 +22,7 @@ public class GreenProperty extends NormalProperty{
     	_buyPrice1 = 300; 
     	_buyPrice2 = 320; 
 	    
-	//set house cost and mortgage value
+	//set house cost
     	_houseCost = 200;
-    	_mortgageValue1 = (int) (.5 * _buyPrice1);
-    	_mortgageValue2 = (int) (.5 * _buyPrice2);
-
     }
 }
