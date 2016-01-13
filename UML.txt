@@ -46,13 +46,12 @@ o int _payAmount
 
 Property extends Landable (abstract)
 ------------------------------------
-o int _buyPrice
 o Player _owner
 o ArrayList<Property> _groupMembers
 o boolean _monopoly
 o boolean _mortgage
 + Property()
-+ Property(String name, String initials, String coordinate, int buyPrice) 
++ Property(String name, String initials, String coordinate)
 + toString()
 + int getHouses()
 + int getBuyPrice()
@@ -65,33 +64,25 @@ o boolean _mortgage
 
 NormalProperty extends Property
 ------------------------------------
+//block of vars below are not 
 o int[6] RENT1 //rent prices for cheaper properties
 o int[6] RENT2 //rent prices for expensive property
   = index 0 == rent w/ no houses, index 1 = rent w/ 1 house, etc.
 o int BUYPRICE1; //buy prices for cheaper properties
 o int BUYPRICE2; //buy prices for expensive property
-o boolean EXPENSIVE; //true if more expensive than other two properties
-o int _houseCost
+o int MORTGAGEVALUE1 //for cheaper
+o int MORTGAGEVALUE2 //for expensive
+o int HOUSECOST
+
+o boolean expensive; //true if more expensive than other two properties
 o int _houses
 + NormalProperty()
-+ NormalProperty(String name, String initials, String coordinate)
++ NormalProperty(String name, String initials, String coordinate, boolean expensive)
++ toString()
 + int getRent()
 + buildHouses(int n)
 + sellHouses(int n)
 
-Railroad extends Property
-------------------------------------
-o FINAL int[4] _rent
-+ Railroad()
-+ Railroad(String name, String initials, String coordinate)
-+ int getRent()
-
-Utility extends Property
-------------------------------------
-o FINAL int[2] _rent
-+ Utility()
-+ Utility(String name, String initials, String coordinate)
-+ int getRent()
 
 <Color>Property extends NormalProperty
 ------------------------------------
@@ -100,7 +91,29 @@ o FINAL int[6] RENT1 //rent prices for cheaper properties
 o FINAL int[6] RENT2 //rent prices for expensive property
 o FINAL int BUYPRICE1; //buy prices for cheaper properties
 o FINAL int BUYPRICE2; //buy prices for expensive property
-o FINAL boolean EXPENSIVE; //true if more expensive than other two properties
 o FINAL int HOUSECOST
+o FINAL int MORTGAGEVALUE1 //for cheaper
+o FINAL int MORTGAGEVALUE2 //for expensive
+
 + <Color>Property()
-+ <Color>Property(String name, String initials, String coordiate)
++ <Color>Property(String name, String initials, String coordiate, boolean expensive)
+
+Railroad extends Property
+------------------------------------
+o FINAL int[4] _rent
+o FINAL BUYPRICE
+o int MORTGAGEVALUE
++ Railroad()
++ Railroad(String name, String initials, String coordinate)
++ int getRent()
++ toString()
+
+Utility extends Property
+------------------------------------
+o FINAL int[2] _rent
+o FINAL BUYPRICE
+o int MORTGAGEVALUE
++ Utility()
++ Utility(String name, String initials, String coordinate)
++ int getRent()
++ toString()
