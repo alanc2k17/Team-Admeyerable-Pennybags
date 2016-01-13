@@ -55,7 +55,6 @@ o boolean _mortgage
 + toString()
 + int getBuyPrice()
 + Player getOwner()
-+ ArrayList
 + void addMembers(Property p)
 + abstract int getRent()
 + int mortage()
