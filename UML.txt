@@ -17,6 +17,7 @@ Player
 + getCash()
 + pay(Player other)
 + move()
++ getPropertiesOwned()
 + buildHouse(Property p)
 + buildHotel(Property p)
 + mortgage(Propert p)
@@ -48,17 +49,15 @@ Property extends Landable (abstract)
 ------------------------------------
 o Player _owner
 o ArrayList<Property> _groupMembers
-o boolean _monopoly
 o boolean _mortgage
 + Property()
 + Property(String name, String initials, String coordinate)
 + toString()
-+ int getHouses()
 + int getBuyPrice()
 + Player getOwner()
++ ArrayList
 + void addMembers(Property p)
 + abstract int getRent()
-+ boolean checkMonopoly()
 + int mortage()
 
 
@@ -70,6 +69,7 @@ o int[6] _rent2 //rent prices for expensive property
 o int _buyPrice1; //buy prices for cheaper properties
 o int _buyPrice2; //buy prices for expensive property
 o int _houseCost
+o boolean _monopoly
 
 o boolean expensive; //true if more expensive than other two properties
 o int _houses
@@ -78,15 +78,18 @@ o int _mortgageValue2
 + NormalProperty()
 + NormalProperty(String name, String initials, String coordinate, boolean expensive)
 + toString()
++ int getHouses()
 + int getRent()
 + buildHouses(int n)
 + sellHouses(int n)
++ boolean checkMonopoly()
 
 
 <Color>Property extends NormalProperty
 ------------------------------------
 + <Color>Property()
 + <Color>Property(String name, String initials, String coordiate, boolean expensive)
+
 
 Railroad extends Property
 ------------------------------------
@@ -96,6 +99,7 @@ o int _mortgageValue
 + Railroad()
 + Railroad(String name, String initials, String coordinate)
 + int getRent()
++ railroadsOwned()
 + toString()
 
 Utility extends Property
@@ -106,4 +110,5 @@ o int _mortgageValue
 + Utility()
 + Utility(String name, String initials, String coordinate)
 + int getRent()
++ int utilitiesOwned()
 + toString()

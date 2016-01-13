@@ -1,0 +1,49 @@
+public class Railroad extends Property{
+    
+    protected final int[] RENT = {25, 50, 100, 200}; //index corresponds w/ number of railroads
+    protected final int BUYPRICE = 200;
+    
+    protected int _mortgageValue; //not inherited from Property b/c some classes under property have 2 mortgage vals
+
+    //default constructor
+    public Railroad(){
+	super();
+	setMortgageValue();
+    }
+
+    //overloaded constructor
+    public Railroad(String name, String initials, String coordinate){
+	super(name, initials, coordinate);
+	setMortgageValue();
+    }
+
+    //override toString; used to print Object to board
+    public String toString(){
+	return "";
+    }
+
+    //sets mortgage value based on BUYPRICE
+    //calld in constructor
+    public void setMortgageValue(){
+	_mortgageValue = (int) (.5 * BUYPRICE);
+    }
+
+    //returns int detailing number of Railroads _owner owns
+    public int railRoadsOwned(){
+	int numRailroads = 0;
+	ArrayList<Property> ownedProperties = getOwner().getPropertiesOwned();
+	for ( int i = 0; i < ownedProperties.size(); i++){ //loop through owner's properties
+	    if ( ownedProperties.get(i) instanceof Railroad ){ //if that property is railroad
+		numRailroads += 1;
+	    }
+	}
+	return numRailroads;
+    }
+
+    //returns int detailing rent if player lands on property
+    //based off of how many other railraods owned
+    public int getRent(){
+	return RENT[ railRoadsOwned() ]; //# of railrds. corresponds w/ index of RENT
+    }
+
+}
