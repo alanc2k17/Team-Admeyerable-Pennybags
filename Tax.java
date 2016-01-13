@@ -1,16 +1,16 @@
 public class Tax {
-  protected int _payAmount;
+    protected int _payAmount;
   
-  public Tax() {
-  }
+    public Tax() {
+    }
   
-  public Tax(int payAmount) {
-  }
+    public Tax(int payAmount) {
+    }
   
-  public String toString() {
-  }
+    public String toString() {
+    }
   
-  public int getAmount() {
-  }
+    public int getAmount() {
+    }
   
 } //end Tax
