@@ -48,6 +48,7 @@ o int _payAmount
 Property extends Landable (abstract)
 ------------------------------------
 o Player _owner
+o ArrayList<Player> _playersOnProperty
 o ArrayList<Property> _groupMembers
 o boolean _mortgage
 + Property()
@@ -104,7 +105,6 @@ o int _mortgageValue
 
 Utility extends Property
 ------------------------------------
-o FINAL int[2] _rent
 o FINAL BUYPRICE
 o int _mortgageValue
 + Utility()
