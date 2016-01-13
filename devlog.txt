@@ -3,6 +3,7 @@
 - Alan and Calvin: finalized Monopoly board structure and how to access Property Player has landed on in class
 - Calvin: initialized all files under Property and created directory structure for organization
 - Calvin: wrote classes BrownProperty and LightBlueProperty
+- Alan: wrote classes (Blue\Green\Orange\Pink\Red\Yellow)Property
 
 2016-01-11
 - Alan and Calvin: discusssed/developed possible class structure (attributes/methods) and board display mechanism in class
