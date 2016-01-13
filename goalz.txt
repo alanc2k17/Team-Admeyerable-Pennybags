@@ -2,3 +2,5 @@
 - overhaul board architecture
   = easily allows player to move; allows easy linkage between player and property
   
+- why do the board be broken???
+  = prints vertically/horizontally?
