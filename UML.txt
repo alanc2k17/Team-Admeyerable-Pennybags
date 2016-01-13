@@ -35,7 +35,6 @@ o ArrayList<Player> _playersOnSquare
 + int getCoordinate()
 + void setPlayerOnSquare(Player p) 
 + void removePlayerOnSquare(Player p)
-+ Property buy(Property p)
 
 Tax
 ----------------------
