@@ -14,7 +14,7 @@
 - implement Bank.java
 - Chance/Community cards
 - JAIL
-- Trade
+- Trade/Auctioning
 
 #3 just for the lolz
 - minigames
