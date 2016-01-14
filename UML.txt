@@ -5,6 +5,10 @@ Preliminary UML Diagrams
 o protected
 FINAL value of var pre-built into class definition
 
+Monopoly
+----------------------
++ trade(Player p)
+
 Player
 ----------------------
 o int _coordinate
