@@ -1,6 +1,7 @@
 2016-01-13
 - Alan and Calvin: wrote Landable and Tax in class
 - Calvin: removed extraneous code in color group classes
+- Calvin: wrote classes Property and NormalProperty
 - Alan: began coding gameplay mechanism
 
 2016-01-12
