@@ -29,7 +29,7 @@ public abstract class Property extends Landable {
 
     // abstract b/c in one subclass, it needs to print houses
     // in another, it needs not
-    public String toString();
+    public abstract String toString();
   
     // accessor method to return 
     public Player getOwner() {
