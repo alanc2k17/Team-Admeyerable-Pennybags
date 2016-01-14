@@ -28,6 +28,34 @@ public class Railroad extends Property{
 	_mortgageValue = (int) (.5 * BUYPRICE);
     }
 
+    //mortgages property
+    //gives owner money equal to mortgage value
+    //returns true if mortgage successful, false otherwise
+    public boolean mortgage(){
+	if ( ! isMortgaged() ){ //don't mortgage if already mortgaged
+	    Player owner = getOwner();
+	    owner.give( _mortgageValue ); //give player money
+	    _mortgage = true; //mark as mortgaged
+	    return true;
+	}
+	return false;
+    }
+
+    //unmortgages property
+    //charges owner money equal to 110% of mortgage value
+    //returns true if mortgage successful, false otherwise
+    public boolean unMortgage(){
+	Player owner = getOwner();
+	int unMortgagePrice = (int) (1.1 * _mortgageValue );
+	// check for enough money and not already unmortgaged
+	if ( isMortgaged() && owner.getCash() >= unMortgagePrice ){
+	    owner.charge(unMortgagePrice); //take money away
+	    _mortgage = false;
+	    return true;
+	}
+	return false;
+    }
+
     //returns int detailing number of Railroads _owner owns
     public int railRoadsOwned(){
 	int numRailroads = 0;

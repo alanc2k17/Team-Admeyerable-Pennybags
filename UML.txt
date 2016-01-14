@@ -1,9 +1,10 @@
+Team Admeyerable Pennybags -- Alan Chen and Calvin Vuong
+
 Preliminary UML Diagrams
 
 + public
 - private
 o protected
-FINAL value of var pre-built into class definition
 
 Monopoly
 ----------------------
@@ -21,6 +22,8 @@ o Property _propertyOn
 + getCoords()
 + getCash()
 + setCash()
++ charge(int n)
++ give(int n)
 + pay(Property p)
 + move()
 + getPropertiesOwned()
@@ -62,20 +65,19 @@ o boolean _mortgage
 + Player getOwner()
 + void addMembers(Property p)
 + abstract int getRent()
-+ abstract int mortage()
-
++ abstract boolean mortgage()
++ abstract boolean unMortgage()
++ boolean isMortgaged()
 
 NormalProperty extends Property (abstract???)
 ------------------------------------
-o int[6] _rent1 //rent prices for cheaper properties
-o int[6] _rent2 //rent prices for expensive property
-  = index 0 == rent w/ no houses, index 1 = rent w/ 1 house, etc.
-o int _buyPrice1; //buy prices for cheaper properties
-o int _buyPrice2; //buy prices for expensive property
+o int[6] _rent1 
+o int[6] _rent2 
+o int _buyPrice1
+o int _buyPrice2 
 o int _houseCost
 o boolean _monopoly
-
-o boolean expensive; //true if more expensive than other two properties
+o boolean expensive;
 o int _houses
 o int _mortgageValue1
 o int _mortgageValue2
@@ -87,25 +89,29 @@ o int _mortgageValue2
 + buildHouses(int n)
 + sellHouses(int n)
 + boolean checkMonopoly()
-+ int mortgage();
++ boolean mortgage();
++ boolean unMortgage()
 
 <Color>Property extends NormalProperty
 ------------------------------------
 + <Color>Property()
 + <Color>Property(String name, String initials, String coordiate, boolean expensive)
-
++ void setInfo()
 
 Railroad extends Property
 ------------------------------------
-o FINAL int[4] _rent
-o FINAL BUYPRICE
+o final int[] RENT
+o final int BUYPRICE
 o int _mortgageValue
+
 + Railroad()
 + Railroad(String name, String initials, String coordinate)
 + int getRent()
-+ railroadsOwned()
-+ toString()
-+ int mortgage()
++ int railroadsOwned()
++ String toString()
++ boolean mortgage()
++ boolean unMortgage()
++ int setMortgageValue()
 
 Utility extends Property
 ------------------------------------
@@ -116,4 +122,5 @@ o int _mortgageValue
 + int getRent()
 + int utilitiesOwned()
 + toString()
-+ int mortgage()
++ boolean mortgage()
++ boolean unMortgage()
