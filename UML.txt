@@ -52,11 +52,10 @@ o boolean _mortgage
 + Property()
 + Property(String name, String initials, String coordinate)
 + toString()
-+ int getBuyPrice()
 + Player getOwner()
 + void addMembers(Property p)
 + abstract int getRent()
-+ int mortage()
++ abstract int mortage()
 
 
 NormalProperty extends Property (abstract???)
@@ -75,13 +74,13 @@ o int _mortgageValue1
 o int _mortgageValue2
 + NormalProperty()
 + NormalProperty(String name, String initials, String coordinate, boolean expensive)
-+ toString()
++ abstract Stirng toString()
 + int getHouses()
 + int getRent()
 + buildHouses(int n)
 + sellHouses(int n)
 + boolean checkMonopoly()
-
++ int mortgage();
 
 <Color>Property extends NormalProperty
 ------------------------------------
@@ -99,6 +98,7 @@ o int _mortgageValue
 + int getRent()
 + railroadsOwned()
 + toString()
++ int mortgage()
 
 Utility extends Property
 ------------------------------------
@@ -109,3 +109,4 @@ o int _mortgageValue
 + int getRent()
 + int utilitiesOwned()
 + toString()
++ int mortgage()

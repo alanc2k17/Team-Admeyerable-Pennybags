@@ -18,7 +18,7 @@ public class Tax extends Landable{
     }
   
     //accessor; returns tax amount
-    public int getTax() {
+    public int getRent() {
 	return _payAmount;
     }
 
