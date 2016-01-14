@@ -15,8 +15,8 @@ public class RedProperty extends NormalProperty{
     //set rent prices, buy prices, house costs, and mortgage values
     public void setInfo(){
 	// set rent prices, index corresponds w/ # of houses
-    	_rent1 = {18, 90, 250, 700, 875, 1050}; //kentucky ave | indiana ave
-	_rent3 = {20, 100, 300, 750, 925, 1100}; //illinois ave
+    	_rent1 = new int[] {18, 90, 250, 700, 875, 1050}; //kentucky ave | indiana ave
+	_rent3 = new int[] {20, 100, 300, 750, 925, 1100}; //illinois ave
 	    
 	// set buy prices
     	_buyPrice1 = 220; 
