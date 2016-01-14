@@ -1,0 +1,20 @@
+#1 MOST IMPORTANTS
+- overhaul board architecture
+  = easily allows player to move; allows easy linkage between player and property
+  
+- why do the board be broken???
+  = prints vertically/horizontally?
+
+- implement Player.java
+
+- finish up gameplay mechanism
+
+#2 SORT OF IMPORTANT
+- finish all classes under Property
+- implement Bank.java
+- Chance/Community cards
+- JAIL
+- Trade
+
+#3 just for the lolz
+- minigames
