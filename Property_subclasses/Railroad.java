@@ -34,8 +34,8 @@ public class Railroad extends Property{
     public boolean mortgage(){
 	if ( ! isMortgaged() ){ //don't mortgage if already mortgaged
 	    Player owner = getOwner();
-	    owner.give( _mortgageValue ); //give player money
-	    _mortgage = true; //mark as mortgaged
+	    owner.give( _mortgageValue ); 
+	    _mortgage = true; 
 	    return true;
 	}
 	return false;
@@ -49,7 +49,7 @@ public class Railroad extends Property{
 	int unMortgagePrice = (int) (1.1 * _mortgageValue );
 	// check for enough money and not already unmortgaged
 	if ( isMortgaged() && owner.getCash() >= unMortgagePrice ){
-	    owner.charge(unMortgagePrice); //take money away
+	    owner.charge(unMortgagePrice); 
 	    _mortgage = false;
 	    return true;
 	}

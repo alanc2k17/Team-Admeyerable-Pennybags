@@ -69,7 +69,7 @@ public class NormalProperty extends Property{
 	// sufficient funds & enough space
 	if ( owner.getCash() >= (h * _houseCost) &&  (_houses + h) < 5 ){
 	    _houses += h; //build
-	    owner.setCash( owner.getCash() - (h * _houseCost) ); // charge player
+	    owner.charge( h * _houseCost ); // charge player
 	    return true;
 	}
 	return false;
@@ -82,7 +82,7 @@ public class NormalProperty extends Property{
 	Player owner = getOwner();
 	if ( (_houses - h) >= 0 ){ //enough houses to sell
 	    _houses -= h; //sell
-	    owner.setCash( owner.getCash() + ((int) (.5 * h * _houseCost)) ); //refund player
+	    owner.charge( ((int) (.5 * h * _houseCost)) ); //refund player
 	    return true;
 	}
 	return false;
@@ -114,4 +114,42 @@ public class NormalProperty extends Property{
 	}
 	return true;
     }
+
+    // mortgages the property
+    // gives player the mortgage money
+    // returns true if mortgage is successful
+    // returns false otherwise
+    public boolean mortgage(){
+	if (! isMortgaged() ){ //don't mortgage if already mortgaged
+	    Player owner = getOwner();
+	    if ( _expensive ) // use expensive mortgage value
+		owner.give( _mortgageValue2 ); 
+	    else // use cheap mort. val
+		owner.give( _mortgageValue1 ); 
+	    _mortgage = true;
+	    return true;
+	}
+	return false;
+    }
+
+    // unmortgages property
+    // charges owner money equal to 110% of mortgage value
+    // returns true if mortgage successful, false otherwise
+    public boolean unMortgage(){
+	Player owner = getOwner();
+	int unMortgagePrice = 0;
+	if ( _expensive ) //use expensive mort. val
+	    unMortgagePrice = (int) (1.1 * _mortgageValue2);
+	else //use cheap mort. val
+	    unMortgagePrice = (int) (1.1 * _mortgageValue1);
+	
+	//check if enough money and not already mortgaged
+	if ( isMortgaged() && owner.getCash() >= unMortgagePrice ){
+	    owner.charge(unMortgagePrice);
+	    _mortgage = false;
+	    return true;
+	}
+	return false;
+    }
+	    
 }
