@@ -11,6 +11,7 @@ for (int i = 0; i < 11; i++) {
       else 
         currentRow += <Property>._initial + "|"
     }
+    System.out.println(currentRow);+
   }
   
 if (board[<Player>._coords *NOT SURE HOW TO SPLIT YET*].isOwned() == false) {
