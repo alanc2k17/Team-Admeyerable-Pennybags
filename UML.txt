@@ -41,7 +41,7 @@ o String _initials
 o ArrayList<Player> _playersOnSquare
 + Landable()
 + Landable(String name, String initials, String coordinate)
-+ abstract String toString() ????
++ abstract String toString()
 + int getCoordinate()
 + void setPlayerOnSquare(Player p) 
 + void removePlayerOnSquare(Player p)

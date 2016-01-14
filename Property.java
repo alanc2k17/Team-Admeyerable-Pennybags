@@ -35,7 +35,13 @@ public abstract class Property extends Landable {
     public Player getOwner() {
 	return _owner;
     }
-  
+    
+    // accessor method to return whether or not Property is mortgaged
+    // returns true if mortgaged; false if not
+    public boolean isMortgaged(){
+	return _mortgage;
+    }
+
     // takes one Property parameter, p, and adds it to _groupMembers
     // _groupMembers used to determine monopoly or rent
     public void addMembers(Property p) {
