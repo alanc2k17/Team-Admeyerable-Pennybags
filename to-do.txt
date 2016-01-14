@@ -1,20 +1,29 @@
-#1 MOST IMPORTANTS
-- overhaul board architecture
-  = easily allows player to move; allows easy linkage between player and property
-  
-- why do the board be broken???
-  = prints vertically/horizontally?
+Team Admeyerable Pennybags -- Alan Chen and Calvin Vuong
+Monopoly: Project To-Do List
 
-- implement Player.java
+#1 TOP PRIORITIES (in order)
+- Alan: overhaul board architecture (Fri-Sat)
+  = easily allows player to move; 
+  = allows easy linkage between player and property; 
+  = allows easy printing
 
-- finish up gameplay mechanism
+- Calvin: finish writing essential classes (Fri-Sat)
+  = write and implement Player.java
+  = implement Bank.java
+  = fix getRent() in Utility upon completion of Player
 
-#2 SORT OF IMPORTANT
-- finish all classes under Property
-- implement Bank.java
-- Chance/Community cards
-- JAIL
-- Trade/Auctioning
+- Alan and Calvin: develop gameplay mechanism in Monopoly driver file (Fri-Mon)
+  = implement turn-based mechansim
+  = allow for easy user interface in selection options
 
-#3 just for the lolz
-- minigames
+#2 SORT OF IMPORTANT (in order)
+- Alan and Calvin: implement "auxilliary" board spaces and their actions (Tue-Thur)
+   - JAIL
+   - GOTOJAIL
+   - Chance/Community cards
+
+- Alan and Calvin: implement trade and auctioning mechanisms (Thur-Sat)
+
+#3 NON-ESSENTIAL (in order; just for the lolz)
+- Alan and Calvin: develop free-parking minigames (Sat-Sun)
+- Alan and Calvin: look for areas to optimize code (Sun-Mon?)
