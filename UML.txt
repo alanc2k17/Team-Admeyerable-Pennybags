@@ -7,20 +7,23 @@ FINAL value of var pre-built into class definition
 
 Player
 ----------------------
-- int _coordinate
-- String _name
-- ArrayList<Property>[] _propertiesOwned
-- int _cash
+o int _coordinate
+o String _name
+o ArrayList<Property>[] _propertiesOwned
+o int _cash
+o Property _propertyOn 
 + Player()
 + Player(String newName)
 + getCoords()
 + getCash()
-+ pay(Player other)
++ setCash()
++ pay(Property p)
 + move()
 + getPropertiesOwned()
++ getPropertyOn()
 + buildHouse(Property p)
 + buildHotel(Property p)
-+ mortgage(Propert p)
++ mortgage(Property p)
 + requestTrade()
 
 Landable (abstract)
