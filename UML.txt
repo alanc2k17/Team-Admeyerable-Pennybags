@@ -8,7 +8,22 @@ o protected
 
 Monopoly
 ----------------------
-+ trade(Player p)
+- int numPlayers
+- ArrayList<Player> playerList
+- Landable[][] board
+- int turns
++ setup()
++ play()
++ turn()
++ playerOptions()
++ minigame()
++ exit()
+
+ChanceDeck
+---------------------
+- String[] cards
++ execute(Player p1, Player p2, Player p3, Player p4)
++ shuffle()
 
 Player
 ----------------------
@@ -19,6 +34,7 @@ o int _cash
 o Property _propertyOn 
 + Player()
 + Player(String newName)
++ String toString()
 + getCoords()
 + getCash()
 + setCash()
@@ -32,6 +48,16 @@ o Property _propertyOn
 + buildHotel(Property p)
 + mortgage(Property p)
 + requestTrade()
++ trade(Player p)
+
+Bank extends Player
+------------------------
+o int _houseBank
+o int _hotelBank
+
+AIPlayer extends Player
+--------------------------
++ decide()
 
 Landable (abstract)
 ----------------------
@@ -115,7 +141,7 @@ o int _mortgageValue
 
 Utility extends Property
 ------------------------------------
-o FINAL BUYPRICE
+o FINAL int BUYPRICE
 o int _mortgageValue
 + Utility()
 + Utility(String name, String initials, String coordinate)
