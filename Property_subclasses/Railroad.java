@@ -71,6 +71,7 @@ public class Railroad extends Property{
     //returns int detailing rent if player lands on property
     //based off of how many other railraods owned
     public int getRent(){
+	if ( isMortgaged() ) return 0; // no rent with mortgage
 	return RENT[ railRoadsOwned() ]; //# of railrds. corresponds w/ index of RENT
     }
 

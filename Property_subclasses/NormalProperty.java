@@ -52,10 +52,10 @@ public class NormalProperty extends Property{
     // returns an int equal to rent on this property
     // uses _houses inst. var. to determine rent
     public int getRent(){
+	if ( isMortgaged() ) return 0; //no rent if mortgaged
 	if (expensive)
 	    // use _rent2 data if prop. is expensive
 	    return _rent2[ _houses ];
-	
 	else
 	    // use _rent1 data if prop. is cheap
 	    return _rent1[ _houses ];
