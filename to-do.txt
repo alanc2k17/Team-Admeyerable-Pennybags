@@ -25,5 +25,6 @@ Monopoly: Project To-Do List
 - Alan and Calvin: implement trade and auctioning mechanisms (Thur-Sat)
 
 #3 NON-ESSENTIAL (in order; just for the lolz)
+- Alan and Calvin: develop computer AI player (Thur-Sun)
 - Alan and Calvin: develop free-parking minigames (Sat-Sun)
 - Alan and Calvin: look for areas to optimize code (Sun-Mon?)
