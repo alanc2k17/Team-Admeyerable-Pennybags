@@ -6,6 +6,10 @@ Preliminary UML Diagrams
 - private
 o protected
 
+(x) indicate completed methods
+(p) indicate methods in progress
+other methods not yet implemented
+
 Monopoly
 ----------------------
 - int numPlayers
@@ -61,92 +65,92 @@ AIPlayer extends Player
 
 Landable (abstract)
 ----------------------
-o int _coordinate
-o String _name
-o String _initials
-o ArrayList<Player> _playersOnSquare
-+ Landable()
-+ Landable(String name, String initials, String coordinate)
-+ abstract String toString()
-+ int getCoordinate()
-+ void setPlayerOnSquare(Player p) 
-+ void removePlayerOnSquare(Player p)
+(x) o int _coordinate
+(x) o String _name
+(x) o String _initials
+(x) o ArrayList<Player> _playersOnSquare
+(x) + Landable()
+(x) + Landable(String name, String initials, String coordinate)
+(x) + abstract String toString()
+(x) + int getCoordinate()
+(x) + void setPlayerOnSquare(Player p) 
+(x) + void removePlayerOnSquare(Player p)
 
 Tax
 ----------------------
-o int _payAmount
-+ Tax()
-+ Tax(int payAmount)
-+ String toString()
-+ int getAmount()
+(x) o int _payAmount
+(x) + Tax()
+(x) + Tax(int payAmount)
+(p) + String toString()
+(x) + int getAmount()
 
 Property extends Landable (abstract)
 ------------------------------------
-o Player _owner
-o ArrayList<Property> _groupMembers
-o boolean _mortgage
-+ Property()
-+ Property(String name, String initials, String coordinate)
-+ toString()
-+ Player getOwner()
-+ void addMembers(Property p)
-+ abstract int getRent()
-+ abstract boolean mortgage()
-+ abstract boolean unMortgage()
-+ boolean isMortgaged()
+(x) o Player _owner
+(x) o ArrayList<Property> _groupMembers
+(x) o boolean _mortgage
+(x) + Property()
+(x) + Property(String name, String initials, String coordinate)
+(x) + String abstract toString()
+(x) + Player getOwner()
+(x) + void addMembers(Property p)
+(x) + abstract int getRent()
+(x) + abstract boolean mortgage()
+(x) + abstract boolean unMortgage()
+(x) + boolean isMortgaged()
 
 NormalProperty extends Property (abstract???)
 ------------------------------------
-o int[6] _rent1 
-o int[6] _rent2 
-o int _buyPrice1
-o int _buyPrice2 
-o int _houseCost
-o boolean _monopoly
-o boolean expensive;
-o int _houses
-o int _mortgageValue1
-o int _mortgageValue2
-+ NormalProperty()
-+ NormalProperty(String name, String initials, String coordinate, boolean expensive)
-+ abstract Stirng toString()
-+ int getHouses()
-+ int getRent()
-+ buildHouses(int n)
-+ sellHouses(int n)
-+ boolean checkMonopoly()
-+ boolean mortgage();
-+ boolean unMortgage()
+(x) o int[6] _rent1 
+(x) o int[6] _rent2 
+(x) o int _buyPrice1
+(x) o int _buyPrice2 
+(x) o int _houseCost
+(x) o boolean _monopoly
+(x) o boolean expensive;
+(x) o int _houses
+(x) o int _mortgageValue1
+(x) o int _mortgageValue2
+(x) + NormalProperty()
+(x) + NormalProperty(String name, String initials, String coordinate, boolean expensive)
+(p) + String toString()
+(x) + int getHouses()
+(x) + int getRent()
+(p) + buildHouses(int n)
+(p) + sellHouses(int n)
+(p) + boolean checkMonopoly()
+(x) + boolean mortgage();
+(x) + boolean unMortgage()
 
 <Color>Property extends NormalProperty
 ------------------------------------
-+ <Color>Property()
-+ <Color>Property(String name, String initials, String coordiate, boolean expensive)
-+ void setInfo()
+(x) + <Color>Property()
+(x) + <Color>Property(String name, String initials, String coordiate, boolean expensive)
+(x) + void setInfo()
 
 Railroad extends Property
 ------------------------------------
-o final int[] RENT
-o final int BUYPRICE
-o int _mortgageValue
+(x) o final int[] RENT
+(x) o final int BUYPRICE
+(x) o int _mortgageValue
 
-+ Railroad()
-+ Railroad(String name, String initials, String coordinate)
-+ int getRent()
-+ int railroadsOwned()
-+ String toString()
-+ boolean mortgage()
-+ boolean unMortgage()
-+ int setMortgageValue()
+(x) + Railroad()
+(x) + Railroad(String name, String initials, String coordinate)
+(x) + int getRent()
+(x) + int railroadsOwned()
+(p) + String toString()
+(x) + boolean mortgage()
+(x) + boolean unMortgage()
+(x) + int setMortgageValue()
 
 Utility extends Property
 ------------------------------------
-o FINAL int BUYPRICE
-o int _mortgageValue
-+ Utility()
-+ Utility(String name, String initials, String coordinate)
-+ int getRent()
-+ int utilitiesOwned()
-+ toString()
-+ boolean mortgage()
+(x) o FINAL int BUYPRICE
+(x) o int _mortgageValue
+(x) + Utility()
+(x) + Utility(String name, String initials, String coordinate)
+(p) + int getRent()
+(x) + int utilitiesOwned()
+(p) + toString()
+(x) + boolean mortgage()
 + boolean unMortgage()
