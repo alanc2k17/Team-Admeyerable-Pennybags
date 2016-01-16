@@ -49,6 +49,14 @@ public class NormalProperty extends Property{
 	return _houses;
     }
 
+    // accessor; gets buy price
+    public int getBuyPrice(){
+	if (expensive)
+	    return _buyPrice2;
+	else
+	    return _buyPrice1;
+    }
+
     // returns an int equal to rent on this property
     // uses _houses inst. var. to determine rent
     public int getRent(){

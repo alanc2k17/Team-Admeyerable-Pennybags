@@ -35,7 +35,12 @@ public abstract class Property extends Landable {
     public Player getOwner() {
 	return _owner;
     }
-    
+
+    // mutator method to set owner
+    public void setOwner(Player p){
+	_owner = p;
+    }
+
     // accessor method to return whether or not Property is mortgaged
     // returns true if mortgaged; false if not
     public boolean isMortgaged(){

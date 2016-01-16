@@ -22,6 +22,11 @@ public class Railroad extends Property{
 	return "";
     }
 
+    // accessor method to get buy price
+    public int getBuyPrice(){
+	return BUYPRICE;
+    }
+
     //sets mortgage value based on BUYPRICE
     //calld in constructor
     public void setMortgageValue(){
