@@ -3,12 +3,14 @@ public class Tax extends Landable{
     
     // default constructor
     public Tax() {
+	super();
 	_payAmount = 100;
     }
   
     // overrided constructor
     // sets _payAmount to parameter value
-    public Tax(int payAmount) {
+    public Tax(String name, int payAmount) {
+	super(name, "TAX");
 	_payAmount = payAmount;
     }
   
