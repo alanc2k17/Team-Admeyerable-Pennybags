@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public abstract class Property extends Landable {
     protected Player _owner;
     protected ArrayList<Player> _playersOnProperty;

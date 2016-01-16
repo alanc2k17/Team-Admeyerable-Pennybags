@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Utility extends Property{
     
     protected final int BUYPRICE = 200;

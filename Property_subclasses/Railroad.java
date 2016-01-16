@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Railroad extends Property{
     
     protected final int[] RENT = {25, 50, 100, 200}; //index corresponds w/ number of railroads
