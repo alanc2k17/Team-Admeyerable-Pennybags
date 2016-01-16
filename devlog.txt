@@ -1,3 +1,6 @@
+2015-01-16
+- Calvin: edited & revised parts of Player
+
 2015-01-14
 - Alan and Calvin: reworked board structure in class
 - Calvin: wrote mortgage() and unmortgage() in appropriate classes
