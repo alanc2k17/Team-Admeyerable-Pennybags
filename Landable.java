@@ -25,7 +25,13 @@ public abstract class Landable {
   
     // different subclasses will display themselves differently
     public abstract String toString();
-  
+
+    // accessor method return name
+    public String getName(){
+	return _name;
+    }
+
+    // accessor method to return coordinate
     public int getCoordinate() {
 	return _coordinate;
     }
