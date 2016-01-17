@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 public abstract class Landable {
-    protected int _coordinate;
     protected String _name;
     protected String _initials;
     // last Player in list will be player most recently landed
@@ -16,9 +15,8 @@ public abstract class Landable {
     }
   
     // overloaded constructor; written even though class is abstract so it can be inherited
-    public Landable (String name, String initials, int coordinate) {
+    public Landable (String name, String initials) {
 	this(); //call default constr. to instanitate _playersOnSquare
-	_coordinate = coordinate;
 	_name = name;
 	_initials = initials;
     }
@@ -29,11 +27,6 @@ public abstract class Landable {
     // accessor method return name
     public String getName(){
 	return _name;
-    }
-
-    // accessor method to return coordinate
-    public int getCoordinate() {
-	return _coordinate;
     }
     
     // accessor to get list of players on square
