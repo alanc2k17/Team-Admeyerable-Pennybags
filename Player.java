@@ -64,6 +64,12 @@ public class Player {
 	return getCash();
     }
     
+    public void pay(Property p) {
+    	int fee = p.getRent();
+    	this.charge(fee);
+    	(p._owner).give(fee);
+    }
+    
     public String move() {
 	int diceRoll = (int)(Math.random() * 6) + 1;
 	diceRoll += (int)(Math.random() * 6) + 1;
@@ -85,12 +91,14 @@ public class Player {
 	return p.getHouses();
     }
     
-    public String buildHotel(Property p) {
-	// ???
+    public void mortgage(Property p) {
+	if (p._expensive == false) {
+		_cashOnHand += p._mortgageValue1;
+	}
+	else {
+		_cashOnHand += p._mortgageValue2;
+	}
+	
     }
     
-    public mortgage(Property p) {
-	// ???
-    }
-    
-    //unsure how to implement pay(Property p)/move()/buildHotel(Property p)
+    //METHODS LEFT: move(); buildHotel(); requestTrade(); trade()
