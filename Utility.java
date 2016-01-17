@@ -20,7 +20,12 @@ public class Utility extends Property{
 
     //override toString; used to print Object to board
     public String toString(){
-	return "";
+    	String returnString = "";
+	returnString += "owner of " + _name + "(initials: " + _initials + ") =" + _owner + "\n";
+	returnString += "current owner also owns " + utilitiesOwned() + " more utility properties";
+	returnString += "current rent is: " + getRent() + "\n";
+	returnString += "mortgage value is: " + _mortgageValue;
+	return returnString;
     }
 
     // accessor method to get buy price
