@@ -24,6 +24,7 @@ public class Railroad extends Property{
 	String returnString = "";
 	returnString += "owner of " + _name + "(initials: " + _initials + ") =" + _owner + "\n";
 		// NOT FINISHED YET
+	return "";
     }
 
     // accessor method to get buy price
