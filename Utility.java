@@ -13,8 +13,8 @@ public class Utility extends Property{
     }
 
     //overloaded constructor
-    public Utility(String name, String initials, int coordinate){
-	super(name, initials, coordinate);
+    public Utility(String name, String initials){
+	super(name, initials);
 	setMortgageValue();
     }
 

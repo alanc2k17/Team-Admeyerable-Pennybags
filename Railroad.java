@@ -14,8 +14,8 @@ public class Railroad extends Property{
     }
 
     //overloaded constructor
-    public Railroad(String name, String initials, int coordinate){
-	super(name, initials, coordinate);
+    public Railroad(String name, String initials){
+	super(name, initials);
 	setMortgageValue();
     }
 

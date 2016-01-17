@@ -7,8 +7,8 @@ public class PinkProperty extends NormalProperty{
     }
 
     //overloaded constructor
-    public PinkProperty(String name, String initials, String coordinate, boolean expensive){
-    	super(name, initials, coordinate, expensive);
+    public PinkProperty(String name, String initials, boolean expensive){
+    	super(name, initials, expensive);
     	setInfo();
     }
 

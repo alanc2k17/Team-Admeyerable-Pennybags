@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 public abstract class Landable {
-    protected int _coordinate;
     protected String _name;
     protected String _initials;
     // last Player in list will be player most recently landed
@@ -9,16 +8,14 @@ public abstract class Landable {
   
     // default constructor; written even though class is abstract so it can be inherited
     public Landable() {
-	_coordinate = 0;
 	_name = "board square";
 	_initials = "xD";
 	_playersOnSquare = new ArrayList<Player>();
     }
   
     // overloaded constructor; written even though class is abstract so it can be inherited
-    public Landable (String name, String initials, int coordinate) {
+    public Landable (String name, String initials) {
 	this(); //call default constr. to instanitate _playersOnSquare
-	_coordinate = coordinate;
 	_name = name;
 	_initials = initials;
     }
@@ -26,16 +23,16 @@ public abstract class Landable {
     // different subclasses will display themselves differently
     public abstract String toString();
 
-    // accessor method return name
+    // accessor method to return name
     public String getName(){
 	return _name;
     }
-
-    // accessor method to return coordinate
-    public int getCoordinate() {
-	return _coordinate;
-    }
     
+    // accessor method to return initials
+    public String getInitials(){
+	return _initials;
+    }
+
     // accessor to get list of players on square
     public ArrayList<Player> getPlayersOn(){
 	return _playersOnSquare;
@@ -43,12 +40,12 @@ public abstract class Landable {
 
     // called after a Player lands on this square
     public void setPlayerOnSquare(Player p) {
-	_playerOnSquare.add(p);
+	_playersOnSquare.add(p);
     }
   
     // called after a Player moves after it is on this square
     public void removePlayerOnSquare(Player p) {
-	_playerOnSquare.remove(p);
+	_playersOnSquare.remove(p);
     }
 
 } //end class Landable

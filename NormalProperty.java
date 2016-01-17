@@ -34,8 +34,8 @@ public class NormalProperty extends Property{
 
     // overloaded constructor
     // also sets expensive boolean to last input param
-    public NormalProperty(String name, String initials, int coordinate, boolean expensive){
-	super(name, initials, coordinate);
+    public NormalProperty(String name, String initials, boolean expensive){
+	super(name, initials);
 	_expensive = expensive;
     }
     
@@ -51,7 +51,7 @@ public class NormalProperty extends Property{
 
     // accessor; gets buy price
     public int getBuyPrice(){
-	if (expensive)
+	if (_expensive)
 	    return _buyPrice2;
 	else
 	    return _buyPrice1;
@@ -61,7 +61,7 @@ public class NormalProperty extends Property{
     // uses _houses inst. var. to determine rent
     public int getRent(){
 	if ( isMortgaged() ) return 0; //no rent if mortgaged
-	if (expensive)
+	if (_expensive)
 	    // use _rent2 data if prop. is expensive
 	    return _rent2[ _houses ];
 	else
@@ -111,7 +111,7 @@ public class NormalProperty extends Property{
     // returns true if Player (owner) has a monopoly on this color
     // false otherwise
     public boolean checkMonopoly(){
-	Player ownerProperties = getOwner().getPropertiesOwned();
+	ArrayList<Property> ownerProperties = getOwner().getPropertiesOwned();
 
 	// for each color group member property
 	for (int i = 0; i < _groupMembers.size(); i++){

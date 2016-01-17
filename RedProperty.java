@@ -7,8 +7,8 @@ public class RedProperty extends NormalProperty{
     }
 
     //overloaded constructor
-    public RedProperty(String name, String initials, String coordinate, boolean expensive){
-    	super(name, initials, coordinate, expensive);
+    public RedProperty(String name, String initials, boolean expensive){
+    	super(name, initials, expensive);
     	setInfo();
     }
 
@@ -16,7 +16,7 @@ public class RedProperty extends NormalProperty{
     public void setInfo(){
 	// set rent prices, index corresponds w/ # of houses
     	_rent1 = new int[] {18, 90, 250, 700, 875, 1050}; //kentucky ave | indiana ave
-	_rent3 = new int[] {20, 100, 300, 750, 925, 1100}; //illinois ave
+	_rent2 = new int[] {20, 100, 300, 750, 925, 1100}; //illinois ave
 	    
 	// set buy prices
     	_buyPrice1 = 220; 

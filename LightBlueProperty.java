@@ -1,14 +1,14 @@
 public class LightBlueProperty extends NormalProperty{
    
     //default constructor
-    public BrownProperty(){
+    public LightBlueProperty(){
 	super();
 	setInfo();
     }
 
     //overloaded constructor
-    public BrownProperty(String name, String initials, String coordinate, boolean expensive){
-	super(name, initials, coordinate, expensive);
+    public LightBlueProperty(String name, String initials, boolean expensive){
+	super(name, initials, expensive);
 	setInfo();
     }
 

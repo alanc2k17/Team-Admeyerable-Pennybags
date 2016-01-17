@@ -93,7 +93,7 @@ public class Monopoly{
 	for ( int row = 0; row < board.length; row++ ){
 	    // loop through each row 5 times, since each element consumes 5 lines
 	    for ( int count = 0; count < 5; count++ ){ 
-		for ( int col = 0; col < row.length; col++ ){
+		for ( int col = 0; col < board[row].length; col++ ){
 		    // if element is null, print 5 empty spaces
 		    if ( board[row][col] == null ){
 			if ( col == 0 )
@@ -114,12 +114,14 @@ public class Monopoly{
 
 			else if ( count == 2){ // on third count, print houses if applicable 
 			    if ( board[row][col] instanceof NormalProperty ){
-				if ( board[row][col].getHouses() == 5 )
+				// typecast to access getHouses() method
+				NormalProperty element = (NormalProperty)(board[row][col]);
+				if ( element.getHouses() == 5 )
 				    System.out.print("  H |"); //print hotel
 				else{
 				    String printStr = "";
 				    // print proper num of houses
-				    for (int h = 0; h < board[row][col].getHouses(); h++)
+				    for (int h = 0; h < element.getHouses(); h++)
 					printStr += "h";
 				    // print added spaces to keep padding
 				    while ( printStr.length() < 4 )

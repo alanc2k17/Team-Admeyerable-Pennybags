@@ -4,17 +4,18 @@ public class Player {
     protected int _coordinate;
     protected String _name;
     protected String _symbol;
-    protected ArrayList<Property>[] _propertiesOwned;
+    protected ArrayList<Property> _propertiesOwned;
     protected int _cashOnHand;
     protected Landable _squareOn;
-    
+    protected int _diceRoll;
+
     public Player() {
 	_coordinate = 0;
 	_name = "nameless";
 	_symbol = "D";
 	_propertiesOwned = new ArrayList<Property>();
 	_cashOnHand = 1500;
-	_propertyOn = ???; 
+	
     }
     
     public Player(String newName, String symbol) {
@@ -31,7 +32,15 @@ public class Player {
 	
 	return returnString;
     }
-    
+
+    public String getName(){
+	return _name;
+    }
+
+    public String getSymbol(){
+	return _symbol;
+    }
+
     public int getCoords() {
 	return _coordinate;
     }
@@ -48,25 +57,29 @@ public class Player {
 	return _squareOn;
     }
     
+    public int getDiceRoll(){
+	return _diceRoll;
+    }
+
     private void setCash(int newCashValue) {
-	_cash = newCashValue;
+	_cashOnHand = newCashValue;
     }
     
     public int charge(int amt) {
 	setCash( getCash() - amt );
-	System.out.println( _name + "now has $" + _cash );
+	System.out.println( _name + "now has $" + _cashOnHand );
 	return getCash();
     }
   
     public int give(int amt) {
 	setCash( getCash() + amt );
-	System.out.pritnln( _name + " now has $" + _cash );
+	System.out.println( _name + " now has $" + _cashOnHand );
 	return getCash();
     }
     
-    public String move() {
-	int diceRoll = (int)(Math.random() * 6) + 1;
-	diceRoll += (int)(Math.random() * 6) + 1;
+    public void move() {
+	_diceRoll = (int)(Math.random() * 6) + 1;
+	_diceRoll += (int)(Math.random() * 6) + 1;
 	
 	// many if statements
     }
@@ -85,12 +98,9 @@ public class Player {
 	return p.getHouses();
     }
     
-    public String buildHotel(Property p) {
-	// ???
-    }
-    
-    public mortgage(Property p) {
+    public void mortgage(Property p) {
 	// ???
     }
     
     //unsure how to implement pay(Property p)/move()/buildHotel(Property p)
+}

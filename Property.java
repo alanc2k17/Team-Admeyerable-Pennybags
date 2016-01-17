@@ -16,8 +16,8 @@ public abstract class Property extends Landable {
     }
   
     // overloaded constructor
-    public Property(String name, String initials, int coordinate) {
-	super(name, initials, coordinate); //use super constructor to set name, inits, coord
+    public Property(String name, String initials) {
+	super(name, initials); //use super constructor to set name, inits, coord
 	_playersOnProperty = new ArrayList<Player>();
 	_groupMembers = new ArrayList<Property>();
 	_mortgage = false;
@@ -27,7 +27,7 @@ public abstract class Property extends Landable {
     public abstract int getRent();
 
     // abstract b/c in buyPrice is defined differently in its three subclasses
-    public abstract int mortgage();
+    public abstract boolean mortgage();
 
     // abstract b/c in one subclass, it needs to print houses
     // in another, it needs not
