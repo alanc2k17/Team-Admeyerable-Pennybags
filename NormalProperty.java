@@ -34,8 +34,8 @@ public class NormalProperty extends Property{
 
     // overloaded constructor
     // also sets expensive boolean to last input param
-    public NormalProperty(String name, String initials, int coordinate, boolean expensive){
-	super(name, initials, coordinate);
+    public NormalProperty(String name, String initials, boolean expensive){
+	super(name, initials);
 	_expensive = expensive;
     }
     
