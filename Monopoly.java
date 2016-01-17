@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import cs1.Keyboard;
 
 public class Monopoly{
     private int numPlayers;
@@ -13,6 +14,43 @@ public class Monopoly{
 	turns = 0;
     }
 
+    // usage: feed Keyboard.readString() into parameter to allow user to select a number selection
+    // returns int as the selection number
+    // if invalid input, reasks user until valid input
+    public int parseInput(String s){
+	int retInt = 0;
+	try{
+	    retInt = Integer.parseInt(s);
+	}
+	catch (Exception e){ // if invalid input
+	    System.out.println("Invalid input! Please try again.");
+	    parseInput(Keyboard.readString()); //prompt user for another input, and parse it
+	}
+	return retInt;
+    }
+
+    // asks user for number of players, and their names
+    // to be called in setup()
+    public void setupPlayers(){
+	System.out.print("How many players do you wish to have (2-4): ");
+	numPlayers = parseInput(Keyboard.readString());
+	
+	for (int i = 0; i < numPlayers; i++){ // ask stuff about each player
+	    System.out.print("Player " + (i+1) + " name: ");
+	    String pName = Keyboard.readString();
+	    
+	    String[] symbolBank = {"x", "o", "v", "m"};
+	    System.out.println("Player " + (i+1) + " symbol:");
+	    System.out.println("1:x\t2:o\t3:v\t4:m");
+	    // choice corresponds with index in symbol bank -1
+	    int symbolChoice = parseInput(Keyboard.readString());
+	    String pSymbol = symbolBank[symbolChoice-1];
+
+	    // call constructor and add to playerList
+	    playerList.add( new Player(pName, pSymbol) );
+	}
+    }
+	
     // sets up the game; instantiates properites, sets up boards and players
     public void setup() {
     	
@@ -88,13 +126,8 @@ public class Monopoly{
 		{ income, connecticut, vermont, income, oriental, reading, income, baltic, income, mediterranean, income }
 	    };
 
-    	// initialize players and add to list
-	// when adding extra player functionality, use loops based on # of players chosen
-	numPlayers = 2;
-	Player p1 = new Player( "Calvin", "x" );
-	Player p2 = new Player( "Alan", "o" );
-	playerList.add(p1);
-	playerList.add(p2);
+    	// initialize players 
+	setupPlayers();
     }
     
     

@@ -19,6 +19,7 @@ public class Player {
     }
     
     public Player(String newName, String symbol) {
+	this();
 	_name = newName;
 	_symbol = symbol;
     }
