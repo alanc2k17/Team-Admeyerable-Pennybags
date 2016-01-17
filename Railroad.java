@@ -23,6 +23,7 @@ public class Railroad extends Property{
     public String toString(){
 	String returnString = "";
 	returnString += "owner of " + _name + "(initials: " + _initials + ") =" + _owner + "\n";
+	returnString += "current owner also owns " + railRoadsOwned() + " more railroad properties";
 	returnString += "current rent is: " + getRent() + "\n";
 	returnString += "mortgage value is: " + _mortgageValue;
 	return returnString;
