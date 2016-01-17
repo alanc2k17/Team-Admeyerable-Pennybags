@@ -63,6 +63,7 @@ public class Player {
 
     private void setCash(int newCashValue) {
 	_cashOnHand = newCashValue;
+	System.out.println( _name + " now has $" + getCash());
     }
     
     public int charge(int amt) {
@@ -80,12 +81,16 @@ public class Player {
     public void move() {
 	_diceRoll = (int)(Math.random() * 6) + 1;
 	_diceRoll += (int)(Math.random() * 6) + 1;
+	System.out.println( _name + " has rolled a: " + getDiceRoll());
     }
 
     public void pay(Property p) {
     	int fee = p.getRent();
     	this.charge(fee);
     	p.getOwner().give(fee);
+    	System.out.println(_name + "has paid " + fee + " to " + p.getOwner());
+    	System.out.println(_name + " now has " + getCash());
+    	System.out.println(p.getOwner() + " now has " + p.getOwner().getCash());
     }
     
     // builds amt number of houses on NormalProperty p
