@@ -21,7 +21,9 @@ public class Railroad extends Property{
 
     //override toString; used to print Object to board
     public String toString(){
-	return "";
+	String returnString = "";
+	returnString += "owner of " + _name + "(initials: " + _initials + ") =" + _owner + "\n";
+		// NOT FINISHED YET
     }
 
     // accessor method to get buy price
