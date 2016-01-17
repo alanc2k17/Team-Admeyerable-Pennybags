@@ -6,6 +6,7 @@ public class Monopoly{
     private Landable[][] board;
     private int turns;
     
+    // sets up the game; instantiates properites, sets up boards and players
     public void setup() {
     	
 	// instantiate normal properties
@@ -66,15 +67,15 @@ public class Monopoly{
 	// nullls will appear as spaces when board is printed
 	board = new Landable[][] 
 	    { 
-		{ null, kentucky, null, indiana, illinois, borail, atlantic, vetnor, marvin, null }
-		{ newyork, null, null, null, null, null, null, null, null, null, pacific }
-		{ tennessee, null, null, null, null, null, null, null, null, null, northcarolina }
-		{ null, null, null, null, null, null, null, null, null, null, null }
-		{ stjames, null, null, null, null, null, null, null, null, null, pennsylvania }
-		{ pennrail, null, null, null, null, null, null, null, null, null, shortline }
-		{ virginia, null, null, null, null, null, null, null, null, null, null }
-		{ states, null, null, null, null, null, null, null, null, null, parkplace }
-		{ electric, null, null, null, null, null, null, null, null, null, luxury }
+		{ null, kentucky, null, indiana, illinois, borail, atlantic, vetnor, marvin, null },
+		{ newyork, null, null, null, null, null, null, null, null, null, pacific },
+		{ tennessee, null, null, null, null, null, null, null, null, null, northcarolina },
+		{ null, null, null, null, null, null, null, null, null, null, null },
+		{ stjames, null, null, null, null, null, null, null, null, null, pennsylvania },
+		{ pennrail, null, null, null, null, null, null, null, null, null, shortline },
+		{ virginia, null, null, null, null, null, null, null, null, null, null },
+		{ states, null, null, null, null, null, null, null, null, null, parkplace },
+		{ electric, null, null, null, null, null, null, null, null, null, luxury },
 		{ stjames, null, null, null, null, null, null, null, null, null, boardwalk }
 	    };
        
@@ -86,6 +87,7 @@ public class Monopoly{
 	playerList.add(p1);
 	playerList.add(p2);
     }
+    
     
     public void printBoard(){
 	for ( int row = 0; row < board.length; row++ ){
@@ -130,7 +132,7 @@ public class Monopoly{
 			} // close count 2
 			
 			else if (count == 3){ // on fourth count, print players on
-			    String printStr - ""; 
+			    String printStr = ""; 
 			    // list of players on square
 			    ArrayList<Player> playersOn = board[row][col].getPlayersOn();
 			    // for each player on square, print its symbol
