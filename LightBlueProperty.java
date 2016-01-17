@@ -7,8 +7,8 @@ public class LightBlueProperty extends NormalProperty{
     }
 
     //overloaded constructor
-    public BrownProperty(String name, String initials, String coordinate, boolean expensive){
-	super(name, initials, coordinate, expensive);
+    public BrownProperty(String name, String initials, boolean expensive){
+	super(name, initials, expensive);
 	setInfo();
     }
 
