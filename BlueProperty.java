@@ -7,8 +7,8 @@ public class BlueProperty extends NormalProperty{
     }
 
     //overloaded constructor
-    public BlueProperty(String name, String initials, String coordinate, boolean expensive){
-    	super(name, initials, coordinate, expensive);
+    public BlueProperty(String name, String initials, boolean expensive){
+    	super(name, initials, expensive);
     	setInfo();
     }
 
