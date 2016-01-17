@@ -39,9 +39,15 @@ public class NormalProperty extends Property{
 	_expensive = expensive;
     }
     
-    // override toString to return info about his class
+    // override toString to return info about this class
     public String toString(){
-	return "";
+	String returnString = "";
+	returnString += "owner of " + _name + "(initials: " + _initials + ") =" + _owner + "\n";
+	returnString += "does the current owner have a monopoly in this color group?" + checkMonopoly() + "\n";
+	returnString += "number of houses on this property: " + _houses + "\n";
+	returnString += "current rent is: " + getRent() + "\n";
+	returnString += "mortgage value is: " + _mortgageValue;
+	return returnString;
     }
 
     // accessor; returns # of houses
