@@ -46,7 +46,7 @@ public class NormalProperty extends Property{
 	returnString += "does the current owner have a monopoly in this color group?" + checkMonopoly() + "\n";
 	returnString += "number of houses on this property: " + _houses + "\n";
 	returnString += "current rent is: " + getRent() + "\n";
-	returnString += "mortgage value is: " + _mortgageValue;
+	returnString += "mortgage value is: " + getMortgageValue();
 	return returnString;
     }
 
@@ -129,6 +129,14 @@ public class NormalProperty extends Property{
 	return true;
     }
 
+    // returns the mortgage value of property, depending on whether it is expensive or not
+    public int getMortgageValue(){
+	if ( _expensive ) // use expensive mortgage value
+	    return _mortgageValue2;
+	else
+	    return _mortgageValue1;
+    }
+
     // mortgages the property
     // gives player the mortgage money
     // returns true if mortgage is successful
@@ -136,10 +144,7 @@ public class NormalProperty extends Property{
     public boolean mortgage(){
 	if (! isMortgaged() ){ //don't mortgage if already mortgaged
 	    Player owner = getOwner();
-	    if ( _expensive ) // use expensive mortgage value
-		owner.give( _mortgageValue2 ); 
-	    else // use cheap mort. val
-		owner.give( _mortgageValue1 ); 
+	    owner.give( getMortgageValue() );
 	    _mortgage = true;
 	    return true;
 	}

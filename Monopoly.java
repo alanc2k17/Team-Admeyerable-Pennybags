@@ -5,7 +5,14 @@ public class Monopoly{
     private ArrayList<Player> playerList;
     private Landable[][] board;
     private int turns;
-    
+
+    // constructor; sets default values
+    public Monopoly(){
+	numPlayers = 0;
+	playerList = new ArrayList<Player>();
+	turns = 0;
+    }
+
     // sets up the game; instantiates properites, sets up boards and players
     public void setup() {
     	
@@ -63,22 +70,24 @@ public class Monopoly{
 	Tax luxury = new Tax("Luxury Tax", 100);
 
 	
+	
 	// initialize board
 	// nullls will appear as spaces when board is printed
 	board = new Landable[][] 
 	    { 
-		{ null, kentucky, null, indiana, illinois, borail, atlantic, vetnor, marvin, null },
+		{ income, kentucky, income, indiana, illinois, borail, atlantic, vetnor, water, marvin, income },
 		{ newyork, null, null, null, null, null, null, null, null, null, pacific },
 		{ tennessee, null, null, null, null, null, null, null, null, null, northcarolina },
-		{ null, null, null, null, null, null, null, null, null, null, null },
+		{ income, null, null, null, null, null, null, null, null, null, income },
 		{ stjames, null, null, null, null, null, null, null, null, null, pennsylvania },
 		{ pennrail, null, null, null, null, null, null, null, null, null, shortline },
-		{ virginia, null, null, null, null, null, null, null, null, null, null },
+		{ virginia, null, null, null, null, null, null, null, null, null, income },
 		{ states, null, null, null, null, null, null, null, null, null, parkplace },
 		{ electric, null, null, null, null, null, null, null, null, null, luxury },
-		{ stjames, null, null, null, null, null, null, null, null, null, boardwalk }
+		{ stjames, null, null, null, null, null, null, null, null, null, boardwalk },
+		{ income, connecticut, vermont, income, oriental, reading, income, baltic, income, mediterranean, income }
 	    };
-       
+
     	// initialize players and add to list
 	// when adding extra player functionality, use loops based on # of players chosen
 	numPlayers = 2;
@@ -94,30 +103,35 @@ public class Monopoly{
 	    // loop through each row 5 times, since each element consumes 5 lines
 	    for ( int count = 0; count < 5; count++ ){ 
 		for ( int col = 0; col < board[row].length; col++ ){
+		    // if element is last in row, print newline
+		    // if not, print nothing
+		    String newLine = "";
+		    if ( col == board[row].length-1 )
+			newLine = "\n";
+
 		    // if element is null, print 5 empty spaces
 		    if ( board[row][col] == null ){
 			if ( col == 0 )
 			    System.out.print("|"); //border
-			System.out.print("    |");
-			if ( col == board[row].length-1) //if last element
-			    System.out.print("\n"); //start newline
+			System.out.print("     " + newLine);
 		    }
 		    else{ //element is an instance of Landable
-			if ( col == 0 )
+			// if in first column or directly after a null...
+			if ( col == 0 || (board[row][col-1] == null) ) 
 			    System.out.print("|"); //border
-
+			
 			if ( count == 0 ) // on first count
-			    System.out.print("-----"); //border
+			    System.out.print("-----" + newLine); //border
 
 			else if ( count == 1 ) // on second count, print initials
-			    System.out.print(" " + board[row][col].getInitials() + " |");
+			    System.out.print(" " + board[row][col].getInitials() + " |" + newLine);
 
 			else if ( count == 2){ // on third count, print houses if applicable 
 			    if ( board[row][col] instanceof NormalProperty ){
 				// typecast to access getHouses() method
 				NormalProperty element = (NormalProperty)(board[row][col]);
 				if ( element.getHouses() == 5 )
-				    System.out.print("  H |"); //print hotel
+				    System.out.print("  H |" + newLine); //print hotel
 				else{
 				    String printStr = "";
 				    // print proper num of houses
@@ -126,11 +140,11 @@ public class Monopoly{
 				    // print added spaces to keep padding
 				    while ( printStr.length() < 4 )
 					printStr += " ";
-				    System.out.print(printStr + "|");
+				    System.out.print(printStr + "|" + newLine);
 				} // close if houses == 5
 			    } // close if normalproperty
 			    else // element is a railroad, utilty, or nonproperty
-				System.out.print("    |"); //print blank spaces (no houses)
+				System.out.print("    |" + newLine); //print blank spaces (no houses)
 			} // close count 2
 			
 			else if (count == 3){ // on fourth count, print players on
@@ -143,11 +157,11 @@ public class Monopoly{
 			    //print added spaces to keep padding
 			    for ( int i = playersOn.size(); i < 4; i++ )
 				printStr += " ";
-			    System.out.print(printStr + "|");
+			    System.out.print(printStr + "|" + newLine);
 			} // close count 3
 			
 			else if ( count == 4 ) // on fifth count 
-			    System.out.print("-----"); //border
+			    System.out.print("-----" + newLine); //border
 		    } // close else instance of Landable
 		} // close loop through row 
 	    } // close loop 5 times
@@ -162,13 +176,18 @@ public class Monopoly{
     }
     
     public void play(){
+	setup();
+	printBoard();
 	// while there are at least 2 players in the game
+	/*
 	while ( playerList.size() > 1 ){
 	    // for each player, call turn
 	    for (int i = 0; i < playerList.size(); i++){
 		turn( playerList.get(i) );
 	    }
 	}
+	*/
+	
     }
 
     public static void main(String[] args){
