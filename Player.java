@@ -80,8 +80,12 @@ public class Player {
     public void move() {
 	_diceRoll = (int)(Math.random() * 6) + 1;
 	_diceRoll += (int)(Math.random() * 6) + 1;
-	
-	// many if statements
+    }
+
+    public void pay(Property p) {
+    	int fee = p.getRent();
+    	this.charge(fee);
+    	p.getOwner().give(fee);
     }
     
     // builds amt number of houses on NormalProperty p
@@ -98,9 +102,13 @@ public class Player {
 	return p.getHouses();
     }
     
-    public void mortgage(Property p) {
-	// ???
+    public boolean mortgage(Property p) {
+	return p.mortgage();
     }
     
-    //unsure how to implement pay(Property p)/move()/buildHotel(Property p)
+    public boolean unMortgage(Property p) {
+	return p.unMortgage();
+    }
 }
+    //METHODS LEFT: move(); buildHotel(); requestTrade(); trade()
+    

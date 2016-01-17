@@ -29,6 +29,8 @@ public abstract class Property extends Landable {
     // abstract b/c in buyPrice is defined differently in its three subclasses
     public abstract boolean mortgage();
 
+    public abstract boolean unMortgage();
+
     // abstract b/c in one subclass, it needs to print houses
     // in another, it needs not
     public abstract String toString();
