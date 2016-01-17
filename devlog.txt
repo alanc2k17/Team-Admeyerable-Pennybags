@@ -1,5 +1,7 @@
 2015-01-16
+- Alan and Calvin: decided on new coordinate system
 - Calvin: edited & revised parts of Player
+- Alan: wrote class Player, revised Property subclasses, toString methods for properties
 
 2015-01-14
 - Alan and Calvin: reworked board structure in class
