@@ -16,8 +16,8 @@ public abstract class Property extends Landable {
     }
   
     // overloaded constructor
-    public Property(String name, String initials, int coordinate) {
-	super(name, initials, coordinate); //use super constructor to set name, inits, coord
+    public Property(String name, String initials) {
+	super(name, initials); //use super constructor to set name, inits, coord
 	_playersOnProperty = new ArrayList<Player>();
 	_groupMembers = new ArrayList<Property>();
 	_mortgage = false;
