@@ -36,6 +36,11 @@ public abstract class Landable {
 	return _coordinate;
     }
     
+    // accessor to get list of players on square
+    public ArrayList<Player> getPlayersOn(){
+	return _playersOnSquare;
+    }
+
     // called after a Player lands on this square
     public void setPlayerOnSquare(Player p) {
 	_playerOnSquare.add(p);

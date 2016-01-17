@@ -86,7 +86,71 @@ public class Monopoly{
 	playerList.add(p1);
 	playerList.add(p2);
     }
-   
+    
+    public void printBoard(){
+	for ( int row = 0; row < board.length; row++ ){
+	    // loop through each row 5 times, since each element consumes 5 lines
+	    for ( int count = 0; count < 5; count++ ){ 
+		for ( int col = 0; col < row.length; col++ ){
+		    // if element is null, print 5 empty spaces
+		    if ( board[row][col] == null ){
+			if ( col == 0 )
+			    System.out.print("|"); //border
+			System.out.print("    |");
+			if ( col == board[row].length-1) //if last element
+			    System.out.print("\n"); //start newline
+		    }
+		    else{ //element is an instance of Landable
+			if ( col == 0 )
+			    System.out.print("|"); //border
+
+			if ( count == 0 ) // on first count
+			    System.out.print("-----"); //border
+
+			else if ( count == 1 ) // on second count, print initials
+			    System.out.print(" " + board[row][col].getInitials() + " |");
+
+			else if ( count == 2){ // on third count, print houses if applicable 
+			    if ( board[row][col] instanceof NormalProperty ){
+				if ( board[row][col].getHouses() == 5 )
+				    System.out.print("  H |"); //print hotel
+				else{
+				    String printStr = "";
+				    // print proper num of houses
+				    for (int h = 0; h < board[row][col].getHouses(); h++)
+					printStr += "h";
+				    // print added spaces to keep padding
+				    while ( printStr.length() < 4 )
+					printStr += " ";
+				    System.out.print(printStr + "|");
+				} // close if houses == 5
+			    } // close if normalproperty
+			    else // element is a railroad, utilty, or nonproperty
+				System.out.print("    |"); //print blank spaces (no houses)
+			} // close count 2
+			
+			else if (count == 3){ // on fourth count, print players on
+			    String printStr - ""; 
+			    // list of players on square
+			    ArrayList<Player> playersOn = board[row][col].getPlayersOn();
+			    // for each player on square, print its symbol
+			    for ( int i = 0; i < playersOn.size(); i++ )
+				printStr += playersOn.get(i).getSymbol();
+			    //print added spaces to keep padding
+			    for ( int i = playersOn.size(); i < 4; i++ )
+				printStr += " ";
+			    System.out.print(printStr + "|");
+			} // close count 3
+			
+			else if ( count == 4 ) // on fifth count 
+			    System.out.print("-----"); //border
+		    } // close else instance of Landable
+		} // close loop through row 
+	    } // close loop 5 times
+	} // close top level loop
+    } // close method
+			    
+
     public void turn(Player p) {
     	// roll dice
     	// move player
