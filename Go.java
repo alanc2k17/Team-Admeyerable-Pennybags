@@ -14,5 +14,5 @@ public class Go extends Landable {
     returnString += "Landed on GO! Awarded $200.";
     return returnString;
   }
-  
+}  
   
