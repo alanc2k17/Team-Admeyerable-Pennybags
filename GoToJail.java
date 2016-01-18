@@ -13,3 +13,4 @@ public class GoToJail extends Landable {
   public String toString() {
     return "Looks like you got caught by the po-po! Peace out, dawg.";
   }
+}
