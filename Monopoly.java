@@ -203,9 +203,40 @@ public class Monopoly{
 			    
 
     public void turn(Player p) {
-    	// roll dice
+    	//check if player is in jail
+    	if (p._squareOn == Jail) //!!!!!
+    		// what to do?
+    	else {
     	// move player
-    	// player actions
+    	p.move();
+    	// if player lands on goToJail
+    	if (p._squareOn == goToJail) {
+    		p.setSquare(Jail); //!!!!!!!!!!!!!!!
+    	}	// if player lands on Chance/Community square
+    	else if (p._squareOn == Chance || p._squareOn == Community) {
+    		//follow instructions on card
+    	}
+    	else if (p._squareOn.getOwner() == Bank) {
+    		//offer buy options
+    	}
+    	else {	// if rent is more than amt of cash player has
+    		if (p._squareOn.getRent() > p._cashOnHand) {
+    			// if player has properties available for rent
+    			if (_propertiesOwned.isEmpty() == true) {
+    				// offer mortgage options
+    			}
+    			else {
+    				// take player out of game
+    			}
+    		}
+    		else {	//pay owner of property
+    			p.pay(p._squareOn);
+    			//offer more options to player
+    			//build house/hotel
+			//trade/mortgage
+    		}
+    		}
+    	}
     }
     
     public void play(){
