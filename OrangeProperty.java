@@ -24,6 +24,8 @@ public class OrangeProperty extends NormalProperty{
 	// set buy prices
     	_buyPrice1 = 180; 
     	_buyPrice2 = 200; 
+
+	setMortgageValue();
 	    
 	//set house cost
     	_houseCost = 100;

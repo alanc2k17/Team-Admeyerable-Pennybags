@@ -53,7 +53,7 @@ public class NormalProperty extends Property{
 	    returnString += "buy price: " + getBuyPrice();
 	}
 	else{
-	    returnString += "owner of " + _name + "(" + _initials + ") " + _owner + "\n"; 
+	    returnString += "owner of " + _name + "(" + _initials + ") " + _owner.getName() + "\n"; 
 	    returnString += "does the current owner have a monopoly in this color group?" + checkMonopoly() + "\n";
 	    returnString += "number of houses on this property: " + _houses + "\n";
 	    returnString += "current rent is: " + getRent() + "\n";

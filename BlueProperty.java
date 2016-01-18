@@ -24,6 +24,8 @@ public class BlueProperty extends NormalProperty{
 	// set buy prices
     	_buyPrice1 = 350; 
     	_buyPrice2 = 400; 
+
+	setMortgageValue();
 	
 	//set house cost
     	_houseCost = 200;

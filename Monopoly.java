@@ -14,6 +14,11 @@ public class Monopoly{
 	turns = 0;
     }
 
+    // clear screen method
+    public void clear(){
+	System.out.print("\033[H\033[2J");
+    }
+
     // usage: feed Keyboard.readString() into parameter s to allow user to select a number selection
     //        range checks that s is between 1-range, inclusive
     // returns int as the selection number
@@ -25,12 +30,12 @@ public class Monopoly{
 	}
 	catch (Exception e){ // if invalid input
 	    System.out.println("Invalid input! Please try again.");
-	    parseInput(Keyboard.readString(), range); //prompt user for another input, and parse it
+	    return parseInput(Keyboard.readString(), range); //prompt user for another input, and parse it
 	}
 	
 	if (retInt < 1 || retInt > range){ // if out of bounds
 	    System.out.println("Invalid range! Please try again.");
-	    parseInput(Keyboard.readString(), range); //prompt user for another input, and parse it
+	    return parseInput(Keyboard.readString(), range); //prompt user for another input, and parse it
 	}  
 	return retInt;
     }
@@ -64,62 +69,40 @@ public class Monopoly{
 	// instatiating brown properties
 	BrownProperty mediterranean = new BrownProperty("Mediterranean Avenue", "MD", false);
 	BrownProperty baltic = new BrownProperty("Baltic Avenue", "BA", true);
-	//mediterranean.addMember( baltic );
-	//baltic.addMember( meditteranean );
 
 	// instantiating light blue properties
 	LightBlueProperty oriental = new LightBlueProperty("Oriental Avenue", "OR", false);
 	LightBlueProperty vermont = new LightBlueProperty("Vermont Avenue", "VT", false);
 	LightBlueProperty connecticut = new LightBlueProperty("Connecticut Avenue", "CT", true);
-	//oriental.addMember(vermont); oriental.addMember(connecticut);
-	//vermont.addMember(oriental); vermont.addMember(connecticut);
-	//connecticut.addMember(oriental); connecticut.addMember(vermont);
 
 	// instantiating pink properties
 	PinkProperty stcharles = new PinkProperty("St. Charles Place", "SC", false);
 	PinkProperty states = new PinkProperty("States Avenue", "SA", false);
 	PinkProperty virginia = new PinkProperty("Virginia Avenue", "VA", true);
-	//stcharles.addMember(states); stcharles.addMember(virginia);
-	//states.addMember(stcharles); states.addMember(virginia);
-	//virginia.addMember(stcharles); virginia.addMember(states);
 
 	// instantiating orange properties
 	OrangeProperty stjames = new OrangeProperty("St. James Place", "SJ", false);
 	OrangeProperty tennessee = new OrangeProperty("Tennessee Avenue", "TN", false);
 	OrangeProperty newyork = new OrangeProperty("New York Avenue", "NY", true);
-	//stjames.addMember(tennessee); stjames.addMember(newyork);
-	//tennessee.addMember(stjames); tennessee.addMember(newyork);
-	//newyork.addMember(st.james); newyork.addMember(tennessee);
 
 	// instantiating red properties
 	RedProperty kentucky = new RedProperty("Kentucky Avenue", "KY", false);
 	RedProperty indiana = new RedProperty("Indiana Avenue", "IN", false);
 	RedProperty illinois = new RedProperty("Illinois Avenue", "IL", true);
-	//kentucky.addMember(indiana); kentucky.addMember(illinois);
-	//indiana.addMember(kentucky); indiana.addMember(illinois);
-	//illinois.addMember(indiana); illinois.addMember(kentucky);
 
 	// instantiating yellow properties
 	YellowProperty atlantic = new YellowProperty("Atlantic Avenue", "AL", false);
 	YellowProperty vetnor = new YellowProperty("Vetnor Avenue", "VN", false);
 	YellowProperty marvin = new YellowProperty("Marvin Gardens", "MG", true);
-	//atlantic.addMember(vetnor); atlantic.addMember(marvin);
-	//vetnor.addMember(atlantic); vetnor.addMember(marvin);
-	//marvin.addMember(atlantic); marvin.addMember(vetnor);
 
 	// instantiating green properties
 	GreenProperty pacific = new GreenProperty("Pacific Avenue", "PC", false);
 	GreenProperty northcarolina = new GreenProperty("North Carolina Avenue", "NC", false);
 	GreenProperty pennsylvania = new GreenProperty("Pennsylvania Avenue", "PA", true);
-	//pacific.addMember(northcarolina); pacific.addMember(pennsylvania);
-	//northcarolina.addMember(pacific); northcarolina.addMember(pennsylvania);
-	//pennsylvania.addMember(pacific); pennsylvania.addMember(northcarolina);
 
 	// instantiating blue properties
 	BlueProperty parkplace = new BlueProperty("Park Place", "PK", false);
 	BlueProperty boardwalk = new BlueProperty("Boardwalk", "BW", true);
-	//parkplace.addMember(boardwalk);
-	//boardwalk.addMember(parkplace);
 
 	// instantiate railroads
 	Railroad reading = new Railroad("Reading Railroad", "RR");
@@ -160,7 +143,7 @@ public class Monopoly{
 		{ virginia, null, null, null, null, null, null, null, null, null, income },
 		{ states, null, null, null, null, null, null, null, null, null, parkplace },
 		{ electric, null, null, null, null, null, null, null, null, null, luxury },
-		{ stjames, null, null, null, null, null, null, null, null, null, boardwalk },
+		{ stcharles, null, null, null, null, null, null, null, null, null, boardwalk },
 		{ jail, connecticut, vermont, income, oriental, reading, income, baltic, income, mediterranean, go }
 	    };
 
@@ -170,6 +153,7 @@ public class Monopoly{
     
     
     public void printBoard(){
+	clear();
 	for ( int row = 0; row < board.length; row++ ){
 	    // loop through each row 5 times, since each element consumes 5 lines
 	    for ( int count = 0; count < 5; count++ ){ 
@@ -248,7 +232,7 @@ public class Monopoly{
 	    ArrayList<Property> propertyList = p.getPropertiesOwned();
 	    // print properties
 	    for (int i = 0; i < propertyList.size(); i++){
-		System.out.println( (i+1+"") + propertyList.get(i).getName() + " $" + 
+		System.out.println( (i+1+" ") + propertyList.get(i).getName() + " $" + 
 				    propertyList.get(i).getMortgageValue() );
 	    }
 	    // choose property
@@ -307,26 +291,6 @@ public class Monopoly{
 	    else if (p.getSquareOn() instanceof Tax)
 		p.charge( ((Tax)p.getSquareOn()).getRent() ); // pay tax
 	    
-
-	    /*
-	    else {	// if rent is more than amt of cash player has
-    		if (p._squareOn.getRent() > p._cashOnHand) {
-		    // if player has properties available for rent
-		    if (_propertiesOwned.isEmpty() == true) {
-			// offer mortgage options
-		    }
-		    else {
-			// take player out of game
-		    }
-    		}
-    		else {	//pay owner of property
-		    p.pay(p._squareOn);
-		    //offer more options to player
-		    //build house/hotel
-		    //trade/mortgage
-    		}
-	    }
-	    */
     	}
     }
     
@@ -337,8 +301,8 @@ public class Monopoly{
 	while ( playerList.size() > 1 ){
 	    // for each player, call turn
 	    for (int i = 0; i < playerList.size(); i++){
-		turn( playerList.get(i) );
 		printBoard();
+		turn( playerList.get(i) );
 	    }
 	}
        

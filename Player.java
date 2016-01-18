@@ -173,7 +173,7 @@ public class Player {
     // used to pay rent
     public void pay(Property p) {
     	int fee = p.getRent();
-    	System.out.println(_name + "has paid " + fee + " to " + p.getOwner());
+    	System.out.println(_name + "has paid " + fee + " to " + p.getOwner().getName());
     	this.charge(fee);
     	p.getOwner().give(fee);
     }

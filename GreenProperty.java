@@ -25,6 +25,8 @@ public class GreenProperty extends NormalProperty{
     	_buyPrice1 = 300; 
     	_buyPrice2 = 320; 
 	    
+	setMortgageValue();
+
 	//set house cost
     	_houseCost = 200;
     }

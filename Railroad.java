@@ -27,7 +27,7 @@ public class Railroad extends Property{
 	    returnString += "buy price: " + getBuyPrice();
 	}
 	else{
-	    returnString += "owner of " + _name + "(" + _initials + ") =" + _owner + "\n";
+	    returnString += "owner of " + _name + "(" + _initials + ") =" + _owner.getName() + "\n";
 	    returnString += "current owner also owns " + railRoadsOwned() + " more railroad properties";
 	    returnString += "current rent is: " + getRent() + "\n";
 	}
