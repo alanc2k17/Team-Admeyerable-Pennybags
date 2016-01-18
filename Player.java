@@ -10,12 +10,11 @@ public class Player {
     protected int _diceRoll;
 
     public Player() {
-	_coordinate = new int[] { 0, 0 };
+	_coordinate = new int[] { 10, 10 };
 	_name = "nameless";
 	_symbol = "D";
 	_propertiesOwned = new ArrayList<Property>();
 	_cashOnHand = 1500;
-	
     }
     
     public Player(String newName, String symbol) {
@@ -42,7 +41,7 @@ public class Player {
 	return _symbol;
     }
 
-    public int getCoords() {
+    public int[] getCoords() {
 	return _coordinate;
     }
     
@@ -60,6 +59,18 @@ public class Player {
     
     public int getDiceRoll(){
 	return _diceRoll;
+    }
+
+    // removes Property p from _propertiesOwned
+    // returns property removed
+    public Property removeProperty(Property p){
+	_propertiesOwned.remove(p);
+	return p;
+    }
+
+    // gives Property p to player
+    public void giveProperty(Property p){
+	_propertiesOwned.add(p);
     }
 
     private void setCash(int newCashValue) {
@@ -99,7 +110,11 @@ public class Player {
     
     // moves player around the board, adjusting coordinates as necessary
     // coordinates corresponds with the indicies in board
+    // also gives pass go cash to player
     public void move( Landable[][] board ) {
+	if (_squareOn != null)
+	    _squareOn.removePlayerOnSquare(this);
+
 	_diceRoll = (int)(Math.random() * 6) + 1;
 	_diceRoll += (int)(Math.random() * 6) + 1;
 	// translate dice roll into change in coordinates, corresponding w/ board
@@ -110,15 +125,17 @@ public class Player {
 		_coordinate[1] = 10;
 	    }
 	    if ( _coordinate[0] > 10 ){ // player leaves right column to bottom row
-		_coordinate[1] -= (coordinate[0] - 10);
+		_coordinate[1] -= (_coordinate[0] - 10);
 		_coordinate[0] = 10;
+		give( 200 ); // pass Go cash
 	    }
 	}
 	else if ( _coordinate[1] == 10 ){ //right column
 	    _coordinate[0] += _diceRoll;
 	    if ( _coordinate[0] > 10 ){ // player leaves right column to bottom row
-		_coordinate[1] -= (coordinate[0] - 10);
+		_coordinate[1] -= (_coordinate[0] - 10);
 		_coordinate[0] = 10;
+		give( 200 ); // pass Go cash
 	    }
 	    if ( _coordinate[1] < 0 ){ //player leaves bottom row to left column
 		_coordinate[0] += _coordinate[1];
@@ -148,10 +165,12 @@ public class Player {
 	    }
 	}
 	System.out.println( _name + " has rolled a: " + _diceRoll);
-	_squareOn = board[ _coordinate[0], _coordinate[1] ];
+	_squareOn = board[ _coordinate[0] ][ _coordinate[1] ];
+	_squareOn.setPlayerOnSquare(this);
 	System.out.println( _name + " has landed on: " + _squareOn );
     }
 
+    // used to pay rent
     public void pay(Property p) {
     	int fee = p.getRent();
     	System.out.println(_name + "has paid " + fee + " to " + p.getOwner());
@@ -159,7 +178,17 @@ public class Player {
     	p.getOwner().give(fee);
     }
 
+    // used to buy a property at list price
+    // only called if p is ownerless
+    // returns true if purchase successful; false otherwise
     public boolean buy(Property p){
+	// enough money to pay
+	if ( getCash() >= p.getBuyPrice() ){
+	    charge( p.getBuyPrice() ); //charge player
+	    p.setOwner(this); //set owner to this player
+	    this.giveProperty(p);
+	    return true;
+	}
 	return false;
     }
     
@@ -185,5 +214,5 @@ public class Player {
 	return p.unMortgage();
     }
 }
-    //METHODS LEFT: move(); buildHotel(); requestTrade(); trade()
+
     

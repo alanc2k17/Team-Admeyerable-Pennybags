@@ -3,15 +3,12 @@ import java.util.ArrayList;
 public abstract class Property extends Landable {
     protected Player _owner;
     protected ArrayList<Player> _playersOnProperty;
-    // _groupMembers used to determine monopoly or rent
-    protected ArrayList<Property> _groupMembers;
     protected boolean _mortgage;
-  
+    
     // default constructor
     public Property() {
 	super(); //set default vals for name, initials, coord
 	_playersOnProperty = new ArrayList<Player>();
-	_groupMembers = new ArrayList<Property>();
 	_mortgage = false;
     }
   
@@ -19,17 +16,21 @@ public abstract class Property extends Landable {
     public Property(String name, String initials) {
 	super(name, initials); //use super constructor to set name, inits, coord
 	_playersOnProperty = new ArrayList<Player>();
-	_groupMembers = new ArrayList<Property>();
 	_mortgage = false;
     }
   
     // not all properties have same rent determination process
     public abstract int getRent();
 
+    // abstract b/c railroads/utilities have one buy price, but normalproperties have two
+    public abstract int getBuyPrice();
+
     // abstract b/c in buyPrice is defined differently in its three subclasses
     public abstract boolean mortgage();
 
     public abstract boolean unMortgage();
+
+    public abstract int getMortgageValue();
 
     // abstract b/c in one subclass, it needs to print houses
     // in another, it needs not
@@ -51,10 +52,10 @@ public abstract class Property extends Landable {
 	return _mortgage;
     }
 
-    // takes one Property parameter, p, and adds it to _groupMembers
+    // add a property to the _groupMembers arraylsit
     // _groupMembers used to determine monopoly or rent
-    public void addMembers(Property p) {
-	_groupMembers.add(p); 
-    }
+    //public void addMember(Property p) {
+    //	_groupMembers.add(p);
+    //}
   
 }

@@ -21,9 +21,15 @@ public class Utility extends Property{
     //override toString; used to print Object to board
     public String toString(){
     	String returnString = "";
-	returnString += "owner of " + _name + "(initials: " + _initials + ") =" + _owner + "\n";
-	returnString += "current owner also owns " + utilitiesOwned() + " more utility properties";
-	returnString += "current rent is: " + getRent() + "\n";
+	if (_owner == null){
+	    returnString += "owner of " + _name + "(" + _initials + ") = No Owner\n";
+	    returnString += "buy price: " + getBuyPrice();
+	}
+	else{
+	    returnString += "owner of " + _name + "(" + _initials + ") =" + _owner + "\n";
+	    returnString += "current owner also owns " + utilitiesOwned() + " more utility properties";
+	    returnString += "current rent is: " + getRent() + "\n";
+	}
 	returnString += "mortgage value is: " + _mortgageValue;
 	return returnString;
     }
@@ -31,6 +37,10 @@ public class Utility extends Property{
     // accessor method to get buy price
     public int getBuyPrice(){
 	return BUYPRICE;
+    }
+
+    public int getMortgageValue(){
+	return _mortgageValue;
     }
 
     //sets mortgage value based on BUYPRICE
@@ -49,6 +59,7 @@ public class Utility extends Property{
 	    _mortgage = true; 
 	    return true;
 	}
+	System.out.println("Sorry! This property is already mortgaged. :(");
 	return false;
     }
 
@@ -64,15 +75,15 @@ public class Utility extends Property{
 	    _mortgage = false;
 	    return true;
 	}
+	System.out.println("Yay! There's no need to unmortgage this property.");
 	return false;
     }
 
     //returns int detailing number of Utilities _owner owns
     public int utilitiesOwned(){
 	int numUtilities = 0;
-	ArrayList<Property> ownedProperties = getOwner().getPropertiesOwned();
-	for ( int i = 0; i < ownedProperties.size(); i++){ //loop through owner's properties
-	    if ( ownedProperties.get(i) instanceof Utility ){ //if that property is railroad
+	for ( int i = 0; i < getOwner().getPropertiesOwned().size(); i++){ //loop through owner's properties
+	    if ( getOwner().getPropertiesOwned().get(i) instanceof Utility ){ //if that property is railroad
 		numUtilities += 1;
 	    }
 	}

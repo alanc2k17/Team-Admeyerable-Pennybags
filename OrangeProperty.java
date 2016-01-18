@@ -17,6 +17,9 @@ public class OrangeProperty extends NormalProperty{
 	// set rent prices, index corresponds w/ # of houses
     	_rent1 = new int[] {14, 70, 200, 550, 700, 900}; //st. james place | tennessee ave
 	_rent2 = new int[] {16, 80, 220, 600, 800, 1000}; //ny ave
+
+	// number of other properties in group
+	_others = 3;
 	    
 	// set buy prices
     	_buyPrice1 = 180; 

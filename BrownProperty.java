@@ -17,6 +17,9 @@ public class BrownProperty extends NormalProperty{
 	// set rent prices, index corresponds w/ # of houses
 	_rent1 = new int[] {6, 30, 90, 270, 400, 550}; //mediterranean
 	_rent2 = new int[] {8, 40, 100, 300, 450, 600}; //baltic
+
+	// number of other properties in group
+	_others = 2;
 	
 	// set buy prices
 	_buyPrice1 = 100; 

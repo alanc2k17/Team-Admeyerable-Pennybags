@@ -18,6 +18,9 @@ public class RedProperty extends NormalProperty{
     	_rent1 = new int[] {18, 90, 250, 700, 875, 1050}; //kentucky ave | indiana ave
 	_rent2 = new int[] {20, 100, 300, 750, 925, 1100}; //illinois ave
 	    
+	// number of other properties in group
+	_others = 3;
+
 	// set buy prices
     	_buyPrice1 = 220; 
     	_buyPrice2 = 240; 

@@ -18,6 +18,8 @@ public class NormalProperty extends Property{
     protected int _houseCost;
     //true if this's owner has monopoly on color group
     protected boolean _monopoly; 
+    //number of other properties with same color group needed for monopoly
+    protected int _others;
 
     //true if this is expensive property of color group
     protected boolean _expensive; 
@@ -30,6 +32,8 @@ public class NormalProperty extends Property{
     public NormalProperty(){
 	super();
 	_expensive = false;
+	_houses = 0;
+	setMortgageValue();
     }
 
     // overloaded constructor
@@ -37,15 +41,23 @@ public class NormalProperty extends Property{
     public NormalProperty(String name, String initials, boolean expensive){
 	super(name, initials);
 	_expensive = expensive;
+	_houses = 0;
+	setMortgageValue();
     }
     
     // override toString to return info about this class
     public String toString(){
 	String returnString = "";
-	returnString += "owner of " + _name + "(initials: " + _initials + ") =" + _owner + "\n";
-	returnString += "does the current owner have a monopoly in this color group?" + checkMonopoly() + "\n";
-	returnString += "number of houses on this property: " + _houses + "\n";
-	returnString += "current rent is: " + getRent() + "\n";
+	if ( _owner == null ){
+	    returnString += "owner of " + _name + "(" + _initials + ") = No Owner\n";
+	    returnString += "buy price: " + getBuyPrice();
+	}
+	else{
+	    returnString += "owner of " + _name + "(" + _initials + ") " + _owner + "\n"; 
+	    returnString += "does the current owner have a monopoly in this color group?" + checkMonopoly() + "\n";
+	    returnString += "number of houses on this property: " + _houses + "\n";
+	    returnString += "current rent is: " + getRent() + "\n";
+	}
 	returnString += "mortgage value is: " + getMortgageValue();
 	return returnString;
     }
@@ -117,6 +129,14 @@ public class NormalProperty extends Property{
     // returns true if Player (owner) has a monopoly on this color
     // false otherwise
     public boolean checkMonopoly(){
+	int count = 0;
+	for (int i = 0; i < getOwner().getPropertiesOwned().size(); i++){ // loop through owner properties
+	    if ( this.getClass().equals( getOwner().getPropertiesOwned().get(i) ) ) //if same class
+		count += 1;
+	}
+	return count == _others;
+	    
+	/*
 	ArrayList<Property> ownerProperties = getOwner().getPropertiesOwned();
 
 	// for each color group member property
@@ -127,6 +147,7 @@ public class NormalProperty extends Property{
 	    }
 	}
 	return true;
+	*/
     }
 
     // returns the mortgage value of property, depending on whether it is expensive or not
@@ -135,6 +156,12 @@ public class NormalProperty extends Property{
 	    return _mortgageValue2;
 	else
 	    return _mortgageValue1;
+    }
+
+    // sets mortgage value, equal to 1/2 buy price
+    public void setMortgageValue(){
+	_mortgageValue1 = (int)(_buyPrice1 * .5);
+	_mortgageValue2 = (int)(_buyPrice2 * .5);
     }
 
     // mortgages the property
@@ -148,6 +175,7 @@ public class NormalProperty extends Property{
 	    _mortgage = true;
 	    return true;
 	}
+	System.out.println("Sorry! This was already mortgaged. :( ");
 	return false;
     }
 
@@ -168,6 +196,7 @@ public class NormalProperty extends Property{
 	    _mortgage = false;
 	    return true;
 	}
+	System.out.println("Yay! There's no need to unmortgage this property.");
 	return false;
     }
 	    
