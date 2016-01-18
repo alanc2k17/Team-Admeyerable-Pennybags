@@ -82,6 +82,7 @@ public class Player {
     public void move() {
 	_diceRoll = (int)(Math.random() * 6) + 1;
 	_diceRoll += (int)(Math.random() * 6) + 1;
+	coordinate = (coordinate + _diceRoll) % 40
 	System.out.println( _name + " has rolled a: " + getDiceRoll());
     }
 
@@ -92,6 +93,10 @@ public class Player {
     	System.out.println(_name + "has paid " + fee + " to " + p.getOwner());
     	System.out.println(_name + " now has " + getCash());
     	System.out.println(p.getOwner() + " now has " + p.getOwner().getCash());
+    }
+
+    public boolean buy(Property p){
+	return false;
     }
     
     // builds amt number of houses on NormalProperty p

@@ -107,13 +107,23 @@ public class Monopoly{
 	Tax income = new Tax("Income Tax", 200);
 	Tax luxury = new Tax("Luxury Tax", 100);
 
+	// instantiate jail space
+	Jail jail = new Jail();
 	
+	// instantiate go to jail space
+	GoToJail gotojail = new GoToJail();
+	
+	// instantiate go space
+	Go go = new Go();
+
+	// instantiate free parking
+	FreeParking freeparking = new FreeParking();
 	
 	// initialize board
 	// nullls will appear as spaces when board is printed
 	board = new Landable[][] 
 	    { 
-		{ income, kentucky, income, indiana, illinois, borail, atlantic, vetnor, water, marvin, income },
+		{ freeparking, kentucky, income, indiana, illinois, borail, atlantic, vetnor, water, marvin, gotojail },
 		{ newyork, null, null, null, null, null, null, null, null, null, pacific },
 		{ tennessee, null, null, null, null, null, null, null, null, null, northcarolina },
 		{ income, null, null, null, null, null, null, null, null, null, income },
@@ -123,7 +133,7 @@ public class Monopoly{
 		{ states, null, null, null, null, null, null, null, null, null, parkplace },
 		{ electric, null, null, null, null, null, null, null, null, null, luxury },
 		{ stjames, null, null, null, null, null, null, null, null, null, boardwalk },
-		{ income, connecticut, vermont, income, oriental, reading, income, baltic, income, mediterranean, income }
+		{ jail, connecticut, vermont, income, oriental, reading, income, baltic, income, mediterranean, go }
 	    };
 
     	// initialize players 
@@ -204,38 +214,38 @@ public class Monopoly{
 
     public void turn(Player p) {
     	//check if player is in jail
-    	if (p._squareOn == Jail) //!!!!!
-    		// what to do?
+    	if (p.getSquareOn() instanceof Jail) //!!!!!
+	    // what to do?
     	else {
-    	// move player
-    	p.move();
-    	// if player lands on goToJail
-    	if (p._squareOn == goToJail) {
-    		p.setSquare(Jail); //!!!!!!!!!!!!!!!
-    	}	// if player lands on Chance/Community square
-    	else if (p._squareOn == Chance || p._squareOn == Community) {
+	    // move player
+	    p.move();
+	    // if player lands on goToJail
+	    if (p.getSquareOn() == goToJail) {
+    		p.goTo(Jail); //!!!!!!!!!!!!!!!
+	    }	// if player lands on Chance/Community square
+	    else if (p._squareOn == Chance || p._squareOn == Community) {
     		//follow instructions on card
-    	}
-    	else if (p._squareOn.getOwner() == Bank) {
+	    }
+	    else if (p._squareOn.getOwner() == null) {
     		//offer buy options
-    	}
-    	else {	// if rent is more than amt of cash player has
+	    }
+	    else {	// if rent is more than amt of cash player has
     		if (p._squareOn.getRent() > p._cashOnHand) {
-    			// if player has properties available for rent
-    			if (_propertiesOwned.isEmpty() == true) {
-    				// offer mortgage options
-    			}
-    			else {
-    				// take player out of game
-    			}
+		    // if player has properties available for rent
+		    if (_propertiesOwned.isEmpty() == true) {
+			// offer mortgage options
+		    }
+		    else {
+			// take player out of game
+		    }
     		}
     		else {	//pay owner of property
-    			p.pay(p._squareOn);
-    			//offer more options to player
-    			//build house/hotel
-			//trade/mortgage
+		    p.pay(p._squareOn);
+		    //offer more options to player
+		    //build house/hotel
+		    //trade/mortgage
     		}
-    		}
+	    }
     	}
     }
     
