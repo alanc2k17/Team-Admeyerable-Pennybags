@@ -1,3 +1,9 @@
+2015-01-18
+- Calvin: implemented basic parts of turn based mechanism; debugged; reworked some Property architecture
+
+2015-01-17
+- Calvin: debugged
+
 2015-01-16
 - Alan and Calvin: decided on new coordinate system
 - Calvin: edited & revised parts of Player
