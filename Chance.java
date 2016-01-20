@@ -38,34 +38,63 @@ public class Chance extends Landable {
       System.out.println("Oops! Something went wrong, we have a team of experienced monkeys on the case!");
     else {
       if (n = 0) {
-        //do something
+        //advance to go
+        System.out.println("Advance to Go! (Collect $200)");
+        p.give(200);
+        p.setSquareOn(go, go); //???? is this a real thing
       }
       if (n = 1) {
-        //do something
+        //bank pays you dividend of $50
+        System.out.println("Bank pays you dividend of $50");
+        p.give(50);
       }
       if (n = 2) {
-        //do something
+        //go to jail
+        System.out.println("Go to Jail! :(");
+        p.setJail(true);
+        p.setSquareOn(jail, jail); //???? again, 
       }
       if (n = 3) {
-        //do something
+        //take a walk on the boardwalk
+        System.out.println("Take a walk on the Boardwalk! (Advance token to Boardwalk)");
+        p.setSquareOn(boardwalk, boardwalk);
       }
       if (n = 4) {
-        //something
+        //you have been elected chairman of the board
+        System.out.println("You have been elected Chairman of the Board! (Pay each player $50)");
+        int ctr = 0
+        for (Player pl : playerList) {
+          pl.give(50);
+          ctr++;
+        }
+        p.charge(50 * ctr);
       }
       if (n = 5) {
-        //something
+        //your building and loan matures
+        System.out.println("Your building {and} loan matures! (Collect $150)");
+        p.give(150);
       }
       if (n = 6) {
-        //something
+        //pay poor tax
+        System.out.println("Fined for doing 56 in a 55! (Fined $15) - Drive safe!");
+        p.charge(15);
       }
       if (n = 7) {
-        //something
+        //win a crossword competition
+        System.out.println("You have won a crossword competition! (Collect $100)");
+        p.give(100);
       }
       if (n = 8) {
-        //something
+        //make general repairs on buildings
+        System.out.println("Make general repairs on all your property! (For each house pay $25, each hotel $100");
+        //need help
       }
       if (n = 9) {
-        //something
+        //advance to illinois ave
+        System.out.println("Advance to Illinois Ave! (If you pass Go, collect $200");
+        if (p._coordinate[0] > 0 && p._coordinate[1] > 4)
+          p.pay(200);
+        p.setSquareOn(go, go);
       }
     }
   }
