@@ -8,7 +8,8 @@ public class Player {
     protected int _cashOnHand;
     protected Landable _squareOn;
     protected int _diceRoll;
-
+    protected boolean _inJail;
+    
     public Player() {
 	_coordinate = new int[] { 10, 10 };
 	_name = "nameless";
@@ -60,7 +61,15 @@ public class Player {
     public int getDiceRoll(){
 	return _diceRoll;
     }
+    
+    public boolean inJail() {
+    	return _inJail;
+    }
 
+    public void setJail(boolean b) {
+    	_inJail = b;
+    }
+    
     // removes Property p from _propertiesOwned
     // returns property removed
     public Property removeProperty(Property p){
