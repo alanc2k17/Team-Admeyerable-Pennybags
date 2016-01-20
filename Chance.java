@@ -1,39 +1,37 @@
 public class Chance extends Landable {
-    private int[] _deck = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    private static int[] _deck = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     
     // default constructor
     public Chance() {
-	super();
+	super("Chance", "CH");
+	shuffle();
     }
     
-    //overloaded constructor
-    public Chance(String name, String initials) {
-	super(name, initials);
-    }
-    
-  //randomly rearrange elements of an array (taken [and modified] from InsertionSort.java -- Thanks Mr. Brown!)
-    public static void shuffle( int[] a ) {
+    //randomly rearrange elements of an array (taken [and modified] from InsertionSort.java -- Thanks Mr. Brown!)
+    public void shuffle() {
 	int randomIndex;
-	for( int i = a.size-1; i > 0; i-- ) {
+	for( int i = _deck.length-1; i > 0; i-- ) {
 	    //pick an index at random
 	    randomIndex = (int)( (i+1) * Math.random() );
 	    //swap the values at position i and randomIndex
-	    int tmp = a[i];
-	    a[i] = a[randomIndex];
-	    a[randomIndex] = tmp; 
+	    int tmp = _deck[i];
+	    _deck[i] = _deck[randomIndex];
+	    _deck[randomIndex] = tmp; 
 	}
     }
     
     //moves first element in _deck to the end of the array
     //effectively moving top card to bottom of deck
-  public void moveToBottom() {
-      int tmp = a[i];
-      a[i] = a[9];
-      a[9] = tmp;
-  }
+    public void moveToBottom() {
+	int tmp = a[0];
+	a[0] = a[9];
+	a[9] = tmp;
+    }
     
     //*reads* card and does what it says
-    public void execute(int n) {
+    public void execute(Player p, Landable[][] board) {
+	int n = _deck[0];
+
 	if (n < 0 || n > 9)
 	    System.out.println("Oops! Something went wrong, we have a team of experienced monkeys on the case!");
 	else {
@@ -91,11 +89,13 @@ public class Chance extends Landable {
 	    }
 	    if (n == 9) {
 		//advance to illinois ave
-        System.out.println("Advance to Illinois Ave! (If you pass Go, collect $200");
-        if (p._coordinate[0] > 0 && p._coordinate[1] > 4)
-	    p.pay(200);
-        p.setSquareOn(go, go);
+		System.out.println("Advance to Illinois Ave! (If you pass Go, collect $200");
+		if (p.getCoordinate()[0] > 0 && p.getCoordinate()[1] > 4)
+		    p.pay(200);
+		p.setSquareOn(new int[] {0,4}, );
 	    }
+
+	    moveToBottom();
 	}
     }
     

@@ -51,7 +51,7 @@ public class Player {
 	return _cashOnHand;
     }
     
-    public ArrayList getPropertiesOwned() {
+    public ArrayList<Property> getPropertiesOwned() {
 	return _propertiesOwned;
     }
     
@@ -95,6 +95,7 @@ public class Player {
 	System.out.println( _name + " now has $" + getCash());
     }
     
+    /*
     // sets the square the player is on
     // used for go to jail and chance cards
     // updates player coordinates
@@ -110,7 +111,14 @@ public class Player {
 	    }
 	}
     }
+    */
     
+    // coord details new coordinates
+    public void setSquareOn(int[] coord, Landable[][] board) {
+	_squareOn = board[coord[0], coord[1]];
+	_coordinate = coord;
+    }
+	
     // takes amt of money away from player
     public int charge(int amt) {
 	setCash( getCash() - amt );
@@ -121,7 +129,6 @@ public class Player {
     // gives amt of money to p;layer
     public int give(int amt) {
 	setCash( getCash() + amt );
-	System.out.println( _name + " now has $" + _cashOnHand );
 	return getCash();
     }
     
@@ -230,6 +237,18 @@ public class Player {
     public boolean unMortgage(Property p) {
 	return p.unMortgage();
     }
+
+    // returns true if player still has properties he can mortgage
+    public boolean canMortgage(){
+	for ( Property prop : getPropertiesOwned() ){
+	    if (! prop.isMortgaged() )
+		return false;
+	}
+	return true;
+    }
+
+    
+
 }
 
     

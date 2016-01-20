@@ -68,7 +68,7 @@ public class Monopoly{
 	// instantiate normal properties
 	// instatiating brown properties
 	BrownProperty mediterranean = new BrownProperty("Mediterranean Avenue", "MD", false);
-	BrownProperty baltic = new BrownProperty("Baltic Avenue", "BA", true);
+	BrownProperty balctic = new BrownProperty("Baltic Avenue", "BA", true);
 
 	// instantiating light blue properties
 	LightBlueProperty oriental = new LightBlueProperty("Oriental Avenue", "OR", false);
@@ -249,24 +249,42 @@ public class Monopoly{
     }
     public void jailTurn(Player p) {
 	p.setJailTurns(p.getJailTurns() + 1); //add one to _jailTurns
+	System.out.println("Would you like to bail? 1:yes\t2:no");
+	int bailout = parseInput(Keyboard.readString());
+	if ( bailout == 1 ){
+	    if ( p.getCash() >= 50 )
+		p.
+	}
+	else if ( bailout == 2 && p.getJailTurns() == 3 ){
+	}
+
+	/*
     	//offer options to pay bail
-    	if (p.getCash() > 50) {
+    	if (p.getCash() >= 50) {
     	    System.out.println("Would you like to pay bail? y:1/tn:2");
    	    int input = parseInt(Keyboard.readString());
    	    if (input == 1) {
    	    	p.setJailTurns(0);
    	    	p.setJail(false);
    	    	p.charge(50);
+		return;
    	    }
-   	    else 
-   	    	return;
-    	}
-    	else if (player has properties available for mortgage) {
+	}
+	if ( p.getCash() >= 50 && p.getJailTurns() == 3 ){
+	    p.setJailTurns(0);
+	    p.setJail(false);
+	    p.charge(50);
+	    System.out.println("Your lawyer forcefully bailed you out... at your own expense. xD ");
+	}
+    	else if ( p.canMortgage() ){
     	    offerMortgageOptions(p);
     	}
-    	else if (p.getJailTurns() == 3) {
-    	    //auto-bail out
-    	}
+    
+	if (p.getJailTurns() == 3 && p.getCash() < 50 ) {
+	    playerList.remove(p);
+	    // bye
+	}
+	*/
     }
 
     public void turn(Player p) {
@@ -282,6 +300,9 @@ public class Monopoly{
 	    //else if (p._squareOn == Chance || p._squareOn == Community) {
     		//follow instructions on card
 	    //}
+
+	    else if (p.getSquareOn() instanceof Chance)
+		p.getSquareOn().execute(p, _board);
 
 	    else if (p.getSquareOn() instanceof Property){
 		// typecast
@@ -312,6 +333,9 @@ public class Monopoly{
 	    else if (p.getSquareOn() instanceof Tax)
 		p.charge( ((Tax)p.getSquareOn()).getRent() ); // pay tax
 	    
+	    //offer general options
+
+	    String end = Keyboard.readString();
     	}
     }
     
