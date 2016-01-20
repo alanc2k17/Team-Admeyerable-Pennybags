@@ -3,33 +3,29 @@ public class Community extends Landable {
   
   // default constructor
   public Community() {
-    super();
+	  super("Community", "CM");
+	  shuffle();
   }
-  
-  //overloaded constructor
-  public Community(String name, String initials) {
-    super(name, initials);
-  }
-  
+    
   //randomly rearrange elements of an array (taken [and modified] from InsertionSort.java -- Thanks Mr. Brown!)
-  public static void shuffle( int[] a ) {
-    int randomIndex;
-    for( int i = a.size-1; i > 0; i-- ) {
-      //pick an index at random
-      randomIndex = (int)( (i+1) * Math.random() );
-      //swap the values at position i and randomIndex
-      int tmp = a[i];
-      a[i] = a[randomIndex];
-      a[randomIndex] = tmp; 
-    }
+  public void shuffle() {
+	  int randomIndex;
+	  for( int i = _deck.length-1; i > 0; i-- ) {
+	      //pick an index at random
+	      randomIndex = (int)( (i+1) * Math.random() );
+	      //swap the values at position i and randomIndex
+	      int tmp = _deck[i];
+	      _deck[i] = _deck[randomIndex];
+	      _deck[randomIndex] = tmp; 
+	  }
   }
-  
+    
   //moves first element in _deck to the end of the array
   //effectively moving top card to bottom of deck
   public void moveToBottom() {
-    int tmp = a[i];
-    a[i] = a[9];
-    a[9] = tmp;
+	  int tmp = a[0];
+	  a[0] = a[9];
+	  a[9] = tmp;
   }
   
   //*reads* card and does what it says
@@ -38,7 +34,7 @@ public class Community extends Landable {
       System.out.println("Oops! Something went wrong, we have a team of experienced monkeys on the case!");
     else {
       if (n = 0) {
-        //do something
+        //bank error in your favor 
       }
       if (n = 1) {
         //do something
