@@ -265,9 +265,10 @@ public class Monopoly{
     	    offerMortgageOptions(p);
     	}
     	else if (p.getJailTurns() == 3) {
-    	    //declare player bankrupt
+    	    //auto-bail out
     	}
     }
+
     public void turn(Player p) {
     	if (p.inJail() == true) {
     	    jailTurn(p);
@@ -281,6 +282,7 @@ public class Monopoly{
 	    //else if (p._squareOn == Chance || p._squareOn == Community) {
     		//follow instructions on card
 	    //}
+
 	    else if (p.getSquareOn() instanceof Property){
 		// typecast
 		Property squareOn = ((Property) (p.getSquareOn()));
