@@ -269,10 +269,9 @@ public class Monopoly{
     	}
     }
     public void turn(Player p) {
-    	//check if player is in jail
-    	if (p.getSquareOn() instanceof Jail){ //!!!!!
-	    System.out.println("you're in jail"); //WE NEED MORE STUFF HERE
-	}
+    	if (p.inJail() == true) {
+    	    jailTurn(p);
+    	}
     	else { //if not in jail
 	    p.move(board);
 
