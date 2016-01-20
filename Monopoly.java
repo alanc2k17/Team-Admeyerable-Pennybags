@@ -247,7 +247,27 @@ public class Monopoly{
 		continueMortgage = false;
 	}	
     }
-
+    public void jailTurn(Player p) {
+	p.setJailTurns(p.getJailTurns() + 1); //add one to _jailTurns
+    	//offer options to pay bail
+    	if (p.getCash() > 50) {
+    	    System.out.println("Would you like to pay bail? y:1/tn:2");
+   	    int input = parseInt(Keyboard.readString());
+   	    if (input == 1) {
+   	    	p.setJailTurns(0);
+   	    	p.setJail(false);
+   	    	p.charge(50);
+   	    }
+   	    else 
+   	    	return;
+    	}
+    	else if (player has properties available for mortgage) {
+    	    offerMortgageOptions(p);
+    	}
+    	else if (p.getJailTurns() == 3) {
+    	    //declare player bankrupt
+    	}
+    }
     public void turn(Player p) {
     	//check if player is in jail
     	if (p.getSquareOn() instanceof Jail){ //!!!!!
