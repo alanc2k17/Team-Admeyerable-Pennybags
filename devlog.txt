@@ -1,3 +1,6 @@
+2015-01-19
+- Alan: wrote Chance class and jailTurn() in Monopoly class
+
 2015-01-18
 - Calvin: implemented basic parts of turn based mechanism; debugged; reworked some Property architecture
 
