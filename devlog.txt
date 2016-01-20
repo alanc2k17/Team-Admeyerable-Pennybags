@@ -1,3 +1,7 @@
+2015-01-20
+Calvin and Alan: deliberated on poorly written jailTurn()
+Alan: rewrote poorly written jailTurn() (is now properly written), completed class Community
+
 2015-01-19
 - Alan: wrote Chance class and jailTurn() in Monopoly class
 
