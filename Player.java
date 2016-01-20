@@ -9,6 +9,7 @@ public class Player {
     protected Landable _squareOn;
     protected int _diceRoll;
     protected boolean _inJail;
+    protected int _jailTurns;
     
     public Player() {
 	_coordinate = new int[] { 10, 10 };
@@ -62,6 +63,13 @@ public class Player {
 	return _diceRoll;
     }
     
+    public int getJailTurns() {
+    	return _jailTurns;
+    }
+    
+    public void setJailTurns(int i) {
+    	_jailTurns = i;
+    }
     public boolean inJail() {
     	return _inJail;
     }
@@ -69,7 +77,7 @@ public class Player {
     public void setJail(boolean b) {
     	_inJail = b;
     }
-    
+
     // removes Property p from _propertiesOwned
     // returns property removed
     public Property removeProperty(Property p){
