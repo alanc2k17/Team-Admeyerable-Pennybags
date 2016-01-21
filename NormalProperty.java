@@ -67,6 +67,11 @@ public class NormalProperty extends Property{
 	return _houses;
     }
 
+    // accessor; returns cost of hosues
+    public int getHouseCost(){
+	return _houseCost;
+    }
+
     // accessor; gets buy price
     public int getBuyPrice(){
 	if (_expensive)

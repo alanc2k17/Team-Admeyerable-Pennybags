@@ -264,7 +264,35 @@ public class Monopoly{
 		continueMortgage = false;
 	}	
     }
-    
+
+    /* METHOD IN PROGRESS
+    // offers player options at the end of turn
+    public void playerOptions(Player p){
+	System.out.println("1. Build houses\n
+2. Sell houses\n
+3. Morgage property\n
+4. Unmortgage property\n
+5. End turn\n
+6. Initiate a trade. NOT IMPLEMENTED\n
+7. Save and exit game. NOT IMPLEMENTED\n ");
+	int choice = parseInput(Keyboard.readString(), 7);
+	while (choice != 5){
+	    if (choice == 1){
+		// print info about properties to build houses on
+		for ( int i = 0; i < p.getPropertiesOwned().size(); i++ ){
+		    if ( p.getPropertiesOwned().get(i) instanceof NormalProperty ){
+			NormalProperty tmp = (NormalProperty)(p.getPropertiesOwned().get(i));
+			System.out.print( i + 1 );
+			System.out.print( ". " + tmp.getName() );
+			System.out.print( "\tCost: " + tmp.getHouseCost() );
+			System.out.print( "\tHouses: " + tmp.getHouses() + "\n");
+		    }
+		}
+		System.out.println();
+	    }
+    }
+    */
+	    
     public void jailTurn(Player p) {
 	//check if player can afford bail
 	if (p.getCash() >= 50) {
@@ -297,22 +325,6 @@ public class Monopoly{
 		p.setJailTurns(p.getJailTurns() + 1);
 	}
 	
-	/*	    
-	//if player cant afford bail
-	else if ( p.getCash() < 50 && 
-	    //if player has properties available for mortgage
-	    if (p.canMortgage()) {
-		if (p.getJailTurns() > 2)
-		    System.out.println("You better watch out! Last chance to mortgage before you lose!");
-		offerMortgageOptions(p);
-	    }
-	    p.setJailTurns(p.getJailTurns() + 1);
-	    //player is bankrupt :c
-	    if (p.getJailTurns() > 3) {
-		playerList.remove(p);
-	    }
-	}
-	*/
     }
 
     public void turn(Player p) {
