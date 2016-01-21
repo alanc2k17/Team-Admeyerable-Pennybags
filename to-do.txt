@@ -1,30 +1,12 @@
 Team Admeyerable Pennybags -- Alan Chen and Calvin Vuong
 Monopoly: Project To-Do List
 
-#1 TOP PRIORITIES (in order)
-- Alan: overhaul board architecture (Fri-Sat)
-  = easily allows player to move; 
-  = allows easy linkage between player and property; 
-  = allows easy printing
+1. Alan and Calvin: implement ability for Player to choose options after rolling (e.g. mortgaging, building houses) (Thur-Fri)
+2. Calvin           : restructure the board printing so that it fits into the screen
+3. Alan and Calvin: implement trade and auctioning mechanisms (Thur-Fri)
+4. Alan and Calvin: implement game saving system using Java I/O (Sat)
 
-- Calvin: finish writing essential classes (Fri-Sat)
-  = write and implement Player.java
-  = implement Bank.java
-  = fix getRent() in Utility upon completion of Player
-
-- Alan and Calvin: develop gameplay mechanism in Monopoly driver file (Fri-Mon)
-  = implement turn-based mechansim
-  = allow for easy user interface in selection options
-
-#2 SORT OF IMPORTANT (in order)
-- Alan and Calvin: implement "auxilliary" board spaces and their actions (Tue-Thur)
-   - JAIL
-   - GOTOJAIL
-   - Chance/Community cards
-
-- Alan and Calvin: implement trade and auctioning mechanisms (Thur-Sat)
-
-#3 NON-ESSENTIAL (in order; just for the lolz)
-- Alan and Calvin: develop computer AI player (Thur-Sun)
+NON-ESSENTIAL (in order; just for the lolz)
+- Alan and Calvin: develop computer AI player (Fri-Sun)
 - Alan and Calvin: develop free-parking minigames (Sat-Sun)
 - Alan and Calvin: look for areas to optimize code (Sun-Mon?)
