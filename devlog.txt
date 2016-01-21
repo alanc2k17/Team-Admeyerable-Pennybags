@@ -1,7 +1,8 @@
 2015-01-20
-Calvin and Alan: deliberated on poorly written jailTurn()
+- Calvin and Alan: deliberated on poorly written jailTurn() in class
 Alan: rewrote poorly written jailTurn() (is now properly written), completed class Community
-
+- Calvin: debugged and implemented Chance/Community into Java; implemented GoToJail; fortified turn-based mechanism to make it more robust and more easy flowing; implemented actions if Player lands on certain other spaces
+ 
 2015-01-19
 - Alan: wrote Chance class and jailTurn() in Monopoly class
 
