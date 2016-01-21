@@ -115,14 +115,20 @@ public class Player {
     
     // coord details new coordinates
     public void setSquareOn(int[] coord, Landable[][] board) {
-	_squareOn = board[coord[0], coord[1]];
-	_coordinate = coord;
+	// remove player from old square
+	board[ _coordinate[0] ][ _coordinate[1] ].removePlayerOnSquare(this);
+	// update Player's _squareOn
+	_squareOn = board[coord[0]][coord[1]];
+	// add player to new square
+	board[ coord[0] ][ coord[1] ].setPlayerOnSquare(this);
+	_coordinate = coord; // update player coordinates
+	
     }
 	
     // takes amt of money away from player
     public int charge(int amt) {
 	setCash( getCash() - amt );
-	System.out.println( _name + "now has $" + _cashOnHand );
+	System.out.println( _name + " now has $" + _cashOnHand );
 	return getCash();
     }
   

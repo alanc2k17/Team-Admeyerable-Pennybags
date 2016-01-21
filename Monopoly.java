@@ -68,7 +68,7 @@ public class Monopoly{
 	// instantiate normal properties
 	// instatiating brown properties
 	BrownProperty mediterranean = new BrownProperty("Mediterranean Avenue", "MD", false);
-	BrownProperty balctic = new BrownProperty("Baltic Avenue", "BA", true);
+	BrownProperty baltic = new BrownProperty("Baltic Avenue", "BA", true);
 
 	// instantiating light blue properties
 	LightBlueProperty oriental = new LightBlueProperty("Oriental Avenue", "OR", false);
@@ -130,21 +130,30 @@ public class Monopoly{
 	// instantiate free parking
 	FreeParking freeparking = new FreeParking();
 	
+	// instantiate chance spaces
+	Chance chance1 = new Chance();
+	Chance chance2 = new Chance();
+	Chance chance3 = new Chance();
+	Community community1 = new Community();
+	Community community2 = new Community();
+	Community community3 = new Community();
+	
+
 	// initialize board
 	// nullls will appear as spaces when board is printed
 	board = new Landable[][] 
 	    { 
-		{ freeparking, kentucky, income, indiana, illinois, borail, atlantic, vetnor, water, marvin, gotojail },
+		{ freeparking, kentucky, chance2, indiana, illinois, borail, atlantic, vetnor, water, marvin, gotojail },
 		{ newyork, null, null, null, null, null, null, null, null, null, pacific },
 		{ tennessee, null, null, null, null, null, null, null, null, null, northcarolina },
-		{ income, null, null, null, null, null, null, null, null, null, income },
+		{ community2, null, null, null, null, null, null, null, null, null, community3 },
 		{ stjames, null, null, null, null, null, null, null, null, null, pennsylvania },
 		{ pennrail, null, null, null, null, null, null, null, null, null, shortline },
-		{ virginia, null, null, null, null, null, null, null, null, null, income },
+		{ virginia, null, null, null, null, null, null, null, null, null, chance3 },
 		{ states, null, null, null, null, null, null, null, null, null, parkplace },
 		{ electric, null, null, null, null, null, null, null, null, null, luxury },
 		{ stcharles, null, null, null, null, null, null, null, null, null, boardwalk },
-		{ jail, connecticut, vermont, income, oriental, reading, income, baltic, income, mediterranean, go }
+		{ jail, connecticut, vermont, chance1, oriental, reading, income, baltic, community1, mediterranean, go }
 	    };
 
     	// initialize players 
@@ -232,14 +241,22 @@ public class Monopoly{
 	    ArrayList<Property> propertyList = p.getPropertiesOwned();
 	    // print properties
 	    for (int i = 0; i < propertyList.size(); i++){
-		System.out.println( (i+1+" ") + propertyList.get(i).getName() + " $" + 
-				    propertyList.get(i).getMortgageValue() );
+		String retStr = "";
+		retStr += i + 1 + " "; // choice number
+		retStr += propertyList.get(i).getName();
+		retStr += "$" + propertyList.get(i).getMortgageValue();
+		if ( propertyList.get(i).isMortgaged() )
+		    retStr += "Already mortgaged.";
+		
+		System.out.println( retStr );
 	    }
+
 	    // choose property
 	    System.out.println("Enter number of property you want to mortgage.");
 	    int index = parseInput(Keyboard.readString(), propertyList.size());
 	    p.mortgage( propertyList.get(index - 1) );
 	    System.out.println(p.getName() + " now has $" + p.getCash());
+
 	    // askt to continue
 	    System.out.print("Continue mortgaging? 1:yes\t2:no ");
 	    int continueOption = parseInput(Keyboard.readString(), 2);
@@ -253,7 +270,7 @@ public class Monopoly{
 	if (p.getCash() >= 50) {
 	    //prompt user input
 	    System.out.println("Would you like to pay bail? y:1\tn:2");
-	    int input = parseInput(Keyboard.readString());
+	    int input = parseInput(Keyboard.readString(), 2);
 	    //if user would like to pay bail
 	    //forced to pay if player has spent more than 3 turns in jail
 	    if (input == 1 || p.getJailTurns() > 3) {
@@ -263,9 +280,26 @@ public class Monopoly{
 	    }
 	    else
 		p.setJailTurns(p.getJailTurns() + 1);//add one to jailTurns
+	    
 	}
+	else if ( p.getCash() < 50 ){
+	    System.out.println("You do not have enough money to bail out. Would you like to mortgage property to do so? If this is your third turn, you will be forced to chose yes. 1:yes\t2:no");
+	    int input = parseInput(Keyboard.readString(), 2);
+	    if (input == 1 || p.getJailTurns() == 3){
+		while ( p.canMortgage() ){
+		    offerMortgageOptions(p);
+		    if ( p.getCash() >= 50 )
+			break;
+		}
+		playerList.remove(p); // you lose!
+	    }
+	    else
+		p.setJailTurns(p.getJailTurns() + 1);
+	}
+	
+	/*	    
 	//if player cant afford bail
-	else {
+	else if ( p.getCash() < 50 && 
 	    //if player has properties available for mortgage
 	    if (p.canMortgage()) {
 		if (p.getJailTurns() > 2)
@@ -278,6 +312,7 @@ public class Monopoly{
 		playerList.remove(p);
 	    }
 	}
+	*/
     }
 
     public void turn(Player p) {
@@ -287,16 +322,25 @@ public class Monopoly{
     	else { //if not in jail
 	    p.move(board);
 
-	    if (p.getSquareOn() instanceof GoToJail)
-		System.out.println("hi, we need to fix this");
-    		//p.setSquareOn( jail, board); 
-	    //else if (p._squareOn == Chance || p._squareOn == Community) {
-    		//follow instructions on card
-	    //}
-
-	    else if (p.getSquareOn() instanceof Chance)
-		p.getSquareOn().execute(p, _board);
-
+	    if (p.getSquareOn() instanceof GoToJail){
+		// typecast p.getSquareOn() to access specific methods
+		GoToJail square = (GoToJail) (p.getSquareOn());
+		square.processVictim(p, board); // send to jail
+	    }
+		    
+	    else if (p.getSquareOn() instanceof Chance ){
+		System.out.println( p.getSquareOn() );
+		// typecast to access specific methods
+		Chance square = (Chance) (p.getSquareOn());
+		square.execute(p, board, playerList);
+	    }
+	    else if (p.getSquareOn() instanceof Community){
+		System.out.println( p.getSquareOn() );
+		// typecast to access specific methods
+		Community square = (Community) (p.getSquareOn());
+		square.execute(p, board, playerList);
+	    }
+	    
 	    else if (p.getSquareOn() instanceof Property){
 		// typecast
 		Property squareOn = ((Property) (p.getSquareOn()));
@@ -327,7 +371,7 @@ public class Monopoly{
 		p.charge( ((Tax)p.getSquareOn()).getRent() ); // pay tax
 	    
 	    //offer general options
-
+	    System.out.println("Type any key, then <Enter> to end your turn.");
 	    String end = Keyboard.readString();
     	}
     }

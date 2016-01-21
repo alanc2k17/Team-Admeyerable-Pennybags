@@ -1,5 +1,7 @@
+import java.util.ArrayList;
+
 public class Chance extends Landable {
-    private static int[] _deck = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    private static int[] _deck = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     
     // default constructor
     public Chance() {
@@ -20,16 +22,22 @@ public class Chance extends Landable {
 	}
     }
     
+    public String toString(){
+	return "You landed on Chance!";
+    }
+
     //moves first element in _deck to the end of the array
     //effectively moving top card to bottom of deck
     public void moveToBottom() {
-	int tmp = a[0];
-	a[0] = a[9];
-	a[9] = tmp;
+	int tmp = _deck[0];
+	for ( int i = 1; i < _deck.length; i ++ ){
+	    _deck[i-1] = _deck[i];
+	}
+	_deck[_deck.length-1] = tmp;
     }
     
     //*reads* card and does what it says
-    public void execute(Player p, Landable[][] board) {
+    public void execute(Player p, Landable[][] board, ArrayList<Player> playerList) {
 	int n = _deck[0];
 
 	if (n < 0 || n > 9)
@@ -38,8 +46,7 @@ public class Chance extends Landable {
 	    if (n == 0) {
         //advance to go
 		System.out.println("Advance to Go! (Collect $200)");
-		p.give(200);
-		p.setSquareOn(go, go); //???? is this a real thing
+		p.setSquareOn(new int[] {10,10}, board);
 	    }
 	    if (n == 1) {
 		//bank pays you dividend of $50
@@ -50,22 +57,20 @@ public class Chance extends Landable {
 		//go to jail
 		System.out.println("Go to Jail! :(");
 		p.setJail(true);
-		p.setSquareOn(jail, jail); //???? again, 
+		p.setSquareOn(new int[] {0,10}, board);
 	    }
 	    if (n == 3) {
 		//take a walk on the boardwalk
 		System.out.println("Take a walk on the Boardwalk! (Advance token to Boardwalk)");
-		p.setSquareOn(boardwalk, boardwalk);
+		p.setSquareOn(new int[] {9,10}, board);
 	    }
 	    if (n == 4) {
 		//you have been elected chairman of the board
 		System.out.println("You have been elected Chairman of the Board! (Pay each player $50)");
-		int ctr = 0
-		    for (Player pl : playerList) {
-			pl.give(50);
-			ctr++;
-		    }
-		p.charge(50 * ctr);
+		for (int i = 0; i < playerList.size(); i++){ // for each player
+		    playerList.get(i).give(50); // give 50
+		}
+		p.charge(50 * playerList.size());
 	    }
 	    if (n == 5) {
 		//your building and loan matures
@@ -84,18 +89,26 @@ public class Chance extends Landable {
 	    }
 	    if (n == 8) {
 		//make general repairs on buildings
-		System.out.println("Make general repairs on all your property! (For each house pay $25, each hotel $100");
+		System.out.println("Make general repairs on all your property! (For each house pay $25)");
 		//need help
+		int houseCount = 0;
+		ArrayList<Property> properties = p.getPropertiesOwned();
+		for (int i = 0; i < properties.size(); i++){ // for each owner property
+		    if (properties.get(i) instanceof NormalProperty)
+			houseCount += ( (NormalProperty) (properties.get(i)) ).getHouses();
+		}
+		
+		p.charge( 25 * houseCount ); //charge 25 per house
 	    }
 	    if (n == 9) {
 		//advance to illinois ave
 		System.out.println("Advance to Illinois Ave! (If you pass Go, collect $200");
-		if (p.getCoordinate()[0] > 0 && p.getCoordinate()[1] > 4)
-		    p.pay(200);
-		p.setSquareOn(new int[] {0,4}, );
+		if (p.getCoords()[0] >= 0 && p.getCoords()[1] > 4)
+		    p.give(200);
+		p.setSquareOn(new int[] {0,4}, board );
 	    }
 
-	    moveToBottom();
+	    moveToBottom(); // move drawn card to bottom
 	}
     }
-    
+}    

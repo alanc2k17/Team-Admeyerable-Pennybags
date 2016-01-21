@@ -8,4 +8,9 @@ public class GoToJail extends Landable {
     public String toString() {
 	return "Looks like you got caught by the po-po! Peace out, dawg.";
     }
+
+    public void processVictim(Player p, Landable[][] board) {
+	p.setJail(true);
+	p.setSquareOn( new int[] {0,10}, board );
+    }
 }
