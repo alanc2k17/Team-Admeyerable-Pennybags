@@ -135,6 +135,8 @@ METHODS
 (x) + boolean mortgage(Property p)
 (x) + boolean unMortgage(Property p)
 (x) + boolean canMortgage()
+(p) + void auction(Property p)
+(p) + void trade(Player p, Property a, Property b)
 
 Landable (abstract)
 ----------------------
