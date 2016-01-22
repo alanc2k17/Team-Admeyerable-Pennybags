@@ -305,9 +305,27 @@ public class Monopoly{
 		    System.out.println("You chose a property that you cannot build/sell one.");
 		
 	    } // closes if choice1 or choice2
-	    else if (choice == 3 || choice == 4){
-		System.out.print("hi");// print info about properties to mortgage
-	    }
+	    else if (choice == 3){ // mortgage
+		for ( int i = 0; i < p.getPropertiesOwned().size(); i++ ){
+		    Property tmp = p.getPropertiesOwned().get(i);
+		    if ( ! tmp.isMortgaged() )
+			System.out.println( (i+1) + ": " + tmp.getName() + " $" + tmp.getMortgageValue() );
+		    
+		} // close print loop
+		int mortgageChoice = parseInput(Keyboard.readString(), tmp.size());
+		if ( p.getPropertiesOwned().get(mortgageChoice).mortgage() ) // if mortgage successful
+		    System.out.println("Successfully mortgaged! You have gained " + tmp.getPropertiesOwned().get(mortgageChoice).getMortgageValue());
+	    } // close choice 3
+	    else if (choice == 4){
+		for ( int i = 0; i < p.getPropertiesOwned().size(); i++ ){
+		    Property tmp = tmp.getPropertiesOwned.get(i);
+		    if ( tmp.isMortgaged() )
+			System.out.println( (i+1) + ": " + tmp.getName() + " $" + tmp.getMortgageValue() );
+		} // close print loop
+		int mortgageChoice = parseInput(Keyboard.readString(), tmp.size());
+		if ( p.getPropertiesOwned().get(mortgageChoice).unMortgage() ) // if unmortgage successful
+		    System.out.println("Sucessfully unmortgaged! You can now charge rent on your property!");
+	    } // close choice 4
 	}
     }
     
