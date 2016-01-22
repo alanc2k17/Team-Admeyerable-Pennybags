@@ -109,11 +109,11 @@ public class NormalProperty extends Property{
     // takes one input param, h, and subtracts h from # of houses
     // returns true if houses successfully sold
     //         false otherwise (ie. not enough houses)
-    public boolean sellHouse(int h){
+    public boolean sellHouses(int h){
 	Player owner = getOwner();
 	if ( (_houses - h) >= 0 ){ //enough houses to sell
 	    _houses -= h; //sell
-	    owner.charge( ((int) (.5 * h * _houseCost)) ); //refund player
+	    owner.give( ((int) (.5 * h * _houseCost)) ); //refund player
 	    return true;
 	}
 	return false;

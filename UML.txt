@@ -1,6 +1,6 @@
 Team Admeyerable Pennybags -- Alan Chen and Calvin Vuong
 
-Preliminary UML Diagrams
+UML Diagrams
 
 + public
 - private
@@ -8,149 +8,306 @@ o protected
 
 (x) indicate completed methods
 (p) indicate methods in progress
-other methods not yet implemented
+(n) other methods not yet implemented
 
-Monopoly
+Monopoly (Driver! vroom vroom)
 ----------------------
-- int numPlayers
-- ArrayList<Player> playerList
-- Landable[][] board
-- int turns
-+ setup()
-+ play()
-+ turn()
-+ playerOptions()
-+ minigame()
-+ exit()
+INSTANCE VARIABLES
+(x) - int numPlayers, turns
+(x) - ArrayList<Player> playerList
+(x) - Landable[][] board
 
-ChanceDeck
----------------------
-- String[] cards
-+ execute(Player p1, Player p2, Player p3, Player p4)
-+ shuffle()
+CONSTRUCTORS
+(x) + Monopoly()
+
+METHODS
+(x) + int parseInput(String s, int range)
+(x) + void clear()
+(x) + void setupPlayers()
+(x) + void setup()
+(x) + void printBoard()
+(x) + void offerMortgageOptions(Player p)
+(x) + void jailTurn(Player p)
+(x) + void turn(Player p)
+(x) + void play()
+(p) + void playerOptions(Player p)
+(p) + void auction(Property p)
+
 
 Player
 ----------------------
-o int _coordinate
-o String _name
-o ArrayList<Property>[] _propertiesOwned
-o int _cash
-o Property _propertyOn 
-+ Player()
-+ Player(String newName)
-+ String toString()
-+ getCoords()
-+ getCash()
-+ setCash()
-+ charge(int n)
-+ give(int n)
-+ pay(Property p)
-+ move()
-+ getPropertiesOwned()
-+ getPropertyOn()
-+ buildHouse(Property p)
-+ buildHotel(Property p)
-+ mortgage(Property p)
-+ requestTrade()
-+ trade(Player p)
+INSTANCE VARIABLES
+(x) o int _cashOnHand, _diceRoll, _jailTurns
+(x) o int[] _coordinate
+(x) o String _name, _symbol
+(x) o boolean _inJail, _bankrupt
+(x) o Landable _squareOn
+(x) o ArrayList<Property> _propertiesOwned
 
-Bank extends Player
-------------------------
-o int _houseBank
-o int _hotelBank
+CONSTRUCTORS
+(x) + Player()
+(x) + Player(String newName, String symbol)
 
-AIPlayer extends Player
---------------------------
-+ decide()
+ACCESSORS
+(x) + String getName()
+(x) + String getSymbol()
+(x) + int[] getCoords()
+(x) + int getCash()
+(x) + int getDiceRoll()
+(x) + int getJailTurns()
+(x) + boolean inJail()
+(x) + ArrayList<Property> getPropertiesOwned()
+(x) + Landable getSquareOn()
+
+MUTATORS
+(x) - void setCash(int newCashValue)
+(x) + void setSquareOn(int[] coord, Landable[][] board)
+(x) + void setJailTurns(int i)
+(x) + void setJail(boolean b)
+
+METHODS
+(x) + Property removeProperty(Property p)
+(x) + int charge(int amt)
+(x) + int give(int amt)
+(x) + int buildHouse(NormalProperty p, int amt)
+(x) + void move(Landable[][] board)
+(x) + void pay(Property p)
+(x) + void giveProperty(Property p)
+(x) + boolean buy(Property p)
+(x) + boolean mortgage(Property p)
+(x) + boolean unMortgage(Property p)
+(x) + boolean canMortgage()
+(p) + void auction(Property p)
+(p) + void trade(Player p, Property a, Property b)
+
 
 Landable (abstract)
 ----------------------
-(x) o int _coordinate
-(x) o String _name
-(x) o String _initials
+INSTANCE VARIABLES
+(x) o String _name, _initials
 (x) o ArrayList<Player> _playersOnSquare
+
+CONSTRUCTORS
 (x) + Landable()
-(x) + Landable(String name, String initials, String coordinate)
+(x) + Landable(String name, String initials}
+
+ABSTRACT
 (x) + abstract String toString()
-(x) + int getCoordinate()
+
+ACCESSORS
+(x) + String getName()
+(x) + String getInitials()
+(x) + ArrayList<Player> getPlayersOn()
+
+MUTATORS
 (x) + void setPlayerOnSquare(Player p) 
 (x) + void removePlayerOnSquare(Player p)
 
-Tax
+
+FreeParking extends Landable
+---------------------
+CONSTRUCTORS
+(x) + FreeParking()
+
+METHODS
+(x) + String toString()
+
+
+Go extends Landable
+---------------------
+CONSTRUCTORS
+(x) + Go()
+
+METHODS
+(x) + String toString()
+
+
+GoToJail extends Landable
+---------------------
+CONSTRUCTORS
+(x) + GoToJail()
+
+METHODS
+(x) + String toString()
+(x) + void processVictim(Player p, Landable[][] board)
+
+
+Jail extends Landable
+---------------------
+CONSTRUCTORS
+(x) + Jail()
+(x) + Jail(String name, String initials)
+
+METHODS
+(x) + String toString()
+
+
+Chance extends Landable
+---------------------
+INSTANCE VARIABLES
+(x) - static int[] _deck
+
+CONSTRUCTORS
+(x) + Chance()
+
+METHODS
+(x) + String toString()
+(x) + void moveToBottom()
+(x) + void execute(Player p, Landable[][] board, ArrayList<Player> playerList)
+
+
+Community extends Landable
+---------------------
+INSTANCE VARIABLES
+(x) - static int[] _deck
+
+CONSTRUCTORS
+(x) + Community()
+
+METHODS
+(x) + String toString()
+(x) + void moveToBottom()
+(x) + void execute (Player p, Landable[][] board, ArrayList<Player> playerList)
+
+
+Tax extends Landable
 ----------------------
+INSTANCE VARIABLES
 (x) o int _payAmount
+
+CONSTRUCTORS
 (x) + Tax()
-(x) + Tax(int payAmount)
-(p) + String toString()
-(x) + int getAmount()
+(x) + Tax(String name,int payAmount)
+
+METHODS
+(x) + String toString()
+(x) + int getRent()
+
 
 Property extends Landable (abstract)
 ------------------------------------
+INSTANCE VARIABLES
 (x) o Player _owner
-(x) o ArrayList<Property> _groupMembers
+(x) o ArrayList<Player> _playersOnProperty
 (x) o boolean _mortgage
+
+CONSTUCTORS
 (x) + Property()
-(x) + Property(String name, String initials, String coordinate)
-(x) + String abstract toString()
-(x) + Player getOwner()
-(x) + void addMembers(Property p)
+(x) + Property(String name, String initials)
+
+ABSTRACT 
+(x) + abstract String toString()
 (x) + abstract int getRent()
+(x) + abstract int getBuyPrice()
 (x) + abstract boolean mortgage()
 (x) + abstract boolean unMortgage()
+(x) + abstract int getMortgageValue()
+
+ACCESSORS
+(x) + Player getOwner()
 (x) + boolean isMortgaged()
 
-NormalProperty extends Property (abstract???)
+MUTATORS
+(x) + void setOwner(Player p)
+
+
+NormalProperty extends Property 
 ------------------------------------
-(x) o int[6] _rent1 
-(x) o int[6] _rent2 
-(x) o int _buyPrice1
-(x) o int _buyPrice2 
-(x) o int _houseCost
-(x) o boolean _monopoly
-(x) o boolean expensive;
-(x) o int _houses
-(x) o int _mortgageValue1
-(x) o int _mortgageValue2
+INSTANCE VARIABLES
+(x) o int[] _rent1, _rent2
+(x) o int _buyPrice1, _buyPrice2, _houses, _housesCost, _others, _mortgageValue1, _mortgageValue2
+(x) o boolean _monopoly, _expensive
+
+CONSTRUCTORS
 (x) + NormalProperty()
-(x) + NormalProperty(String name, String initials, String coordinate, boolean expensive)
-(p) + String toString()
+(x) + NormalProperty(String name, String initials, boolean expensive)
+
+ACCESSORS
 (x) + int getHouses()
 (x) + int getRent()
-(p) + buildHouses(int n)
-(p) + sellHouses(int n)
-(p) + boolean checkMonopoly()
-(x) + boolean mortgage();
+(x) + int getMortgageValue()
+
+MUTATORS
+(x) + void setMortgageValue()
+
+METHODS
+(x) + String toString()
+(x) + boolean buildHouses(int h)
+(x) + boolean sellHouses(int h)
+(x) + boolean checkMonopoly()
+(x) + boolean mortgage()
 (x) + boolean unMortgage()
+(x) + boolean propertyIn(Property p, ArrayList<Property> list)
+
 
 <Color>Property extends NormalProperty
 ------------------------------------
+CONSTRUCTORS
 (x) + <Color>Property()
-(x) + <Color>Property(String name, String initials, String coordiate, boolean expensive)
+(x) + <Color>Property(String name, String initials, boolean expensive)
+
+METHODS
 (x) + void setInfo()
+
 
 Railroad extends Property
 ------------------------------------
+INSTANCE VARIABLES
 (x) o final int[] RENT
 (x) o final int BUYPRICE
 (x) o int _mortgageValue
 
-(x) + Railroad()
-(x) + Railroad(String name, String initials, String coordinate)
+CONSTRUCTORS
+(x) + Railroad(String name, String initials)
+
+ACCESSORS
+(x) + int getBuyPrice()
+(x) + int getMortgageValue()
 (x) + int getRent()
-(x) + int railroadsOwned()
-(p) + String toString()
+
+MUTATORS
+(x) + void setMortgageValue()
+
+METHODS
+(x) + String toString
 (x) + boolean mortgage()
 (x) + boolean unMortgage()
-(x) + int setMortgageValue()
+(x) + int railRoadsOwned()
+
 
 Utility extends Property
 ------------------------------------
-(x) o FINAL int BUYPRICE
+INSTANCE VARIABLES
+(x) o final int BUYPRICE
 (x) o int _mortgageValue
+
+CONSTRUCTORS
 (x) + Utility()
-(x) + Utility(String name, String initials, String coordinate)
-(p) + int getRent()
-(x) + int utilitiesOwned()
-(p) + toString()
+(x) + Utility(String name, String initials)
+
+ACCESSORS
+(x) + int getBuyPrice()
+(x) + int getMortgageValue()
+(x) + int getRent()
+
+MUTATORS
+(x) + void setMortgageValue()
+
+METHODS
+(x) + String toString
 (x) + boolean mortgage()
-+ boolean unMortgage()
+(x) + boolean unMortgage()
+(x) + int utilitiesOwned()
+
+
+(V2) AIPlayer extends Player
+------------------------------
+METHODS
++ void decide()
++ void autoMortgage()
++ boolean forfeit()
++ void autoSell()
++ void autoBuild()
++ void completeMonopoly()
++ void initiateTrade()
++ void autoAuction()

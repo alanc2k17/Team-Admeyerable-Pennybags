@@ -235,7 +235,21 @@ public class Player {
 				+ p.getName() + " still has " + p.getHouses() + " houses!" );
 	return p.getHouses();
     }
-    
+
+    // sells amt number of houses on NormalProperty p
+    // prints out confirmatin/denial message
+    // returns new number of houses on NormalProperty p
+    public int sellHouse(NormalProperty p, int amt) {
+	// if can build houses
+	if ( p.sellHouses(amt) == true )
+	    // houses already built in conditional statement
+	    System.out.println( p.getName() + " now has " + p.getHouses() + " houses!" );
+	else
+	    System.out.println( "Oh no! Something went wrong: Do you have enough houses to sell?" 
+				+ p.getName() + " still has " + p.getHouses() + " houses!" );
+	return p.getHouses();
+    }
+
     public boolean mortgage(Property p) {
 	return p.mortgage();
     }
