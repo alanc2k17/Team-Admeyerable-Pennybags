@@ -312,20 +312,24 @@ public class Monopoly{
 			System.out.println( (i+1) + ": " + tmp.getName() + " $" + tmp.getMortgageValue() );
 		    
 		} // close print loop
-		int mortgageChoice = parseInput(Keyboard.readString(), tmp.size());
-		if ( p.getPropertiesOwned().get(mortgageChoice).mortgage() ) // if mortgage successful
-		    System.out.println("Successfully mortgaged! You have gained " + tmp.getPropertiesOwned().get(mortgageChoice).getMortgageValue());
+		int mortgageChoice = parseInput(Keyboard.readString(), p.getPropertiesOwned().size());
+		if ( p.getPropertiesOwned().get(mortgageChoice).mortgage() ){ // if mortgage successful
+		    System.out.println("Successfully mortgaged! You have gained " + p.getPropertiesOwned().get(mortgageChoice).getMortgageValue());
+		}
 	    } // close choice 3
 	    else if (choice == 4){
 		for ( int i = 0; i < p.getPropertiesOwned().size(); i++ ){
-		    Property tmp = tmp.getPropertiesOwned.get(i);
+		    Property tmp = p.getPropertiesOwned().get(i);
 		    if ( tmp.isMortgaged() )
 			System.out.println( (i+1) + ": " + tmp.getName() + " $" + tmp.getMortgageValue() );
 		} // close print loop
-		int mortgageChoice = parseInput(Keyboard.readString(), tmp.size());
+		int mortgageChoice = parseInput(Keyboard.readString(), p.getPropertiesOwned().size());
 		if ( p.getPropertiesOwned().get(mortgageChoice).unMortgage() ) // if unmortgage successful
 		    System.out.println("Sucessfully unmortgaged! You can now charge rent on your property!");
 	    } // close choice 4
+	    else if (choice == 5){
+		return;
+	    }
 	}
     }
     
@@ -419,11 +423,11 @@ public class Monopoly{
 
 	    else if (p.getSquareOn() instanceof Tax)
 		p.charge( ((Tax)p.getSquareOn()).getRent() ); // pay tax
-	    
-	    //offer general options
-	    System.out.println("Type any key, then <Enter> to end your turn.");
-	    String end = Keyboard.readString();
     	}
+	playerOptions( p );
+	//offer general options
+	System.out.println("Type any key, then <Enter> to end your turn.");
+	Keyboard.readString();
     }
     
     public void play(){
