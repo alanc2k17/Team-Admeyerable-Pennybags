@@ -8,7 +8,10 @@ o protected
 
 (x) indicate completed methods
 (p) indicate methods in progress
+<<<<<<< HEAD
 (n) other methods not yet implemented
+=======
+>>>>>>> 93325e9d7edc44a187b97f6b62bd47e93cf61741
 
 Monopoly (Driver! vroom vroom)
 ----------------------
@@ -33,6 +36,68 @@ METHODS
 (p) + void playerOptions(Player p)
 (p) + void auction(Property p)
 
+<<<<<<< HEAD
+=======
+Chance extends Landable
+---------------------
+INSTANCE VARIABLES
+(x) - static int[] _deck
+
+CONSTRUCTORS
+(x) + Chance()
+
+METHODS
+(x) + String toString()
+(x) + void moveToBottom()
+(x) + void execute(Player p, Landable[][] board, ArrayList<Player> playerList)
+
+Community extends Landable
+---------------------
+INSTANCE VARIABLES
+(x) - static int[] _deck
+
+CONSTRUCTORS
+(x) + Community()
+
+METHODS
+(x) + String toString()
+(x) + void moveToBottom()
+(x) + void execute (Player p, Landable[][] board, ArrayList<Player> playerList)
+
+FreeParking extends Landable
+---------------------
+CONSTRUCTORS
+(x) + FreeParking()
+
+METHODS
+(x) + String toString()
+
+Go extends Landable
+---------------------
+CONSTRUCTORS
+(x) + Go()
+
+METHODS
+(x) + String toString()
+
+GoToJail extends Landable
+---------------------
+CONSTRUCTORS
+(x) + GoToJail()
+
+METHODS
+(x) + String toString()
+(x) + void processVictim(Player p, Landable[][] board)
+
+Jail extends Landable
+---------------------
+CONSTRUCTORS
+(x) + Jail()
+(x) + Jail(String name, String initials)
+
+METHODS
+(x) + String toString()
+>>>>>>> 93325e9d7edc44a187b97f6b62bd47e93cf61741
 
 Player
 ----------------------
@@ -55,6 +120,11 @@ ACCESSORS
 (x) + int getCash()
 (x) + int getDiceRoll()
 (x) + int getJailTurns()
+<<<<<<< HEAD
+=======
+(x) + void setJailTurns(int i)
+(x) + void setJail(boolean b)
+>>>>>>> 93325e9d7edc44a187b97f6b62bd47e93cf61741
 (x) + boolean inJail()
 (x) + ArrayList<Property> getPropertiesOwned()
 (x) + Landable getSquareOn()
@@ -62,8 +132,11 @@ ACCESSORS
 MUTATORS
 (x) - void setCash(int newCashValue)
 (x) + void setSquareOn(int[] coord, Landable[][] board)
+<<<<<<< HEAD
 (x) + void setJailTurns(int i)
 (x) + void setJail(boolean b)
+=======
+>>>>>>> 93325e9d7edc44a187b97f6b62bd47e93cf61741
 
 METHODS
 (x) + Property removeProperty(Property p)
@@ -79,7 +152,10 @@ METHODS
 (x) + boolean canMortgage()
 (p) + void auction(Property p)
 (p) + void trade(Player p, Property a, Property b)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 93325e9d7edc44a187b97f6b62bd47e93cf61741
 
 Landable (abstract)
 ----------------------
@@ -103,6 +179,7 @@ MUTATORS
 (x) + void setPlayerOnSquare(Player p) 
 (x) + void removePlayerOnSquare(Player p)
 
+<<<<<<< HEAD
 
 FreeParking extends Landable
 ---------------------
@@ -170,6 +247,8 @@ METHODS
 (x) + void execute (Player p, Landable[][] board, ArrayList<Player> playerList)
 
 
+=======
+>>>>>>> 93325e9d7edc44a187b97f6b62bd47e93cf61741
 Tax extends Landable
 ----------------------
 INSTANCE VARIABLES
@@ -182,7 +261,10 @@ CONSTRUCTORS
 METHODS
 (x) + String toString()
 (x) + int getRent()
+<<<<<<< HEAD
 
+=======
+>>>>>>> 93325e9d7edc44a187b97f6b62bd47e93cf61741
 
 Property extends Landable (abstract)
 ------------------------------------
@@ -205,12 +287,22 @@ ABSTRACT
 
 ACCESSORS
 (x) + Player getOwner()
+<<<<<<< HEAD
 (x) + boolean isMortgaged()
 
 MUTATORS
 (x) + void setOwner(Player p)
 
 
+=======
+
+MUTATORS
+(x) + void setOwner(Player p)
+
+METHODS
+(x) + boolean isMortgaged()
+
+>>>>>>> 93325e9d7edc44a187b97f6b62bd47e93cf61741
 NormalProperty extends Property 
 ------------------------------------
 INSTANCE VARIABLES
@@ -238,7 +330,10 @@ METHODS
 (x) + boolean mortgage()
 (x) + boolean unMortgage()
 (x) + boolean propertyIn(Property p, ArrayList<Property> list)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 93325e9d7edc44a187b97f6b62bd47e93cf61741
 
 <Color>Property extends NormalProperty
 ------------------------------------
@@ -273,7 +368,10 @@ METHODS
 (x) + boolean mortgage()
 (x) + boolean unMortgage()
 (x) + int railRoadsOwned()
+<<<<<<< HEAD
 
+=======
+>>>>>>> 93325e9d7edc44a187b97f6b62bd47e93cf61741
 
 Utility extends Property
 ------------------------------------
@@ -299,6 +397,7 @@ METHODS
 (x) + boolean unMortgage()
 (x) + int utilitiesOwned()
 
+<<<<<<< HEAD
 
 (V2) AIPlayer extends Player
 ------------------------------
@@ -311,3 +410,8 @@ METHODS
 + void completeMonopoly()
 + void initiateTrade()
 + void autoAuction()
+=======
+(V2) AIPlayer extends Player
+--------------------------
++ decide()
+>>>>>>> 93325e9d7edc44a187b97f6b62bd47e93cf61741
