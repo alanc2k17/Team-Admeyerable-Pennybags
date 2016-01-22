@@ -356,6 +356,7 @@ public class Monopoly{
 	    if (p.getSquareOn() instanceof GoToJail){
 		// typecast p.getSquareOn() to access specific methods
 		GoToJail square = (GoToJail) (p.getSquareOn());
+		p.setSquareOn( new int[] {0,10}, board); 
 		square.processVictim(p, board); // send to jail
 	    }
 		    
