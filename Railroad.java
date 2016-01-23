@@ -28,7 +28,7 @@ public class Railroad extends Property{
 	}
 	else{
 	    returnString += "owner of " + _name + "(" + _initials + ") =" + _owner.getName() + "\n";
-	    returnString += "current owner also owns " + railRoadsOwned() + " more railroad properties";
+	    returnString += "current owner also owns " + railRoadsOwned() + " more railroads";
 	    returnString += "current rent is: " + getRent() + "\n";
 	}
 	returnString += "mortgage value is: " + _mortgageValue;
@@ -95,8 +95,8 @@ public class Railroad extends Property{
     //returns int detailing rent if player lands on property
     //based off of how many other railraods owned
     public int getRent(){
-	if ( isMortgaged() ) return 0; // no rent with mortgage
-	return RENT[ railRoadsOwned() ]; //# of railrds. corresponds w/ index of RENT
+	if ( isMortgaged() || railRoadsOwned() == 0 ) return 0; // no rent with mortgage
+	return RENT[ railRoadsOwned()-1 ]; //# of railrds. corresponds w/ index of RENT
     }
 
 }

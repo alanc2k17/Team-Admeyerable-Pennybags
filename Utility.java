@@ -94,8 +94,8 @@ public class Utility extends Property{
     //based off of how many other railraods owned
     public int getRent(){
 	if ( isMortgaged() ) return 0;
-
-	int diceRoll = getOwner().getDiceRoll();
+	// last element in _playersOnSquare is the last player who landed on this square
+	int diceRoll = _playersOnSquare.get( _playersOnSquare.size()-1 ).getDiceRoll();
 	int numUtilities = utilitiesOwned();
 	// rent equal to diceRoll * 4 if 1 utility, * 10 if 2
 	if ( numUtilities == 1 )
