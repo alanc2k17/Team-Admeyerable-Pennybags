@@ -278,6 +278,8 @@ public class Monopoly{
 	System.out.println("5. End turn");
 	System.out.println("6. Initiate a trade. NOT IMPLEMENTED");
 	System.out.println("7. Save and exit game. NOT IMPLEMENTED");
+	if ( p.getCash() < 0 )
+	    System.out.println("WARNING. YOU ARE IN DEBT. IF YOU DO NOT ACHIEVE A NON-NEGATIVE BALANCE AND END YOUR TURN, YOU WILL FORFEIT. IF YOU CANNOT REPAY YOUR DEBTS IN THIS TURN, YOU LOSE. Have a nice day.");
 	int choice = parseInput(Keyboard.readString(), 7);
 
 	if (choice == 1 || choice == 2){ // if sell houses or build houses
@@ -324,6 +326,8 @@ public class Monopoly{
 	    offerMortgageOptions(p, 1);
 	}
 	else if (choice == 5){
+	    if ( p.getCash() < 0 )
+		playerList.remove(p); // remove player from game
 	    return;
 	}
 	playerOptions(p); // call player options again
@@ -349,15 +353,6 @@ public class Monopoly{
 	else if ( p.getCash() < 50 ){
 	    System.out.println("You do not have enough money to bail out. Would you like to mortgage property to do so? If this is your third turn, you will be forced to chose yes. 1:yes\t2:no");
 	    int input = parseInput(Keyboard.readString(), 2);
-	    /*
-	      if (input == 1 || p.getJailTurns() == 3){
-		while ( p.canMortgage() ){
-		    offerMortgageOptions(p);
-		    if ( p.getCash() >= 50 )
-			break;
-		}
-		playerList.remove(p); // you lose!
-	    */
 	}
 	else
 	    p.setJailTurns(p.getJailTurns() + 1);
@@ -395,12 +390,13 @@ public class Monopoly{
 		// typecast
 		Property squareOn = ((Property) (p.getSquareOn()));
 		if (squareOn.getOwner() == null){
-		    System.out.println("Do you wish to buy: ");
+		    System.out.println("Do you wish to buy: (current cash: " + p.getCash() + ")");
 		    System.out.println("1:yes\t2:no");
 		    int choice = parseInput(Keyboard.readString(), 2);
 		    if ( choice == 1 ){ //want to buy
 			while ( ! p.buy( squareOn ) ){ // if not enough 
 			    // offer mortgage options
+			    System.out.println("You do not have enough cash to pay. Offering mortgage options.");
 			    offerMortgageOptions(p, 0);
 			    System.out.print("Do you wish to buy the property? 1:yes\t2:no ");
 			    int keepGoing = parseInput(Keyboard.readString(), 2);
@@ -422,7 +418,7 @@ public class Monopoly{
     	}
 	playerOptions( p );
 	//offer general options
-	System.out.println("Type any key, then <Enter> to end your turn.");
+
 	Keyboard.readString();
     }
     
