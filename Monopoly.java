@@ -19,10 +19,24 @@ public class Monopoly{
 	System.out.print("\033[H\033[2J");
     }
 
+
     // usage: feed Keyboard.readString() into parameter s to allow user to select a number selection
-    //        range checks that s is between 1-range, inclusive
     // returns int as the selection number
     // if invalid input, reasks user until valid input
+    public int parseInput(String s){
+	int retInt = 0;
+	try{
+	    retInt = Integer.parseInt(s);
+	}
+	catch (Exception e){ // if invalid input
+	    System.out.println("Invalid input! Please try again.");
+	    return parseInput(Keyboard.readString()); //reprompt user
+	}
+	return retInt;
+    }
+
+    // same usage as parseInput(String s), except additional int param range asks user to select a number
+    // between 0 and range inclusive, and reasks until valid input
     public int parseInput(String s, int range){
 	int retInt = 0;
 	try{
