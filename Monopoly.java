@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import cs1.Keyboard;
 
-public class Monopoly{
+public class Monopoly implements UserInput{
     private int numPlayers;
     private ArrayList<Player> playerList;
     private Landable[][] board;
@@ -12,6 +12,12 @@ public class Monopoly{
 	numPlayers = 0;
 	playerList = new ArrayList<Player>();
 	turns = 0;
+    }
+
+    // accessor to get playerList
+    // used in chance and auctioning methods
+    public ArrayList<Player> getPlayerList(){
+	return playerList;
     }
 
     // clear screen method
@@ -173,6 +179,12 @@ public class Monopoly{
 
     	// initialize players 
 	setupPlayers();
+	// testing purposes only
+	/*
+	playerList.get(0).buy(newyork);
+	playerList.get(0).buy(tennessee);
+	playerList.get(0).buy(stjames);
+	*/
     }
     
     
@@ -239,116 +251,9 @@ public class Monopoly{
 	    } // close loop 3 times
 	} // close top level loop
     } // close method
-			    
 
-    // offers mortgage options and keeps prompting player is done
-    // params: Player p player doing the mortgaging
-    //         int opt  0 if player is mortgaging, 1 if unmortgaging
-    public void offerMortgageOptions(Player p, int opt){
-	boolean continueMortgage = true;
-	while ( continueMortgage ){
-	    ArrayList<Property> propertyList = p.getPropertiesOwned();
-	    // print properties
-	    for (int i = 0; i < propertyList.size(); i++){
-		String retStr = "";
-		retStr += i + 1 + " "; // choice number
-		retStr += propertyList.get(i).getName();
-		retStr += " $" + propertyList.get(i).getMortgageValue() + " ";
-		if ( propertyList.get(i).isMortgaged() )
-		    retStr += "already mortgaged";
-		else
-		    retStr += "not mortgaged.";
-		System.out.println( retStr );
-	    }
 
-	    // choose property
-	    if ( opt == 0 ) //mortgage option
-		System.out.println("Enter number of property you want to mortgage.");
-	    else // unmortgage option
-		System.out.println("Enter number of property you want to unmortgage.");
-	    int index = parseInput(Keyboard.readString(), propertyList.size());
-
-	    if ( opt == 0 ) //mortgage option
-		p.mortgage( propertyList.get(index - 1) );
-	    else // unmortgage option
-		p.unMortgage( propertyList.get(index - 1) );
-
-	    // askt to continue
-	    if ( opt == 0 )
-		System.out.print("Continue mortgaging? 1:yes\t2:no ");
-	    else
-		System.out.print("Continue unmortgaging? 1:yes\t2:no ");
-	    int continueOption = parseInput(Keyboard.readString(), 2);
-	    if ( continueOption == 2 )
-		continueMortgage = false;
-	}	
-    }
-
-    // offers player options at the end of turn
-    public void playerOptions(Player p){
-	System.out.println("1. Build houses");
-	System.out.println("2. Sell houses");
-	System.out.println("3. Morgage property");
-	System.out.println("4. Unmortgage property");
-	System.out.println("5. End turn");
-	System.out.println("6. Initiate a trade. NOT IMPLEMENTED");
-	System.out.println("7. Save and exit game. NOT IMPLEMENTED");
-	if ( p.getCash() < 0 )
-	    System.out.println("WARNING. YOU ARE IN DEBT. IF YOU DO NOT ACHIEVE A NON-NEGATIVE BALANCE AND END YOUR TURN, YOU WILL FORFEIT. IF YOU CANNOT REPAY YOUR DEBTS IN THIS TURN, YOU LOSE. Have a nice day.");
-	int choice = parseInput(Keyboard.readString(), 7);
-
-	if (choice == 1 || choice == 2){ // if sell houses or build houses
-	    // print info about properties to build houses on
-	    for ( int i = 0; i < p.getPropertiesOwned().size(); i++ ){
-		if ( p.getPropertiesOwned().get(i) instanceof NormalProperty){
-		    NormalProperty tmp = (NormalProperty)(p.getPropertiesOwned().get(i));
-		    if ( tmp.checkMonopoly() ){
-
-			System.out.print( i + 1 );
-			System.out.print( ". " + tmp.getName() );
-			System.out.print( "\tCost: " + tmp.getHouseCost() );
-			System.out.print( "\tHouses: " + tmp.getHouses() + "\n");
-		    }
-		}
-	    } // close all printing
-	    System.out.println();
-	    
-	    System.out.print("Which property do you want to build on? ");
-	    int propChoice = parseInput(Keyboard.readString(), p.getPropertiesOwned().size()) - 1;
-	    if ( p.getPropertiesOwned().get(propChoice) instanceof NormalProperty && 
-		 ((NormalProperty)(p.getPropertiesOwned()).get(propChoice)).checkMonopoly() ){
-		
-		NormalProperty property = (NormalProperty) ( p.getPropertiesOwned().get(propChoice) );
-		if (choice==1){
-		    System.out.print("How many houses do you want to build? ");
-		    int houseNum = parseInput(Keyboard.readString(), 5);
-		    p.buildHouse( property, houseNum );
-		}
-		else if (choice==2){
-		    System.out.print("How many hosues do you want to sell? ");
-		    int houseNum = parseInput(Keyboard.readString(), 5);
-		    p.sellHouse( property, houseNum);
-		}
-	    } // close if property is part of monopoly  
-	    else // invalid input
-		System.out.println("You chose a property that you cannot build/sell one.");
-	    
-	} // closes if choice1 or choice2
-	
-	else if (choice == 3){ // mortgage
-	    offerMortgageOptions(p, 0);
-	}
-	else if (choice == 4){
-	    offerMortgageOptions(p, 1);
-	}
-	else if (choice == 5){
-	    if ( p.getCash() < 0 )
-		playerList.remove(p); // remove player from game
-	    return;
-	}
-	playerOptions(p); // call player options again
-    }
-
+    // performs auctioning between every player in game
     public void auction(Property p) {
 	// copy contents of playerList into bidderList
 	// cannot use assignment operator, b/c then an alias would be created
@@ -408,101 +313,7 @@ public class Monopoly{
 	highestBidder.giveProperty(p); //highest bidder wins property
 	highestBidder.charge(currentBid);
 	System.out.println("Congrats! " + highestBidder.getName() + " won the bid for " + currentBid + "!");
-    }
-		    
-    public void jailTurn(Player p) {
-	//check if player can afford bail
-	System.out.println("Jail Turn: " + p.getJailTurns());
-	if (p.getCash() >= 50) {
-	    //prompt user input
-	    System.out.println("Would you like to pay bail? y:1\tn:2");
-	    int input = parseInput(Keyboard.readString(), 2);
-	    //if user would like to pay bail
-	    //forced to pay if player has spent more than 3 turns in jail
-	    if (input == 1 || p.getJailTurns() >= 3) {
-		p.setJailTurns(0); 
-		p.setJail(false);
-		p.charge(50);
-	    }
-	    else
-		p.setJailTurns(p.getJailTurns() + 1);//add one to jailTurns
-	    
-	}
-	else if ( p.getCash() < 50 ){
-	    System.out.println("You do not have enough money to bail out. Would you like to mortgage property to do so? If this is your third turn, you will be forced to chose yes. 1:yes\t2:no");
-	    int input = parseInput(Keyboard.readString(), 2);
-	    if ( input == 1 || p.getJailTurns() >= 3 ){
-		System.out.println("Mortgage until you get at least $50. If you do not do so or cannot do so and end mortgaging, you will lose.");
-		offerMortgageOptions( p, 0 );
-		if ( p.getCash() < 50 )
-		    return;
-	    }
-	}
-	else
-	    p.setJailTurns(p.getJailTurns() + 1);
-    }
-    
-
-    public void turn(Player p) {
-    	if (p.inJail() == true) {
-    	    jailTurn(p);
-    	}
-    	else { //if not in jail
-	    p.move(board);
-
-	    if (p.getSquareOn() instanceof GoToJail){
-		// typecast p.getSquareOn() to access specific methods
-		GoToJail square = (GoToJail) (p.getSquareOn());
-		p.setSquareOn( new int[] {0,10}, board); 
-		square.processVictim(p, board); // send to jail
-	    }
-		    
-	    else if (p.getSquareOn() instanceof Chance ){
-		System.out.println( p.getSquareOn() );
-		// typecast to access specific methods
-		Chance square = (Chance) (p.getSquareOn());
-		square.execute(p, board, playerList);
-	    }
-	    else if (p.getSquareOn() instanceof Community){
-		System.out.println( p.getSquareOn() );
-		// typecast to access specific methods
-		Community square = (Community) (p.getSquareOn());
-		square.execute(p, board, playerList);
-	    }
-	    
-	    else if (p.getSquareOn() instanceof Property){
-		// typecast
-		Property squareOn = ((Property) (p.getSquareOn()));
-		if (squareOn.getOwner() == null && squareOn.getOwner() != p){
-		    System.out.println("Do you wish to buy: (current cash: " + p.getCash() + ")");
-		    System.out.println("1:yes\t2:no");
-		    int choice = parseInput(Keyboard.readString(), 2);
-		    if ( choice == 1 ){ //want to buy
-			while ( ! p.buy( squareOn ) ){ // if not enough 
-			    // offer mortgage options
-			    System.out.println("You do not have enough cash to pay. Offering mortgage options.");
-			    offerMortgageOptions(p, 0);
-			    System.out.print("Do you wish to buy the property? 1:yes\t2:no ");
-			    int keepGoing = parseInput(Keyboard.readString(), 2);
-			    if (keepGoing == 2)
-				break;
-			}
-			System.out.println("Success! You have successfully bought " + squareOn.getName() );
-			System.out.println("Your new cash on hand: " + p.getCash() );
-		    }
-		    else // pass to auction
-			auction(squareOn);
-		}
-		else // property has an owner
-		    p.pay( squareOn ); // pay rent
-	    }
-
-	    else if (p.getSquareOn() instanceof Tax)
-		p.charge( ((Tax)p.getSquareOn()).getRent() ); // pay tax
-    	}
-	playerOptions( p );
-	//offer general options
-    }
+    }		   
     
     public void play(){
 	setup();
@@ -511,7 +322,7 @@ public class Monopoly{
 	while ( playerList.size() > 1 ){
 	    // for each player, call turn
 	    for (int i = 0; i < playerList.size(); i++){
-		turn( playerList.get(i) );
+		playerList.get(i).turn(board, this);
 		printBoard();
 	    }
 	}

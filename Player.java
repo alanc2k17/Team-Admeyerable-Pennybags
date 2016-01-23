@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import cs1.Keyboard;
 
-public class Player {
+public class Player implements UserInput{
     protected int[] _coordinate;
     protected String _name;
     protected String _symbol;
@@ -63,19 +64,42 @@ public class Player {
 	return _diceRoll;
     }
     
-    public int getJailTurns() {
-    	return _jailTurns;
-    }
-    
-    public void setJailTurns(int i) {
-    	_jailTurns = i;
-    }
-    public boolean inJail() {
-    	return _inJail;
+    public void setJail(boolean b){
+	_inJail = b;
     }
 
-    public void setJail(boolean b) {
-    	_inJail = b;
+    // usage: feed Keyboard.readString() into parameter s to allow user to select a number selection
+    // returns int as the selection number
+    // if invalid input, reasks user until valid input
+    public int parseInput(String s){
+	int retInt = 0;
+	try{
+	    retInt = Integer.parseInt(s);
+	}
+	catch (Exception e){ // if invalid input
+	    System.out.println("Invalid input! Please try again.");
+	    return parseInput(Keyboard.readString()); //reprompt user
+	}
+	return retInt;
+    }
+
+    // same usage as parseInput(String s), except additional int param range asks user to select a number
+    // between 0 and range inclusive, and reasks until valid input
+    public int parseInput(String s, int range){
+	int retInt = 0;
+	try{
+	    retInt = Integer.parseInt(s);
+	}
+	catch (Exception e){ // if invalid input
+	    System.out.println("Invalid input! Please try again.");
+	    return parseInput(Keyboard.readString(), range); //prompt user for another input, and parse it
+	}
+	
+	if (retInt < 1 || retInt > range){ // if out of bounds
+	    System.out.println("Invalid range! Please try again.");
+	    return parseInput(Keyboard.readString(), range); //prompt user for another input, and parse it
+	}  
+	return retInt;
     }
 
     // removes Property p from _propertiesOwned
@@ -203,7 +227,163 @@ public class Player {
 	}
 	return false;
     }
+
+    // executes a turn of this player if he is in jail
+    public void jailTurn() {
+	//check if player can afford bail
+	System.out.println("Jail Turn: " + _jailTurns );
+	if (getCash() >= 50) {
+	    //prompt user input
+	    System.out.println("Would you like to pay bail? y:1\tn:2");
+	    int input = parseInput(Keyboard.readString(), 2);
+	    //if user would like to pay bail
+	    //forced to pay if player has spent more than 3 turns in jail
+	    if (input == 1 || _jailTurns >= 3) {
+		_jailTurns = 0;
+		_inJail = false;
+		charge(50);
+	    }
+	    else
+		_jailTurns += 1;//add one to jailTurns
+	    
+	}
+	else if ( getCash() < 50 ){
+	    System.out.println("You do not have enough money to bail out. Would you like to mortgage property to do so? If this is your third turn, you will be forced to chose yes. 1:yes\t2:no");
+	    int input = parseInput(Keyboard.readString(), 2);
+	    if ( input == 1 || _jailTurns >= 3 ){
+		System.out.println("Mortgage until you get at least $50. If you do not do so or cannot do so and end mortgaging, you will lose.");
+		offerMortgageOptions(0);
+		if ( getCash() < 50 )
+		    return;
+	    }
+	}
+	else
+	    _jailTurns += 1;
+    }
+
+    // executes a player turn
+    // params: Landable[][] board represents the Monopoly board
+    //         Monopoly game represents the Monopoly object being played
+    //              needed for executeLandOn()
+    public void turn(Landable[][] board, Monopoly game) {
+    	if (_inJail){
+    	    jailTurn();
+    	}
+    	else { //if not in jail
+	    move(board);
+	    executeLandOn(board, game); // determine course of action based on what player landed on
+	    playerOptions(game); //offer general options
+	}
+    }
+
+    // determines course of action based on what player landed on
+    // params: Landable[][] board represents the Monopoly board
+    //         Monopoly game represents Monopoly object being played
+    //               needed for propertyAction()
+    public void executeLandOn(Landable[][] board, Monopoly game){
+	if ( _squareOn instanceof GoToJail )
+	    goToJailAction( (GoToJail)(_squareOn), board );
+
+	else if ( _squareOn instanceof Chance )
+	    chanceAction( (Chance)(_squareOn), board, game) ;
+
+	else if ( _squareOn instanceof Community )
+	    communityAction( (Community)(_squareOn), board, game );
+
+	else if ( _squareOn instanceof Property )
+	    propertyAction( (Property)(_squareOn), game );
+
+	else if ( _squareOn instanceof Tax )
+	    taxAction( (Tax)(_squareOn) );
+    }
+
+    // performs necessary actions if player lands on go to jail square
+    // takes 2 params: the GoToJail instance landed on, and the Monopoly board
+    public void goToJailAction( GoToJail square, Landable[][] board ){
+	setSquareOn( new int[] {0,10}, board); // move to jail
+	square.processVictim(this, board); // send to jail
+    }
     
+    // triggers actions on this player within chance object
+    // takes 3 params: the Chance instance landed on, the  Monpoly board, and the Monopoly game
+    public void chanceAction( Chance square, Landable[][] board, Monopoly game ){
+	System.out.println(square);
+	square.execute(this, board, game.getPlayerList()); // execute action based on chance card
+    }
+
+    // triggers actions on this player within chance object
+    // takes 2 params: the Community instance landed on, Monoboly board, and the Monopoly game
+    public void communityAction( Community square, Landable[][] board, Monopoly game ){
+	System.out.println(square);
+	square.execute(this, board, game.getPlayerList()); // execute action based on community card
+    }
+
+    // performs necessary actions for player landing on a property
+    // e.g. buying, renting, etc.
+    // params: typecasted Property square: property landed on
+    //         Monopoly game represents game being played
+    //             needed to reference Monopoly's auction method
+    public void propertyAction(Property square, Monopoly game){
+	if (square.getOwner() == null && square.getOwner() != this){ //unowned
+	    System.out.println("Do you wish to buy " + square.getName() + " for " + square.getBuyPrice() + " (current cash: " + getCash() + ")");
+	    System.out.println("1:yes\t2:no");
+	    int choice = parseInput(Keyboard.readString(), 2);
+	   
+	    if ( choice == 1 ){ //want to buy
+		while ( ! buy( square ) ){ // if not enough 
+		    // offer mortgage options
+		    System.out.println("You do not have enough cash to pay. Offering mortgage options.");
+		    offerMortgageOptions(0);
+		    System.out.print("Do you wish to buy the property? 1:yes\t2:no ");
+		    int keepGoing = parseInput(Keyboard.readString(), 2);
+		    if (keepGoing == 2) // if stop mortgaging
+			break; // exit loop
+		}
+		System.out.println("Success! You have successfully bought " + square.getName() );
+		System.out.println("Your new cash on hand: " + getCash() );
+	    }
+	    else // pass buying, go to auction
+		game.auction( square );
+	}
+	else // property has an owner
+	    pay( square ); // pay rent
+    }
+    
+    // charges the player for the tax value of the tax square landed on
+    // takes 1 param, typecasted Tax instance landed on
+    public void taxAction(Tax square){
+	charge( square.getRent() ); // pay tax
+    }
+    
+    // offers player options at the end of turn
+    // takes one param: Monopoly game, the monopoly object being played
+    //                    used to remove player from Monopoly's playerList if he is bankrup
+    public void playerOptions(Monopoly game){
+	System.out.println("1. Build houses");
+	System.out.println("2. Sell houses");
+	System.out.println("3. Morgage property");
+	System.out.println("4. Unmortgage property");
+	System.out.println("5. End turn");
+	System.out.println("6. Initiate a trade. NOT IMPLEMENTED");
+	System.out.println("7. Save and exit game. NOT IMPLEMENTED");
+	if ( getCash() < 0 )
+	    System.out.println("WARNING. YOU ARE IN DEBT. IF YOU DO NOT ACHIEVE A NON-NEGATIVE BALANCE AND END YOUR TURN, YOU WILL FORFEIT. IF YOU CANNOT REPAY YOUR DEBTS IN THIS TURN, YOU LOSE. Have a nice day.");
+	int choice = parseInput(Keyboard.readString(), 7);
+
+	if ( (choice == 1 || choice == 2) ) // if sell houses or build houses
+	    offerBuildOptions(choice-1);
+	
+	else if (choice == 3 || choice == 4) // mortgage or unmortgage
+	    offerMortgageOptions(choice-3);
+       
+	else if (choice == 5){ // done
+	    if ( getCash() < 0 ) // if bankrupt
+		game.getPlayerList().remove(this); // remove player from game
+	    return; // stop playerOptions
+	}
+	playerOptions(game); // call player options again
+    }
+
     // builds amt number of houses on NormalProperty p
     // prints out confirmation/denial message for user
     // returns new number of houses on NormalProperty p
@@ -232,6 +412,57 @@ public class Player {
 	return p.getHouses();
     }
 
+    // offers build/sell options
+    // params: int opt 0 if player is building, 1 if selling
+    public void offerBuildOptions(int opt){
+	if ( getPropertiesOwned().size() == 0 ) // no build/sell if no properties
+	    System.out.println("You do not have any properties yet.");
+
+	else{
+	    // print info about properties to build houses on
+	    boolean atLeastOne = false; // true if there is at least 1 property to build a house on
+	   
+	    for ( int i = 0; i < getPropertiesOwned().size(); i++ ){
+		if ( getPropertiesOwned().get(i) instanceof NormalProperty){
+		    NormalProperty tmp = (NormalProperty)(getPropertiesOwned().get(i));
+		    if ( tmp.checkMonopoly() ){ //print info if monopoly b/c then can build house
+			atLeastOne = true;
+			System.out.print( i + 1 );
+			System.out.print( ". " + tmp.getName() );
+			System.out.print( "\tCost: " + tmp.getHouseCost() );
+			System.out.print( "\tHouses: " + tmp.getHouses() + "\n");
+		    }
+		}
+	    } // close all printing
+	    System.out.println();
+	    
+	    if ( atLeastOne ){ // only offer choices if player can build at least one house
+		System.out.print("Which property do you want to build on? ");
+		int propChoice = parseInput(Keyboard.readString(), getPropertiesOwned().size()) - 1;
+		if ( getPropertiesOwned().get(propChoice) instanceof NormalProperty && 
+		     ((NormalProperty)(getPropertiesOwned()).get(propChoice)).checkMonopoly() ){
+		    
+		    NormalProperty property = (NormalProperty) ( getPropertiesOwned().get(propChoice) );
+		    
+		    if (opt==0){ //build
+			System.out.print("How many houses do you want to build? ");
+			int houseNum = parseInput(Keyboard.readString(), 5);
+			buildHouse( property, houseNum );
+		    }
+		    else if (opt==1){ //sell
+			System.out.print("How many hosues do you want to sell? ");
+			int houseNum = parseInput(Keyboard.readString(), 5);
+			sellHouse( property, houseNum);
+		    }
+		} // close if property is part of monopoly
+	    } // close if at least one
+	    
+	    else // invalid input
+		System.out.println("You do not have any properties that you can build on.");
+	} // closes else
+    }
+    
+
     public boolean mortgage(Property p) {
 	return p.mortgage();
     }
@@ -249,7 +480,50 @@ public class Player {
 	return true;
     }
 
-    
+    // offers mortgage options and keeps prompting player until done
+    // params: int opt 0 if player is mortgaging, 1 if unmortgaging
+    public void offerMortgageOptions(int opt){
+	if ( getPropertiesOwned().size() == 0 ){
+	    System.out.println("No properties to work with.");
+	    return;
+	}
+	boolean continueMortgage = true;
+	while ( continueMortgage ){
+	    // print properties
+	    for (int i = 0; i < _propertiesOwned.size(); i++){
+		String retStr = "";
+		retStr += i + 1 + " "; // choice number
+		retStr += _propertiesOwned.get(i).getName();
+		retStr += " $" + _propertiesOwned.get(i).getMortgageValue() + " ";
+		if ( _propertiesOwned.get(i).isMortgaged() )
+		    retStr += "already mortgaged";
+		else
+		    retStr += "not mortgaged.";
+		System.out.println( retStr );
+	    }
+
+	    // choose property
+	    if ( opt == 0 ) //mortgage option
+		System.out.println("Enter number of property you want to mortgage.");
+	    else // unmortgage option
+		System.out.println("Enter number of property you want to unmortgage.");
+	    int index = parseInput(Keyboard.readString(), _propertiesOwned.size());
+
+	    if ( opt == 0 ) //mortgage option
+		mortgage( _propertiesOwned.get(index - 1) );
+	    else // unmortgage option
+		unMortgage( _propertiesOwned.get(index - 1) );
+
+	    // askt to continue
+	    if ( opt == 0 )
+		System.out.print("Continue mortgaging? 1:yes\t2:no ");
+	    else
+		System.out.print("Continue unmortgaging? 1:yes\t2:no ");
+	    int continueOption = parseInput(Keyboard.readString(), 2);
+	    if ( continueOption == 2 )
+		continueMortgage = false;
+	}	
+    }
 
 }
 
