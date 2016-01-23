@@ -412,13 +412,14 @@ public class Monopoly{
 		    
     public void jailTurn(Player p) {
 	//check if player can afford bail
+	System.out.println("Jail Turn: " + p.getJailTurns());
 	if (p.getCash() >= 50) {
 	    //prompt user input
 	    System.out.println("Would you like to pay bail? y:1\tn:2");
 	    int input = parseInput(Keyboard.readString(), 2);
 	    //if user would like to pay bail
 	    //forced to pay if player has spent more than 3 turns in jail
-	    if (input == 1 || p.getJailTurns() > 3) {
+	    if (input == 1 || p.getJailTurns() >= 3) {
 		p.setJailTurns(0); 
 		p.setJail(false);
 		p.charge(50);
@@ -430,6 +431,12 @@ public class Monopoly{
 	else if ( p.getCash() < 50 ){
 	    System.out.println("You do not have enough money to bail out. Would you like to mortgage property to do so? If this is your third turn, you will be forced to chose yes. 1:yes\t2:no");
 	    int input = parseInput(Keyboard.readString(), 2);
+	    if ( input == 1 || p.getJailTurns() >= 3 ){
+		System.out.println("Mortgage until you get at least $50. If you do not do so or cannot do so and end mortgaging, you will lose.");
+		offerMortgageOptions( p, 0 );
+		if ( p.getCash() < 50 )
+		    return;
+	    }
 	}
 	else
 	    p.setJailTurns(p.getJailTurns() + 1);
