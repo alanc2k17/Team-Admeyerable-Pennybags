@@ -1,0 +1,45 @@
+General Rules / Decision Making Procedures for AIPlayer
+----------------------------------------------------------------
+
+when AIPlayer prompts a trade ...
++ receiveTrade()
+  o if giving my property = monopoly for other player:
+       o if other's property to me = monopoly for me:
+       	    GRANT TRADE
+       o if other's property to me >= 2.5 * value of my property to other
+       	    GRANT TRADE
+       o else: DENY TRADE
+
+  o else if other's property >= my property: 
+       GRANT TRADE
+
+when AIPlayer's turn to bid
++ autoAuction()
+  o if highest bid >= getCash():
+       QUIT
+  o while highest bid <= 1.25 * propertyValue
+       CONTINUE
+  o while upon acquisition = monopoly for me && highest bid >= .9 * getCash()
+       CONTINUE
+  o when all else exits
+       QUIT
+
+when AIPlayer lands on an empty property
++ autoBuy()
+  o if getCash() >= property value
+       BUY
+  o if acquisition = monopoly && totalMortgageValue + getCash() > propertyPrice
+       AUTOMORTGAGE until enough money, then buy
+  o else
+       PASS AND INITIATE AUCTION SEQUENCE
+
+triggered when getCash() < 0 or when trying to buy properties under certain conditions
+mortgages properties from least valuable to most valuable
++ autoMortgage(int targetCash)
+  o while getCash() < targetCash
+      MORTGAGE NEXT LOWEST PROPERTY
+  o if no more properties that can mortgages
+      QUIT
+
+ 
+       
