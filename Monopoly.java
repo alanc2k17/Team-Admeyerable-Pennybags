@@ -348,7 +348,45 @@ public class Monopoly{
 	}
 	playerOptions(p); // call player options again
     }
-    
+    public void auction(Property p) {
+	ArrayList<Player> bidderList = playerList;
+	int currentBid = 0;
+	Player highestBidder;
+
+	while (bidderList.size() > 1) {
+	    for (Player pl : bidderList) {
+		//if current player cannot afford to bid
+		if (currentBid > pl.getCash()) 
+		    bidderList.remove(pl);
+		//if current player can afford to bid
+		else {
+		    System.out.println("People are bidding on " + p.getName() + "! Would you like to bid? y:1\tn:2");
+		    int input = parseInput(Keyboard.readString(), 2);
+		    //if player wants to bid, determine how much
+		    if (input == 1) {
+			System.out.println("Current bid: " + currentBid + ". How much would you like to bid?");
+			int inputBid = parseInput(Keyboard.readString()); // needs new parseInput
+			if (inputBid < currentBid) {
+			    System.out.println("Too low! Cheapskate!");
+			}
+			//if player does not want to bid
+			else {
+			    currentBid = inputBid;
+			    highestBidder = pl;
+			}
+		    }
+		    else {
+			System.out.println("Do you want to drop out of the auction? y:1\tn:2");
+			int inputDropOut = parseInput(Keyboard.readString(), 2);
+			if (inputDropOut == 1)
+			    bidderList.remove(pl);
+		    }
+		}
+	    }
+
+	}
+    }
+		    
     public void jailTurn(Player p) {
 	//check if player can afford bail
 	if (p.getCash() >= 50) {
@@ -423,7 +461,7 @@ public class Monopoly{
 			System.out.println("Your new cash on hand: " + p.getCash() );
 		    }
 		    else // pass to auction
-			System.out.println("IMPLEMENT AUCTION LATER"); //auction
+			auction(p.getSquareOn());
 		}
 		else // property has an owner
 		    p.pay( squareOn ); // pay rent
