@@ -201,7 +201,7 @@ public class NormalProperty extends Property{
 	    _mortgage = false;
 	    return true;
 	}
-	System.out.println("Yay! There's no need to unmortgage this property.");
+	System.out.println("Yay! There's no need to unmortgage this property, or you do not have enough money.");
 	return false;
     }
 	    
