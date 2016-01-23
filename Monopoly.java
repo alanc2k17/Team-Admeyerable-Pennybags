@@ -59,6 +59,7 @@ public class Monopoly{
 
 	    // call constructor and add to playerList
 	    playerList.add( new Player(pName, pSymbol) );
+	    
 	}
     }
 	
@@ -288,6 +289,7 @@ public class Monopoly{
 		if ( p.getPropertiesOwned().get(i) instanceof NormalProperty){
 		    NormalProperty tmp = (NormalProperty)(p.getPropertiesOwned().get(i));
 		    if ( tmp.checkMonopoly() ){
+
 			System.out.print( i + 1 );
 			System.out.print( ". " + tmp.getName() );
 			System.out.print( "\tCost: " + tmp.getHouseCost() );
@@ -297,7 +299,7 @@ public class Monopoly{
 	    } // close all printing
 	    System.out.println();
 	    
-	    System.out.print("Which property do you want to build on?");
+	    System.out.print("Which property do you want to build on? ");
 	    int propChoice = parseInput(Keyboard.readString(), p.getPropertiesOwned().size()) - 1;
 	    if ( p.getPropertiesOwned().get(propChoice) instanceof NormalProperty && 
 		 ((NormalProperty)(p.getPropertiesOwned()).get(propChoice)).checkMonopoly() ){
@@ -418,8 +420,6 @@ public class Monopoly{
     	}
 	playerOptions( p );
 	//offer general options
-
-	Keyboard.readString();
     }
     
     public void play(){

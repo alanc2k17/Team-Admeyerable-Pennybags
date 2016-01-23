@@ -136,8 +136,9 @@ public class NormalProperty extends Property{
     public boolean checkMonopoly(){
 	int count = 0;
 	for (int i = 0; i < getOwner().getPropertiesOwned().size(); i++){ // loop through owner properties
-	    if ( this.getClass().equals( getOwner().getPropertiesOwned().get(i) ) ) //if same class
+	    if ( this.getClass().equals( getOwner().getPropertiesOwned().get(i).getClass() ) ){ //if same class
 		count += 1;
+	    }
 	}
 	return count == _others;
 	    
