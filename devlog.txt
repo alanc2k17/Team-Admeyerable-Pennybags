@@ -1,6 +1,13 @@
+2015-01-21
+- Alan and Calvin: progress in implementing player options; wrote first two options together in class
+- Calvin: finished incorporation of mortgage and unmortgage in player options; debugged
+
+2015-01-21
+- Calvin: reworked flowchart to better plan turn() method and designed a better board
+- Alan: reworked UML diagram
 2015-01-20
 - Calvin and Alan: deliberated on poorly written jailTurn() in class
-Alan: rewrote poorly written jailTurn() (is now properly written), completed class Community
+- Alan: rewrote poorly written jailTurn() (is now properly written), completed class Community
 - Calvin: debugged and implemented Chance/Community into Java; implemented GoToJail; fortified turn-based mechanism to make it more robust and more easy flowing; implemented actions if Player lands on certain other spaces
  
 2015-01-19
