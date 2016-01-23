@@ -1,5 +1,6 @@
 2016-01-23
 - Calvin: wrote an outline of the general AI decision-making process
+- Calvin: moved many of Monopoly's methods to Player b/c it makes more sense
 
 2016-01-22
 - Calvin: debugged Alan's auctioning system; redesigned board to allow for better user interface; debugged multiple mechanisms in general 
