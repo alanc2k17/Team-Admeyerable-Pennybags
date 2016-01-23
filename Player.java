@@ -82,36 +82,20 @@ public class Player {
     // returns property removed
     public Property removeProperty(Property p){
 	_propertiesOwned.remove(p);
+	p.setOwner(null);
 	return p;
     }
 
     // gives Property p to player
     public void giveProperty(Property p){
 	_propertiesOwned.add(p);
+	p.setOwner(this);
     }
 
     private void setCash(int newCashValue) {
 	_cashOnHand = newCashValue;
 	System.out.println( _name + " now has $" + getCash());
     }
-    
-    /*
-    // sets the square the player is on
-    // used for go to jail and chance cards
-    // updates player coordinates
-    public void setSquareOn(Landable square, Landable[][] board){
-	_squareOn = square;
-	// find square
-	for (int i = 0; i < board.length; i++){
-	    for (int k = 0; k < board[i].length; k++){
-		if ( board[i][k] == square ){
-		    _coordinate[0] = i; //set coordinates to square location
-		    _coordinate[1] = k;
-		}
-	    }
-	}
-    }
-    */
     
     // coord details new coordinates
     public void setSquareOn(int[] coord, Landable[][] board) {
@@ -214,8 +198,7 @@ public class Player {
 	// enough money to pay
 	if ( getCash() >= p.getBuyPrice() ){
 	    charge( p.getBuyPrice() ); //charge player
-	    p.setOwner(this); //set owner to this player
-	    this.giveProperty(p);
+	    this.giveProperty(p); //give property and set new owner
 	    return true;
 	}
 	return false;
