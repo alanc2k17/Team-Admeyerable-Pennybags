@@ -128,7 +128,6 @@ public class Player {
     // takes amt of money away from player
     public int charge(int amt) {
 	setCash( getCash() - amt );
-	System.out.println( _name + " now has $" + _cashOnHand );
 	return getCash();
     }
   
