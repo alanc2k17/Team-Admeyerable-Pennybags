@@ -1,30 +1,38 @@
-2015-01-21
+2016-01-23
+- Calvin: wrote an outline of the general AI decision-making process
+
+2016-01-22
+- Calvin: debugged Alan's auctioning system; redesigned board to allow for better user interface; debugged multiple mechanisms in general 
+
+
+2016-01-21
 - Alan and Calvin: progress in implementing player options; wrote first two options together in class
 - Calvin: finished incorporation of mortgage and unmortgage in player options; debugged
 
-2015-01-21
+2016-01-21
 - Calvin: reworked flowchart to better plan turn() method and designed a better board
 - Alan: reworked UML diagram
-2015-01-20
+
+2016-01-20
 - Calvin and Alan: deliberated on poorly written jailTurn() in class
 - Alan: rewrote poorly written jailTurn() (is now properly written), completed class Community
 - Calvin: debugged and implemented Chance/Community into Java; implemented GoToJail; fortified turn-based mechanism to make it more robust and more easy flowing; implemented actions if Player lands on certain other spaces
  
-2015-01-19
+2016-01-19
 - Alan: wrote Chance class and jailTurn() in Monopoly class
 
-2015-01-18
+2016-01-18
 - Calvin: implemented basic parts of turn based mechanism; debugged; reworked some Property architecture
 
-2015-01-17
+2016-01-17
 - Calvin: debugged
 
-2015-01-16
+2016-01-16
 - Alan and Calvin: decided on new coordinate system
 - Calvin: edited & revised parts of Player
 - Alan: wrote class Player, revised Property subclasses, toString methods for properties
 
-2015-01-14
+2016-01-14
 - Alan and Calvin: reworked board structure in class
 - Calvin: wrote mortgage() and unmortgage() in appropriate classes
 
