@@ -536,8 +536,9 @@ public class Player implements UserInput{
 		continueMortgage = false;
 	}	
     }
-        public void trade(Player p) {
-	ArrayList<NormalProperty> want, have;
+    public void trade(Player p) {
+	ArrayList<Property> want = new ArrayList<Property>(1);
+	ArrayList<Property> have = new ArrayList<Property>(1);
 	boolean anotherOne = true;
 
 	//prompt user to choose properties wanted
@@ -546,7 +547,7 @@ public class Player implements UserInput{
 	while (anotherOne == true) {
 	    int input = parseInput(Keyboard.readString(), p._propertiesOwned.size());
 	    //check if property is already chosen
-	    if (want.contains(p._propertiesOwned(input)))
+	    if (want.contains(p._propertiesOwned.get(input)))
 		System.out.println("This property has already been chosen! Please choose another property.");
 	    else {
 		//confirm property
@@ -559,17 +560,17 @@ public class Player implements UserInput{
 		System.out.println("Would you like to make another choice? y:1\tn:2");
 		int another = parseInput(Keyboard.readString(), 2);
 		if (another == 2)
-		    anotherOne == false;
+		    anotherOne = false;
 	    } //end else
 	} // end while | easter egg found! (3 of 3)
-	anotherOne == true;
+	anotherOne = true;
 	
 	//promt user to choose properties to exchange
 	System.out.println("Please choose which properties you would like to give " + p._name);
 	System.out.println(this._propertiesOwned);
 	while (anotherOne == true) {
 	    int input = parseInput(Keyboard.readString(), this._propertiesOwned.size());
-	    if (want.contains(p._propertiesOwned(input)))
+	    if (want.contains(p._propertiesOwned.get(input)))
 		System.out.println("This property has already been chosen! Please choose another property.");
 	    else {
 		//confirm property
@@ -582,7 +583,7 @@ public class Player implements UserInput{
 		System.out.println("Would you like to make another choice? y:1\tn:2");
 		int another = parseInput(Keyboard.readString(), 2);
 		if (another == 2)
-		    anotherOne == false;
+		    anotherOne = false;
 	    } //end else 
 	} //end while
 	
@@ -592,7 +593,7 @@ public class Player implements UserInput{
 	System.out.println( "Does " + this._name + " agree to the trade?" );
 	int agree1 = parseInput(Keyboard.readString(), 2);
 	System.out.println( "Does " + p._name + " agree to the trade?" );
-	int agree2 = parseInput(Keybaord.readString(), 2);
+	int agree2 = parseInput(Keyboard.readString(), 2);
 	//if both players agree to trade
 	if (agree1 == 1 && agree2 == 1) {
 	    System.out.println("Both players agreed to the trade!");
