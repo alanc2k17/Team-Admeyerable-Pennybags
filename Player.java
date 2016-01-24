@@ -687,11 +687,11 @@ public class Player implements UserInput{
 			System.out.println(pr.getName());
 		    }
 		}
+		//if one/both players do not agree to the trade
+		else 
+		    System.out.println("Oh no! One (or more) of the parties declined the trade! :C");
 	}
-	//if one/both players do not agree to the trade
-	else 
-	    System.out.println("Oh no! One (or more) of the parties declined the trade! :C");
-    } //end trade
+    }//end trade
 
 }
 
