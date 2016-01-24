@@ -371,7 +371,7 @@ public class Player implements UserInput{
 	    else // pass buying, go to auction
 		game.auction( square );
 	}
-	else // property has an owner
+	else if ( square.getOwner() != this ) // property has an owner but not this player
 	    pay( square ); // pay rent
     }
     
