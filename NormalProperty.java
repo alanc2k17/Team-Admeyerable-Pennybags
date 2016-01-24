@@ -79,6 +79,14 @@ public class NormalProperty extends Property{
 	    return _buyPrice1;
     }
 
+    //MUTATORS USED IN LOADING FROM SAVE FILE
+    public void setHouses(int n){
+	if ( n > 5 )
+	    _houses = 0;
+	else
+	    _houses = n;
+    }
+
     // returns an int equal to rent on this property
     // uses _houses inst. var. to determine rent
     public int getRent(){
@@ -140,21 +148,9 @@ public class NormalProperty extends Property{
 	    }
 	}
 	return count == _others;
-	    
-	/*
-	ArrayList<Property> ownerProperties = getOwner().getPropertiesOwned();
-
-	// for each color group member property
-	for (int i = 0; i < _groupMembers.size(); i++){
-	    // if this color group property not owned
-	    if (! propertyIn( _groupMembers.get(i), ownerProperties) ){
-		return false; 
-	    }
-	}
-	return true;
-	*/
     }
-
+    
+    // accessor
     // returns the mortgage value of property, depending on whether it is expensive or not
     public int getMortgageValue(){
 	if ( _expensive ) // use expensive mortgage value

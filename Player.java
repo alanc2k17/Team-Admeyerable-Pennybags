@@ -36,6 +36,7 @@ public class Player implements UserInput{
 	return returnString;
     }
 
+    // accessors
     public String getName(){
 	return _name;
     }
@@ -72,6 +73,25 @@ public class Player implements UserInput{
 	return _jailTurns;
     }
 
+    // MUTATORS USED IN LOADING FROM SAVE FILE
+
+    public void setName(String s){
+	_name = s;
+    }
+
+    public void setSymbol(String s){
+	_symbol = s;
+    }
+
+    public void setCoords(int[] coord){
+	_coordinate = coord;
+    }
+
+    public void setCash(int newCashValue) {
+	_cashOnHand = newCashValue;
+	System.out.println( _name + " now has $" + getCash());
+    }
+    
     public void setJail(boolean b){
 	_inJail = b;
     }
@@ -126,11 +146,6 @@ public class Player implements UserInput{
     public void giveProperty(Property p){
 	_propertiesOwned.add(p);
 	p.setOwner(this);
-    }
-
-    private void setCash(int newCashValue) {
-	_cashOnHand = newCashValue;
-	System.out.println( _name + " now has $" + getCash());
     }
     
     // coord details new coordinates
@@ -426,6 +441,10 @@ public class Player implements UserInput{
 	    }
 	    return true; // stop playerOptions
 	}
+
+	else if (choice == 7)
+	    game.saveData();
+
 	return playerOptions(game); // call player options again
     }
 

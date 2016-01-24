@@ -51,11 +51,10 @@ public abstract class Property extends Landable {
     public boolean isMortgaged(){
 	return _mortgage;
     }
-
-    // add a property to the _groupMembers arraylsit
-    // _groupMembers used to determine monopoly or rent
-    //public void addMember(Property p) {
-    //	_groupMembers.add(p);
-    //}
+    
+    // MUTATORS USED TO SET INFO WHEN LOADING SAVE FILE
+    public void setMortgage(boolean b){
+	_mortgage = true;
+    }
   
 }

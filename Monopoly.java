@@ -5,13 +5,11 @@ public class Monopoly implements UserInput{
     private int numPlayers;
     private ArrayList<Player> playerList;
     private Landable[][] board;
-    private int turns;
 
     // constructor; sets default values
     public Monopoly(){
 	numPlayers = 0;
 	playerList = new ArrayList<Player>();
-	turns = 0;
     }
 
     // accessor to get playerList
@@ -60,9 +58,12 @@ public class Monopoly implements UserInput{
 	return retInt;
     }
 
-    // NOT DONE
     // takes data from the game and writes data to a file called savefile.txt
     public void saveData(){
+	String playerInfo = "";
+	String propertyInfo = "";
+
+	// gather player info; loop through playerList
 	for ( int i = 0; i < playerList.size(); i++ ){
 	    String line = "";
 	    Player p = playerList.get(i);
@@ -72,11 +73,49 @@ public class Monopoly implements UserInput{
 	    line += p.getCoords()[1] + ",";
 	    line += p.getCash() + ",";
 	    line += p.inJail() + ",";
-	    line += p.jailTurns() + ",";
+	    line += p.jailTurns() + "|";
+	    playerInfo += line;
 	}
+
+	// gather property info; loo through board to get properties
+	for ( int row = 0; row < board.length; row++ ){
+	    for ( int col = 0; col < board[row].length; col++ ){
+		if ( board[row][col] instanceof Property && ((Property) (board[row][col])).getOwner() != null ){ // if owned property
+		    Property pr = (Property)(board[row][col]); //typecast to access vars
+		    String line = "";
+		    line += pr.getInitials() + ",";
+		    line += row + ",";
+		    line += col + ",";
+		    line += pr.getOwner().getSymbol() + ",";
+		    line += pr.isMortgaged() + ",";
+		    
+		    if ( board[row][col] instanceof NormalProperty )
+			line += ((NormalProperty) board[row][col] ).getHouses() + "|";
+		    else
+			line += 0 + "|"; //if instance of railroad or utility, no houses
+
+		    propertyInfo += line;
+		}
+	    }
+	} // close propert loop
+
+	Savefile.writeInfo(propertyInfo + "&&&" + playerInfo);		
     }
+
+
     // reads data from the savefile.txt and sets up the game accordingly
-    
+    // returns true if data successfully loaded
+    // false otherwise
+    public boolean loadFile(){
+	String contents = Savefile.readInfo();
+	if ( contents.equals("bad") ) // no existing savefile
+	    return false;
+	String propertyInfo = contents.substring(0, contents.indexOf("&&&"));
+	String playerInfo = contents.substring(contents.indexOf("&&&")+3, contents.length());
+	return true;
+    }
+	
+	    
     // asks user for number of players, and their names
     // to be called in setup()
     public void setupPlayers(){
