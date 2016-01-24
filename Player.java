@@ -63,9 +63,21 @@ public class Player implements UserInput{
     public int getDiceRoll(){
 	return _diceRoll;
     }
+
+    public boolean inJail(){
+	return _inJail;
+    }
     
+    public int jailTurns(){
+	return _jailTurns;
+    }
+
     public void setJail(boolean b){
 	_inJail = b;
+    }
+
+    public void setJailTurns(int n){
+	_jailTurns = n;
     }
 
     // usage: feed Keyboard.readString() into parameter s to allow user to select a number selection

@@ -60,25 +60,41 @@ public class Monopoly implements UserInput{
 	return retInt;
     }
 
+    // NOT DONE
+    // takes data from the game and writes data to a file called savefile.txt
+    public void saveData(){
+	for ( int i = 0; i < playerList.size(); i++ ){
+	    String line = "";
+	    Player p = playerList.get(i);
+	    line += p.getName() + ",";
+	    line += p.getSymbol() + ",";
+	    line += p.getCoords()[0] + ",";
+	    line += p.getCoords()[1] + ",";
+	    line += p.getCash() + ",";
+	    line += p.inJail() + ",";
+	    line += p.jailTurns() + ",";
+	}
+    }
+    // reads data from the savefile.txt and sets up the game accordingly
+    
     // asks user for number of players, and their names
     // to be called in setup()
     public void setupPlayers(){
 	System.out.print("How many players do you wish to have (2-4): ");
 	numPlayers = parseInput(Keyboard.readString(), 4);
-	
+	while ( numPlayers < 2 ){ // make sure within range
+	    System.out.println("Invalid range.");
+	    numPlayers = parseInput(Keyboard.readString(), 4);
+	}
+
+	String[] symbolBank = {"x", "o", "v", "m"};	
 	for (int i = 0; i < numPlayers; i++){ // ask stuff about each player
-	    System.out.print("Player " + (i+1) + " name: ");
+
+	    System.out.print("Player " + (i+1) + " " + symbolBank[i] + " name: ");
 	    String pName = Keyboard.readString();
 	    
-	    String[] symbolBank = {"x", "o", "v", "m"};
-	    System.out.println("Player " + (i+1) + " symbol:");
-	    System.out.println("1:x\t2:o\t3:v\t4:m");
-	    // choice corresponds with index in symbol bank -1
-	    int symbolChoice = parseInput(Keyboard.readString(), 4);
-	    String pSymbol = symbolBank[symbolChoice-1];
-
 	    // call constructor and add to playerList
-	    playerList.add( new Player(pName, pSymbol) );
+	    playerList.add( new Player(pName, symbolBank[i]) );
 	    
 	}
     }

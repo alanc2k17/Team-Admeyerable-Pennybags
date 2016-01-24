@@ -16,8 +16,7 @@ public class NormalProperty extends Property{
 
     protected int _houses;
     protected int _houseCost;
-    //true if this's owner has monopoly on color group
-    protected boolean _monopoly; 
+
     //number of other properties with same color group needed for monopoly
     protected int _others;
 
