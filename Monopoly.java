@@ -380,7 +380,6 @@ public class Monopoly implements UserInput{
     
     public void play(){
 	setup();
-	//printBoard();
 	// while there are at least 2 players in the game
 	while ( playerList.size() > 1 ){
 	    // for each player, call turn
@@ -389,8 +388,14 @@ public class Monopoly implements UserInput{
 	    while ( turnNumber < playerList.size() ){
 		if ( turnNumber >= playerList.size() ) //guard against out of bounds error
 		    break;
-		if ( playerList.get(turnNumber).turn(board, this) ) //if player is not bankrupt after turn
+		if ( playerList.get(turnNumber) instanceof AI) {  
+		    ((AI)playerList.get(turnNumber)).botTurn(board, this); //if player is not bankrupt after turn
 		    turnNumber += 1;
+		}
+		else {
+		    if ( playerList.get(turnNumber).turn(board, this) )
+			turnNumber += 1;
+		}
 		// if player is bankrupt, do not increment, b/c next-in-line player shifts left to fill the spot
 	    }    
 	}
