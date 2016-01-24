@@ -50,7 +50,7 @@ public class AI extends Player {
 	for (Property pr : have) {
 	    if (checkMonopoly((NormalProperty)pr))
 		willGiveMonopoly = true;
-	    netWorthHave += pr.getBuyPrice();
+	    netWorthHave += pr.getBuyPrice();	    
 	}
 
 	//algorithm to decide
@@ -173,4 +173,3 @@ public class AI extends Player {
 	    pay( square ); // pay rent
 	}
 }//end class
-
