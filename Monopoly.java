@@ -270,14 +270,23 @@ public class Monopoly implements UserInput{
 
     // performs auctioning between every player in game
     public void auction(Property p) {
+	// to avoid null pointer exception, quit auction if no one has money
+	boolean allNegative = true;
+	for ( int i = 0; i < playerList.size(); i++ ){
+	    if ( playerList.get(i).getCash() > 0 )
+		allNegative = false;
+	}
+	if (allNegative == true) { return; }
+
 	// copy contents of playerList into bidderList
 	// cannot use assignment operator, b/c then an alias would be created
+	System.out.println("Starting auction!");
 	ArrayList<Player> bidderList = new ArrayList<Player>();
 	for ( int i = 0; i < playerList.size(); i++ ){
 	    bidderList.add( playerList.get(i) );
 	}
 	int currentBid = 0;
-	Player highestBidder = null;
+	Player highestBidder = new Player("no one", "d");
 	int dropOuts = 0;
 
 	while (bidderList.size() - dropOuts > 1) { // while there is more tha one bidder
@@ -336,11 +345,17 @@ public class Monopoly implements UserInput{
 	// while there are at least 2 players in the game
 	while ( playerList.size() > 1 ){
 	    // for each player, call turn
-	    for (int i = 0; i < playerList.size(); i++){
-		playerList.get(i).turn(board, this);
-		printBoard();
-	    }
+	    int maxTurns = playerList.size();
+	    int turnNumber = 0;
+	    while ( turnNumber < playerList.size() ){
+		if ( turnNumber >= playerList.size() ) //guard against out of bounds error
+		    break;
+		if ( playerList.get(turnNumber).turn(board, this) ) //if player is not bankrupt after turn
+		    turnNumber += 1;
+		// if player is bankrupt, do not increment, b/c next-in-line player shifts left to fill the spot
+	    }    
 	}
+	System.out.println("Congratulations to our filthy rich winner: " + playerList.get(0).getName());
        	
     }
 

@@ -64,7 +64,7 @@ public class Community extends Landable {
 		for (int i = 0; i < playerList.size(); i++){ // for each player
 		    playerList.get(i).give(50); // give 50
 		}
-		p.charge(50 * playerList.size());
+		p.charge(50 * playerList.size()-1);
 	    }
 	    if (n == 4) {
 		//holiday fund matures

@@ -17,7 +17,7 @@ public class Player implements UserInput{
 	_name = "nameless";
 	_symbol = "D";
 	_propertiesOwned = new ArrayList<Property>();
-	_cashOnHand = 1500;
+	_cashOnHand = 1300;
     }
     
     public Player(String newName, String symbol) {
@@ -257,9 +257,8 @@ public class Player implements UserInput{
 	    }
 	    else
 		_jailTurns += 1;//add one to jailTurns
-	    
 	}
-	else if ( getCash() < 50 ){
+	else { // less than $50
 	    System.out.println("You do not have enough money to bail out. Would you like to mortgage property to do so? If this is your third turn, you will be forced to chose yes. 1:yes\t2:no");
 	    int input = parseInput(Keyboard.readString(), 2);
 	    if ( input == 1 || _jailTurns >= 3 ){
@@ -267,26 +266,33 @@ public class Player implements UserInput{
 		offerMortgageOptions(0);
 		if ( getCash() < 50 )
 		    return;
+		else{
+		    charge(50);
+		    return;
+		}
 	    }
+	    else
+		_jailTurns += 1;
 	}
-	else
-	    _jailTurns += 1;
     }
 
     // executes a player turn
     // params: Landable[][] board represents the Monopoly board
     //         Monopoly game represents the Monopoly object being played
     //              needed for executeLandOn()
-    public void turn(Landable[][] board, Monopoly game) {
+    // returns true if Player is alive after turn
+    // returns false if Player is bankrupt
+    public boolean turn(Landable[][] board, Monopoly game) {
 	game.clear(); //clear screen
     	if (_inJail){
     	    jailTurn();
+	    return playerOptions(game);
     	}
     	else { //if not in jail
 	    move(board);
 	    game.printBoard();
 	    executeLandOn(board, game); // determine course of action based on what player landed on
-	    playerOptions(game); //offer general options
+	    return playerOptions(game); //offer general options
 	}
     }
 
@@ -341,7 +347,7 @@ public class Player implements UserInput{
 	    System.out.println("Do you wish to buy " + square.getName() + " for " + square.getBuyPrice() + " (current cash: " + getCash() + ")");
 	    System.out.println("1:yes\t2:no");
 	    int choice = parseInput(Keyboard.readString(), 2);
-	   
+	    boolean  purchaseMade = true;
 	    if ( choice == 1 ){ //want to buy
 		while ( ! buy( square ) ){ // if not enough 
 		    // offer mortgage options
@@ -349,11 +355,18 @@ public class Player implements UserInput{
 		    offerMortgageOptions(0);
 		    System.out.print("Do you wish to buy the property? 1:yes\t2:no ");
 		    int keepGoing = parseInput(Keyboard.readString(), 2);
-		    if (keepGoing == 2) // if stop mortgaging
+		    if (keepGoing == 2){ // if stop mortgaging
+			System.out.println("The property has not been bought. Any properties you did mortgage still remain mortgaged.");
+			purchaseMade = false;
 			break; // exit loop
+		    }
 		}
-		System.out.println("Success! You have successfully bought " + square.getName() );
-		System.out.println("Your new cash on hand: " + getCash() );
+		if ( purchaseMade ){
+		    System.out.println("Success! You have successfully bought " + square.getName() );
+		    System.out.println("Your new cash on hand: " + getCash() );
+		}
+		else //if no purchase made even after mortgaging
+		    game.auction( square );
 	    }
 	    else // pass buying, go to auction
 		game.auction( square );
@@ -371,7 +384,9 @@ public class Player implements UserInput{
     // offers player options at the end of turn
     // takes one param: Monopoly game, the monopoly object being played
     //                    used to remove player from Monopoly's playerList if he is bankrup
-    public void playerOptions(Monopoly game){
+    // returns true if Player is alive after options exits
+    // returns false if Player is bankrupt after options exits
+    public boolean playerOptions(Monopoly game){
 	System.out.println("1. Build houses");
 	System.out.println("2. Sell houses");
 	System.out.println("3. Morgage property");
@@ -404,11 +419,14 @@ public class Player implements UserInput{
 	}   
 	    
 	else if (choice == 6){ // done
-	    if ( getCash() < 0 ) // if bankrupt
+	    if ( getCash() < 0 ){ // if bankrupt
+		System.out.println("Sorry, you (" + getName() + ") have lost!");
 		game.getPlayerList().remove(this); // remove player from game
-	    return; // stop playerOptions
+		return false;
+	    }
+	    return true; // stop playerOptions
 	}
-	playerOptions(game); // call player options again
+	return playerOptions(game); // call player options again
     }
 
     // builds amt number of houses on NormalProperty p
