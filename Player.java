@@ -661,28 +661,32 @@ public class Player implements UserInput{
 	} //end while
 	
 	//print out trade
-	System.out.println( this.getName() + " would like to trade with " + otherP.getName() + "!" );
-	System.out.println( "Does " + this.getName() + " agree to the trade? 1.yes\t2.no" );
-	int agree1 = parseInput(Keyboard.readString(), 2);
-	System.out.println( "Does " + otherP.getName() + " agree to the trade? 1.yes\2.no" );
-	int agree2 = parseInput(Keyboard.readString(), 2);
-	//if both players agree to trade
-	if (agree1 == 1 && agree2 == 1) {
-	    System.out.println("Both players agreed to the trade!");
-	    System.out.println(this.getName() + " has newly acquired: ");
-	    for (Property pr : want) {
-		this.getPropertiesOwned().add(pr);
-		pr.setOwner(this);
-		otherP.getPropertiesOwned().remove(pr);
-		System.out.println(pr.getName());
-	    }
-	    System.out.println(otherP.getName() + " has newly acquired: ");
-	    for (Property pr : give) {
-		this.getPropertiesOwned().remove(pr);
-		pr.setOwner(otherP);
-		otherP.getPropertiesOwned().add(pr);
-		System.out.println(pr.getName());
-	    }
+	if (otherP instanceof AI) 
+	    ((AI)otherP).receiveTrade(this, want, give);
+	else {
+		System.out.println( this.getName() + " would like to trade with " + otherP.getName() + "!" );
+		System.out.println( "Does " + this.getName() + " agree to the trade? 1.yes\t2.no" );
+		int agree1 = parseInput(Keyboard.readString(), 2);
+		System.out.println( "Does " + otherP.getName() + " agree to the trade? 1.yes\2.no" );
+		int agree2 = parseInput(Keyboard.readString(), 2);
+		//if both players agree to trade
+		if (agree1 == 1 && agree2 == 1) {
+		    System.out.println("Both players agreed to the trade!");
+		    System.out.println(this.getName() + " has newly acquired: ");
+		    for (Property pr : want) {
+			this.getPropertiesOwned().add(pr);
+			pr.setOwner(this);
+			otherP.getPropertiesOwned().remove(pr);
+			System.out.println(pr.getName());
+		    }
+		    System.out.println(otherP.getName() + " has newly acquired: ");
+		    for (Property pr : give) {
+			this.getPropertiesOwned().remove(pr);
+			pr.setOwner(otherP);
+			otherP.getPropertiesOwned().add(pr);
+			System.out.println(pr.getName());
+		    }
+		}
 	}
 	//if one/both players do not agree to the trade
 	else 
