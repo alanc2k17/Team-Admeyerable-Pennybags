@@ -278,11 +278,13 @@ public class Player implements UserInput{
     //         Monopoly game represents the Monopoly object being played
     //              needed for executeLandOn()
     public void turn(Landable[][] board, Monopoly game) {
+	game.clear(); //clear screen
     	if (_inJail){
     	    jailTurn();
     	}
     	else { //if not in jail
 	    move(board);
+	    game.printBoard();
 	    executeLandOn(board, game); // determine course of action based on what player landed on
 	    playerOptions(game); //offer general options
 	}

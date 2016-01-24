@@ -68,13 +68,14 @@ public class Chance extends Landable {
 		//you have been elected chairman of the board
 		System.out.println("You have been elected Chairman of the Board! (Pay each player $50)");
 		for (int i = 0; i < playerList.size(); i++){ // for each player
-		    playerList.get(i).give(50); // give 50
+		    if ( playerList.get(i) != p ) // only pay those not yourself
+			playerList.get(i).give(50); // give 50
 		}
-		p.charge(50 * playerList.size());
+		p.charge(50 * playerList.size()-1);
 	    }
 	    if (n == 5) {
 		//your building and loan matures
-		System.out.println("Your building {and} loan matures! (Collect $150)");
+		System.out.println("Your building loan matures! (Collect $150)");
 		p.give(150);
 	    }
 	    if (n == 6) {

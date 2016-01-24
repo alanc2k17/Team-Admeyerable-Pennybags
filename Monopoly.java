@@ -205,7 +205,6 @@ public class Monopoly implements UserInput{
     
     
     public void printBoard(){
-	clear();
 	for ( int row = 0; row < board.length; row++ ){
 	    // loop through each row 3 times, since each element consumes 3 lines
 	    for ( int count = 0; count < 4; count++ ){ 
@@ -217,17 +216,17 @@ public class Monopoly implements UserInput{
 			newLine = "\n";
 
 		    // if element is null, print 9 empty spaces
-		    if ( board[row][col] == null ){
+		    if ( board[row][col] == null && count != 0){
 			if ( col == 0 )
 			    System.out.print("|"); //border
 			System.out.print("         " + newLine);
 		    }
 		    else{ //element is an instance of Landable
 			// if in first column or directly after a null...
-			if ( col == 0 || (board[row][col-1] == null) ) 
+			if ( (col == 0 || (board[row][col-1] == null)) && count != 0 ) 
 			    System.out.print("|"); //border
 			
-			if ( count == 0 ) /*(row == 0 || row == 10)*/ //
+			if ( (count == 0) && (row == 0 || row == 10) )// && board[row-1][col] == null) ) ) //
 			    System.out.print("---------" + newLine); //border
 
 			if ( count == 1 ){ // on first count, print initials, owner, and houses
@@ -333,7 +332,7 @@ public class Monopoly implements UserInput{
     
     public void play(){
 	setup();
-	printBoard();
+	//printBoard();
 	// while there are at least 2 players in the game
 	while ( playerList.size() > 1 ){
 	    // for each player, call turn
