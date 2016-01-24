@@ -28,7 +28,6 @@ public class Utility extends Property{
 	else{
 	    returnString += "owner of " + _name + "(" + _initials + ") =" + _owner.getName() + "\n";
 	    returnString += "current owner also owns " + utilitiesOwned() + " more utility properties";
-	    returnString += "current rent is: " + getRent() + "\n";
 	}
 	returnString += "mortgage value is: " + _mortgageValue;
 	return returnString;

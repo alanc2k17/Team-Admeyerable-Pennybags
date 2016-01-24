@@ -342,8 +342,7 @@ public class Monopoly implements UserInput{
 		printBoard();
 	    }
 	}
-       
-	
+       	
     }
 
     public static void main(String[] args){

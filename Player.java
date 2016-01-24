@@ -246,7 +246,7 @@ public class Player implements UserInput{
 	System.out.println("Jail Turn: " + _jailTurns );
 	if (getCash() >= 50) {
 	    //prompt user input
-	    System.out.println("Would you like to pay bail? y:1\tn:2");
+	    System.out.println("Would you like to pay bail? 1.yes\t2.no");
 	    int input = parseInput(Keyboard.readString(), 2);
 	    //if user would like to pay bail
 	    //forced to pay if player has spent more than 3 turns in jail
@@ -390,9 +390,14 @@ public class Player implements UserInput{
 	else if (choice == 5){
 	    System.out.println("Who do you want to trade with?");
 	    for ( int i = 0; i < game.getPlayerList().size(); i++ ){
+		if ( ! (game.getPlayerList().get(i) == this) ) // do not print yourself as a trade option
 		System.out.println( (i+1) + ". " + game.getPlayerList().get(i).getSymbol() + " " + game.getPlayerList().get(i).getName() );
 	    }
 	    int playerChoice = parseInput( Keyboard.readString(), game.getPlayerList().size() ) - 1;
+	    while ( game.getPlayerList().get(playerChoice) == this ){
+		System.out.println("You cannot choose yourself to trade with...");
+		playerChoice = parseInput( Keyboard.readString(), game.getPlayerList().size() ) - 1;
+	    }
 	    this.trade( game.getPlayerList().get(playerChoice) );
 	}   
 	    
@@ -546,6 +551,12 @@ public class Player implements UserInput{
     }
 
     public void trade(Player otherP) {
+	// check if there are properties available to trade
+	if ( this.getPropertiesOwned().size() == 0 || otherP.getPropertiesOwned().size() == 0 ){
+	    System.out.println("There are no properties to trade.");
+	    return;
+	}
+	    
 	ArrayList<Property> want = new ArrayList<Property>();
 	ArrayList<Property> give = new ArrayList<Property>();
 	boolean anotherOne = true;
@@ -565,51 +576,56 @@ public class Player implements UserInput{
 	    else {
 		//confirm property
 		System.out.println("You have chosen " + otherP.getPropertiesOwned().get(input)
-				   + "Are you sure this is the property you want? y:1\tn:2");
+				   + "Are you sure this is the property you want? 1.yes\t2.no");
 		int confirm = parseInput(Keyboard.readString(), 2);
 		if (confirm == 1)
 		    want.add(otherP.getPropertiesOwned().get(input));
 		//would user like to make another choice
-		System.out.println("Would you like to make another choice? y:1\tn:2");
+		System.out.println("Would you like to make another choice? 1.yes\t2.no");
 		int another = parseInput(Keyboard.readString(), 2);
-		if (another == 2)
+		// if user quit or no more properties to pick from, no another one
+		if (another == 2 || want.size() == otherP.getPropertiesOwned().size())
 		    anotherOne = false;
+		else if (another == 1)
+		    System.out.println("Choose another property");
 	    } //end else
 	} // end while | easter egg found! (3 of 3)
-	anotherOne = true;
-	
-	//promt user to choose properties to exchange
+
+	anotherOne = true;	
+	//promt user to choose properties to give
 	System.out.println("Please choose which properties you would like to give " + otherP.getName());
-	// print otherP's properties and values
-	for ( int i = 0; i < otherP.getPropertiesOwned().size(); i++ ){
+	// print this's properties and values
+	for ( int i = 0; i < this.getPropertiesOwned().size(); i++ ){
 	    System.out.println( (i+1) + ": " + this.getPropertiesOwned().get(i).getName() + " value: " + this.getPropertiesOwned().get(i).getBuyPrice() );
 	}
 
 	while (anotherOne == true) {
 	    int input = parseInput(Keyboard.readString(), this.getPropertiesOwned().size())-1;
-	    if (want.contains(otherP.getPropertiesOwned().get(input)))
+	    if (want.contains(this.getPropertiesOwned().get(input)))
 		System.out.println("This property has already been chosen! Please choose another property.");
 	    else {
 		//confirm property
 		System.out.println("You have chosen " + this.getPropertiesOwned().get(input)
-				   + "Are you sure this is the property you want to give? y:1\tn:2");
+				   + "Are you sure this is the property you want to give? 1:yes\t2:no");
 		int confirm = parseInput(Keyboard.readString(), 2);
 		if (confirm == 1)
 		    give.add(this.getPropertiesOwned().get(input));
 		//would user like to make another choice
-		System.out.println("Would you like to make another choice? y:1\tn:2");
+		System.out.println("Would you like to make another choice? 1.yes\t2.no");
 		int another = parseInput(Keyboard.readString(), 2);
-		if (another == 2)
+		if (another == 2 || give.size() == this.getPropertiesOwned().size())
 		    anotherOne = false;
+		else if (another == 1)
+		    System.out.println("Choose another property");
+
 	    } //end else 
 	} //end while
 	
 	//print out trade
 	System.out.println( this.getName() + " would like to trade with " + otherP.getName() + "!" );
-	System.out.println( this.getName() + " offers " + give + " for " + otherP.getName() + "'s " + want);
-	System.out.println( "Does " + this.getName() + " agree to the trade?" );
+	System.out.println( "Does " + this.getName() + " agree to the trade? 1.yes\t2.no" );
 	int agree1 = parseInput(Keyboard.readString(), 2);
-	System.out.println( "Does " + otherP.getName() + " agree to the trade?" );
+	System.out.println( "Does " + otherP.getName() + " agree to the trade? 1.yes\2.no" );
 	int agree2 = parseInput(Keyboard.readString(), 2);
 	//if both players agree to trade
 	if (agree1 == 1 && agree2 == 1) {
@@ -617,12 +633,14 @@ public class Player implements UserInput{
 	    System.out.println(this.getName() + " has newly acquired: ");
 	    for (Property pr : want) {
 		this.getPropertiesOwned().add(pr);
+		pr.setOwner(this);
 		otherP.getPropertiesOwned().remove(pr);
 		System.out.println(pr.getName());
 	    }
 	    System.out.println(otherP.getName() + " has newly acquired: ");
 	    for (Property pr : give) {
 		this.getPropertiesOwned().remove(pr);
+		pr.setOwner(otherP);
 		otherP.getPropertiesOwned().add(pr);
 		System.out.println(pr.getName());
 	    }
