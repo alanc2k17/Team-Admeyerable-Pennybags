@@ -547,7 +547,7 @@ public class Player implements UserInput{
 
     public void trade(Player otherP) {
 	ArrayList<Property> want = new ArrayList<Property>();
-	ArrayList<Property> have = new ArrayList<Property>();
+	ArrayList<Property> give = new ArrayList<Property>();
 	boolean anotherOne = true;
 
 	//prompt user to choose properties wanted
@@ -582,7 +582,7 @@ public class Player implements UserInput{
 	System.out.println("Please choose which properties you would like to give " + otherP.getName());
 	// print otherP's properties and values
 	for ( int i = 0; i < otherP.getPropertiesOwned().size(); i++ ){
-	    System.out.println( (i+1) + ": " + otherP.getPropertiesOwned().get(i).getName() + " value: " + otherP.getPropertiesOwned().get(i).getBuyPrice() );
+	    System.out.println( (i+1) + ": " + this.getPropertiesOwned().get(i).getName() + " value: " + this.getPropertiesOwned().get(i).getBuyPrice() );
 	}
 
 	while (anotherOne == true) {
@@ -595,7 +595,7 @@ public class Player implements UserInput{
 				   + "Are you sure this is the property you want to give? y:1\tn:2");
 		int confirm = parseInput(Keyboard.readString(), 2);
 		if (confirm == 1)
-		    have.add(this.getPropertiesOwned().get(input));
+		    give.add(this.getPropertiesOwned().get(input));
 		//would user like to make another choice
 		System.out.println("Would you like to make another choice? y:1\tn:2");
 		int another = parseInput(Keyboard.readString(), 2);
@@ -606,7 +606,7 @@ public class Player implements UserInput{
 	
 	//print out trade
 	System.out.println( this.getName() + " would like to trade with " + otherP.getName() + "!" );
-	System.out.println( this.getName() + " offers " + have + " for " + otherP.getName() + "'s " + want);
+	System.out.println( this.getName() + " offers " + give + " for " + otherP.getName() + "'s " + want);
 	System.out.println( "Does " + this.getName() + " agree to the trade?" );
 	int agree1 = parseInput(Keyboard.readString(), 2);
 	System.out.println( "Does " + otherP.getName() + " agree to the trade?" );
@@ -614,16 +614,18 @@ public class Player implements UserInput{
 	//if both players agree to trade
 	if (agree1 == 1 && agree2 == 1) {
 	    System.out.println("Both players agreed to the trade!");
+	    System.out.println(this.getName() + " has newly acquired: ");
 	    for (Property pr : want) {
 		this.getPropertiesOwned().add(pr);
 		otherP.getPropertiesOwned().remove(pr);
+		System.out.println(pr.getName());
 	    }
-	    for (Property pr : have) {
+	    System.out.println(otherP.getName() + " has newly acquired: ");
+	    for (Property pr : give) {
 		this.getPropertiesOwned().remove(pr);
 		otherP.getPropertiesOwned().add(pr);
+		System.out.println(pr.getName());
 	    }
-	    System.out.println( this.getName() + " now has: " + this.getPropertiesOwned());
-	    System.out.println( otherP.getName() + " now has: " + otherP.getPropertiesOwned());
 	}
 	//if one/both players do not agree to the trade
 	else 
