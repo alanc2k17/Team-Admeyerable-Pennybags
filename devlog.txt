@@ -1,3 +1,5 @@
+2016-01-24
+-Alan: wrote and incorporated AI.java into Monopoly
 2016-01-23
 - Calvin: wrote an outline of the general AI decision-making process; moved many of Monopoly's methods to Player b/c it makes more sense
 - Alan: wrote trade(Player p) in class Player
