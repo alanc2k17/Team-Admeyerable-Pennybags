@@ -11,6 +11,6 @@ public class GoToJail extends Landable {
 
     public void processVictim(Player p, Landable[][] board) {
 	p.setJail(true);
-	p.setSquareOn( new int[] {0,10}, board );
+	p.setSquareOn( new int[] {10,0}, board );
     }
 }
