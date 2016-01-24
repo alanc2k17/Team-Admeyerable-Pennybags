@@ -1,17 +1,14 @@
 2016-01-23
-- Calvin: wrote an outline of the general AI decision-making process
-- Calvin: moved many of Monopoly's methods to Player b/c it makes more sense
+- Calvin: wrote an outline of the general AI decision-making process; moved many of Monopoly's methods to Player b/c it makes more sense
+- Alan: wrote trade(Player p) in class Player
 
 2016-01-22
 - Calvin: debugged Alan's auctioning system; redesigned board to allow for better user interface; debugged multiple mechanisms in general 
-
+- Alan: wrote auction(Property p) in class Player
 
 2016-01-21
 - Alan and Calvin: progress in implementing player options; wrote first two options together in class
-- Calvin: finished incorporation of mortgage and unmortgage in player options; debugged
-
-2016-01-21
-- Calvin: reworked flowchart to better plan turn() method and designed a better board
+- Calvin: finished incorporation of mortgage and unmortgage in player options; debugged; reworked flowchart to better plan turn() method and designed a better board
 - Alan: reworked UML diagram
 
 2016-01-20
