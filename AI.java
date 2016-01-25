@@ -85,10 +85,25 @@ public class AI extends Player {
 	return -1;
     }
 
+    //bidding algorithm for aiplayer
+    //returns bid if decided to bid
+    //-1 otherwise
+    public int autoAuction(Property p, int highestBid) {
+	if (highestBid > getCash())
+	    return -1;
+	while (highestBid <= 1.25 * p.getBuyPrice()) 
+	    return highestBid + 5;
+	if (p instanceof NormalProperty) {
+	    while (checkMonopoly((NormalProperty)p) && highestBid >= .9 * getCash()) 
+		return highestBid + 5;
+	}
+	return -1;
+    }
+
     //buying algorithm for aiplayer
     //returns 1 if decided to buy
     //returns -1 if decided not to buy
-    public int autoBuy(NormalProperty p) {
+    public int autoBuy(Property p) {
 	int totalMortgageValue = 0;
 	//determines totalMortgageValue
 	for (Property pr : _propertiesOwned) 
@@ -97,37 +112,17 @@ public class AI extends Player {
 	//determine if bot would like to buy
 	if (getCash() > p.getBuyPrice())
 	    return 1;
-	if (checkMonopoly(p) && totalMortgageValue + getCash() > p.getBuyPrice()) {
-	    while (getCash() < p.getBuyPrice()) {
-		autoMortgage(p.getBuyPrice());
+	if (p instanceof NormalProperty) {
+	    if (checkMonopoly((NormalProperty)p) && totalMortgageValue + getCash() > p.getBuyPrice()) {
+		while (getCash() < p.getBuyPrice()) {
+		    autoMortgage(p.getBuyPrice());
+		}
+		return 1;
 	    }
-	    return 1;
 	}
 	return -1;
     }
-
-    //mortgage algorithm for aiplayer
-    //triggered when _cash < 0 or trying to buy property under certain conditions
-    //chooses properties based on least valuable to most valuable
-    public void autoMortgage(int targetCash) {
-	Property leastValuable = _propertiesOwned.get(0);
-	int cantMortgageCTR = 0;
-	
-	while (getCash() < targetCash) {
-	    //determine least valuable property
-	    for (Property pr : _propertiesOwned) {
-		if (canMortgage() == true) {
-		    if (pr.getBuyPrice() < leastValuable.getBuyPrice()) {
-			leastValuable = pr;
-		    }
-		}
-		else
-		    return;
-	    mortgage(pr);
-	    }
-	}
-    }
-
+    
     // executes a player turn
     // params: Landable[][] board represents the Monopoly board
     //         Monopoly game represents the Monopoly object being played
