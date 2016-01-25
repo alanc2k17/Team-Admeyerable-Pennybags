@@ -10,6 +10,6 @@ Welcome to Admeyerable Pennybags' Monopoly! Here, you can choose to play with up
 and you're good to go!
 
 Our current version features:
--AI to play against you when your friends rage quit!
--All of the awe-inspiring features from the original Monopoly!
+- AI to play against you when your friends rage quit!
+- All of the awe-inspiring features from the original Monopoly!
 
