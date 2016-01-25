@@ -121,9 +121,9 @@ public class Monopoly implements UserInput{
     public void setupPlayers(){
 	String[] symbolBank = {"x", "o", "v", "m"};	
 
-	System.out.print("How many players do you wish to have (1-4): ");
+	System.out.print("How many players do you wish to have (2-4): ");
 	numPlayers = parseInput(Keyboard.readString(), 4);
-	while ( numPlayers < 2 ){
+	while ( numPlayers < 2 ){ // min of 2 players
 	    System.out.println("Invalid range!");
 	    numPlayers = parseInput(Keyboard.readString(), 4);
 	}
