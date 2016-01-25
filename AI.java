@@ -10,7 +10,7 @@ public class AI extends Player {
 
     //overloaded constructor
     public AI(String name, String symbol) {
-	this();
+	super(name, symbol);
 	_name = name;
 	_symbol = symbol;
     }
