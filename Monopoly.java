@@ -411,8 +411,8 @@ public class Monopoly implements UserInput{
 		if ( turnNumber >= playerList.size() ) //guard against out of bounds error
 		    break;
 		if ( playerList.get(turnNumber) instanceof AI) {  
-		    ((AI)playerList.get(turnNumber)).botTurn(board, this); //if player is not bankrupt after turn
-		    turnNumber += 1;
+		    if ( ((AI)playerList.get(turnNumber)).botTurn(board, this) ) //if player is not bankrupt after turn
+			turnNumber += 1;
 		}
 		else {
 		    if ( playerList.get(turnNumber).turn(board, this) )

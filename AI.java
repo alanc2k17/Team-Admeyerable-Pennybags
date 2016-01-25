@@ -85,12 +85,8 @@ public class AI extends Player {
     public int autoAuction(Property p, int highestBid) {
 	if (highestBid > getCash())
 	    return -1;
-	while (highestBid <= 1.25 * p.getBuyPrice()) 
+	while (highestBid <= 1.25 * p.getBuyPrice() && getCash() >= highestBid + 5) 
 	    return highestBid + 5;
-	if (p instanceof NormalProperty) {
-	    while (checkMonopoly((NormalProperty)p) && highestBid >= .9 * getCash()) 
-		return highestBid + 5;
-	}
 	return -1;
     }
 
@@ -126,19 +122,23 @@ public class AI extends Player {
 	    totalMortgageValue += pr.getMortgageValue();
 
 	//determine if bot would like to buy
-	if (getCash() > p.getBuyPrice()){
+
+	if ( buy(p) ){ // buys property at full price, if successfully bought...
 	    System.out.println("Property bought!");
 	    return 1;
 	}
-	if (p instanceof NormalProperty) {
+	else if (p instanceof NormalProperty) {
+	    // if has potential to buy with mortgages...
 	    if (checkMonopoly((NormalProperty)p) && (totalMortgageValue + getCash()) > p.getBuyPrice()) {
 		while (getCash() < p.getBuyPrice()) {
-		    autoMortgage(p.getBuyPrice());
+		    autoMortgage(p.getBuyPrice()); //mortgage until you can buy
 		}
+		buy(p);
 		System.out.println("Property bought!");
 		return 1;
 	    }
 	}
+	System.out.println( getName() + " did not buy this property. Going into auction.");
 	return -1;
     }
     
@@ -176,13 +176,8 @@ public class AI extends Player {
 	}
 	else { // less than $50
 	    if (_jailTurns >= 3 ){
-	        autoMortgage(50);
-		if ( getCash() < 50 )
-		    return;
-		else{
-		    charge(50);
-		    return;
-		}
+	        autoMortgage(50); //mortage until at least $50 is achieved
+		charge(50);
 	    }
 	    else
 		_jailTurns += 1;
@@ -192,13 +187,12 @@ public class AI extends Player {
     //overridden property action
     public void propertyAction(Property square, Monopoly game){
 	if (square.getOwner() == null && square.getOwner() != this) { //unowned
-	    autoBuy(square);
-	    if (getCash() < square.getBuyPrice())
-		game.auction(square);
+	    if ( autoBuy(square) == -1 ) //AI did not buy
+		game.auction(square); // auction property
 	}
 	else if ( square.getOwner() != this ) // property has an owner but not this player
 	    pay( square ); // pay rent
 	}
 }//end class
-}//end class
+
 

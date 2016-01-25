@@ -279,12 +279,7 @@ public class Player implements UserInput{
 	    if ( input == 1 || _jailTurns >= 3 ){
 		System.out.println("Mortgage until you get at least $50. If you do not do so or cannot do so and end mortgaging, you will lose.");
 		offerMortgageOptions(0);
-		if ( getCash() < 50 )
-		    return;
-		else{
-		    charge(50);
-		    return;
-		}
+		charge(50);		
 	    }
 	    else
 		_jailTurns += 1;
