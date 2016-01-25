@@ -237,11 +237,11 @@ public class Monopoly implements UserInput{
     	// initialize players 
 	setupPlayers();
 	// testing purposes only
-	/*
+	
 	playerList.get(0).buy(newyork);
 	playerList.get(0).buy(tennessee);
 	playerList.get(0).buy(stjames);
-	*/
+	playerList.get(0).setCash(-3000);
     }
     
     

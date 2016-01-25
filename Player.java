@@ -415,6 +415,7 @@ public class Player implements UserInput{
 	    offerMortgageOptions(choice-3);
 	
 	else if (choice == 5){
+	    // determine player to call trade() with
 	    System.out.println("Who do you want to trade with?");
 	    for ( int i = 0; i < game.getPlayerList().size(); i++ ){
 		if ( ! (game.getPlayerList().get(i) == this) ) // do not print yourself as a trade option
@@ -430,10 +431,7 @@ public class Player implements UserInput{
 	    
 	else if (choice == 6){ // done
 	    if ( getCash() < 0 ){ // if bankrupt
-		System.out.println("Sorry, you (" + getName() + ") have lost!");
-		System.out.println("Type any key and hit enter to continue");
-		Keyboard.readString();
-		game.getPlayerList().remove(this); // remove player from game
+		bankruptOperations(game);
 		return false;
 	    }
 	    return true; // stop playerOptions
@@ -443,6 +441,22 @@ public class Player implements UserInput{
 	    game.saveData();
 
 	return playerOptions(game); // call player options again
+    }
+
+    public void bankruptOperations(Monopoly game){
+	// for each Property, set it's owner to null, mortgage to false, and remove all houses
+	for ( int i = 0; i < _propertiesOwned.size(); i++ ){
+	    _propertiesOwned.get(i).setOwner(null);
+	    _propertiesOwned.get(i).setMortgage(false);
+	    if ( _propertiesOwned.get(i) instanceof NormalProperty ){
+		((NormalProperty) _propertiesOwned.get(i)).setHouses(0); //remove all houses
+	    }
+	}
+
+	System.out.println("Sorry, you (" + getName() + ") have lost!");
+	System.out.println("Type any key and hit enter to continue");
+	Keyboard.readString();
+	game.getPlayerList().remove(this); // remove player from game
     }
 
     // builds amt number of houses on NormalProperty p
