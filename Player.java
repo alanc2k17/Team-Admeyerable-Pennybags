@@ -661,8 +661,12 @@ public class Player implements UserInput{
 	} //end while
 	
 	//print out trade
-	if (otherP instanceof AI) 
-	    ((AI)otherP).receiveTrade(this, want, give);
+	if (otherP instanceof AI) {
+	    if (((AI)otherP).receiveTrade(this, want, give) == 1)
+		System.out.println("trade accepted!");
+	    if (((AI)otherP).receiveTrade(this, want, give) == -1)
+		System.out.println("trade declined!");
+	}
 	else {
 		System.out.println( this.getName() + " would like to trade with " + otherP.getName() + "!" );
 		System.out.println( "Does " + this.getName() + " agree to the trade? 1.yes\t2.no" );
