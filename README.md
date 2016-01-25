@@ -4,7 +4,7 @@ APCS1 Final Project
 The Real Monopoly!
 
 Welcome to Admeyerable Pennybags' Monopoly! Here, you can choose to play with up to four friends or three robots! To run the game, simply type these commands into your terminal:
-> javac Monopoly.java \n
+> javac Monopoly.java and
 > java Monopoly
 
 and you're good to go!
