@@ -393,11 +393,12 @@ public class Monopoly implements UserInput{
 	    int maxTurns = playerList.size();
 	    int turnNumber = 0;
 	    while ( turnNumber < playerList.size() ){
-		if ( turnNumber >= playerList.size() ) //guard against out of bounds error
-		    break;
 		if ( playerList.get(turnNumber).turn(board, this) )
 		    turnNumber += 1;
 		// if player is bankrupt, do not increment, b/c next-in-line player shifts left to fill the spot
+		if ( turnNumber >= playerList.size() ) //guard against out of bounds error
+		    break;
+
 	    }    
 	}
 	System.out.println("Congratulations to our filthy rich winner: " + playerList.get(0).getName());

@@ -1,14 +1,9 @@
 public class Jail extends Landable {
     //default constructor
     public Jail() {
-	super();
+	super("Jail", "JA");
     }
   
-    //overloaded constructor
-    public Jail(String name, String initials) {
-	super(name, initials);
-    }
-    
     //overloaded toString
     public String toString() {
 	String returnString = "";

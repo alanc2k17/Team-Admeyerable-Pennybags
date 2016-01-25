@@ -431,6 +431,8 @@ public class Player implements UserInput{
 	else if (choice == 6){ // done
 	    if ( getCash() < 0 ){ // if bankrupt
 		System.out.println("Sorry, you (" + getName() + ") have lost!");
+		System.out.println("Type any key and hit enter to continue");
+		Keyboard.readString();
 		game.getPlayerList().remove(this); // remove player from game
 		return false;
 	    }
