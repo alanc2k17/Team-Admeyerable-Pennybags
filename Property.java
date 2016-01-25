@@ -2,20 +2,17 @@ import java.util.ArrayList;
 
 public abstract class Property extends Landable {
     protected Player _owner;
-    protected ArrayList<Player> _playersOnProperty;
     protected boolean _mortgage;
     
     // default constructor
     public Property() {
 	super(); //set default vals for name, initials, coord
-	_playersOnProperty = new ArrayList<Player>();
 	_mortgage = false;
     }
   
     // overloaded constructor
     public Property(String name, String initials) {
 	super(name, initials); //use super constructor to set name, inits, coord
-	_playersOnProperty = new ArrayList<Player>();
 	_mortgage = false;
     }
   

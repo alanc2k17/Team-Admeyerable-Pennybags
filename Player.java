@@ -12,6 +12,7 @@ public class Player implements UserInput{
     protected boolean _inJail;
     protected int _jailTurns;
     
+    // default constr.
     public Player() {
 	_coordinate = new int[] { 10, 10 };
 	_name = "nameless";
@@ -20,10 +21,23 @@ public class Player implements UserInput{
 	_cashOnHand = 1300;
     }
     
+    // overloaded constr. used for new game instantiation
     public Player(String newName, String symbol) {
 	this();
 	_name = newName;
 	_symbol = symbol;
+    }
+
+    // overloaded constr. used for load game instantiation
+    public Player(String newName, String symbol, int cor1, int cor2, int cash, boolean inJail, int jailTurns){
+	this();
+	_name = newName;
+	_symbol = symbol;
+	_coordinate[0] = cor1;
+	_coordinate[1] = cor2;
+	_cashOnHand = cash;
+	_inJail = inJail;
+	_jailTurns = jailTurns;
     }
     
     public String toString() {
@@ -73,21 +87,7 @@ public class Player implements UserInput{
 	return _jailTurns;
     }
 
-    // MUTATORS USED IN LOADING FROM SAVE FILE
-
-    public void setName(String s){
-	_name = s;
-    }
-
-    public void setSymbol(String s){
-	_symbol = s;
-    }
-
-    public void setCoords(int[] coord){
-	_coordinate = coord;
-    }
-
-    public void setCash(int newCashValue) {
+    private void setCash(int newCashValue) {
 	_cashOnHand = newCashValue;
 	System.out.println( _name + " now has $" + getCash());
     }
@@ -151,13 +151,14 @@ public class Player implements UserInput{
     // coord details new coordinates
     public void setSquareOn(int[] coord, Landable[][] board) {
 	// remove player from old square
-	board[ _coordinate[0] ][ _coordinate[1] ].removePlayerOnSquare(this);
+	if ( board[ _coordinate[0] ][ _coordinate[1] ].getPlayersOn().size() > 0 )
+	    board[ _coordinate[0] ][ _coordinate[1] ].removePlayerOnSquare(this);
 	// update Player's _squareOn
 	_squareOn = board[coord[0]][coord[1]];
 	// add player to new square
 	board[ coord[0] ][ coord[1] ].setPlayerOnSquare(this);
 	_coordinate = coord; // update player coordinates
-	
+
     }
 	
     // takes amt of money away from player
