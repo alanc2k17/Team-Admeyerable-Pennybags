@@ -119,22 +119,31 @@ public class Monopoly implements UserInput{
     // asks user for number of players, and their names
     // to be called in setup()
     public void setupPlayers(){
-	System.out.print("How many players do you wish to have (2-4): ");
-	numPlayers = parseInput(Keyboard.readString(), 4);
-	while ( numPlayers < 2 ){ // make sure within range
-	    System.out.println("Invalid range.");
-	    numPlayers = parseInput(Keyboard.readString(), 4);
-	}
-
 	String[] symbolBank = {"x", "o", "v", "m"};	
-	for (int i = 0; i < numPlayers; i++){ // ask stuff about each player
 
-	    System.out.print("Player " + (i+1) + " " + symbolBank[i] + " name: ");
+	System.out.print("How many players do you wish to have (1-4): ");
+	numPlayers = parseInput(Keyboard.readString(), 4);
+
+	//instantiate bots if less than 2 players
+        if (numPlayers < 2) {
+	    System.out.print("Player " + 1 + " " + symbolBank[0] + " name: ");
 	    String pName = Keyboard.readString();
+	    playerList.add(new Player(pName, symbolBank[0]));
+	    System.out.println("How many bots would you like?");
+	    int numBots = parseInput(Keyboard.readString(), 3);
+	    for (int i = 1; i < numBots + 1; i++) 
+		playerList.add(new AI("Bot " + i, symbolBank[i]));
+	}
+	else {
+	    //instantiate other players if more than 1
+	    for (int i = 0; i < numPlayers; i++){ // ask stuff about each player
+
+		System.out.print("Player " + (i+1) + " " + symbolBank[i] + " name: ");
+		String pName = Keyboard.readString();
 	    
-	    // call constructor and add to playerList
-	    playerList.add( new Player(pName, symbolBank[i]) );
-	    
+		// call constructor and add to playerList
+		playerList.add( new Player(pName, symbolBank[i]) );
+	    }
 	}
     }
 	
