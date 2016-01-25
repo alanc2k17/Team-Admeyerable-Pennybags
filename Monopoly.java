@@ -341,51 +341,64 @@ public class Monopoly implements UserInput{
 	    for ( int i = 0; i < bidderList.size(); i++ ){ // for each bidder
 		if ( bidderList.get(i) != null ) { // if not a dropped out bidder
 		    Player pl = bidderList.get(i);
-		    
-		    if (currentBid >= pl.getCash()){ //if current player cannot afford to bid
-			bidderList.set(i, null);
-			dropOuts += 1;
-			System.out.println( pl.getName() + " has dropped out!" );
-			if ( dropOuts == bidderList.size() - 1 )
-			    break;
-		    }
-
-		    else { //if current player can afford to bid
-			System.out.println("People are bidding on " + p.getName() + "! The highest bid is " + currentBid + ". " + pl.getName() + ": Would you like to bid? y:1\tn:2");
-			int input = parseInput(Keyboard.readString(), 2);
-			//if player wants to bid, determine how much
-			if (input == 1) { // yes to bid
-			    if ( highestBidder == null ) // you are first bidder
-				System.out.println("Start bidding. " + pl.getName() + ": How much would you like to bid?");
-			    else
-				System.out.println("Current bid: " + currentBid + " by " + highestBidder.getName() + ". " + pl.getName() + ": How much would you like to bid?");
-
-			    int inputBid = parseInput(Keyboard.readString()); // needs new parseInput
-				while (inputBid <= currentBid || inputBid > pl.getCash()) {
-				    System.out.println("Invalid bid! Try again.");
-				    inputBid = parseInput(Keyboard.readString());
-				}
-			    // set new bid to max bid so far
-			    currentBid = inputBid;
+		    if (pl instanceof AI) { //if current player is a bot
+			if (((AI)pl).autoAuction(p, currentBid) == -1)
+			    bidderList.remove(pl);
+			else {
+			    currentBid = (((AI)pl).autoAuction(p, currentBid));
 			    highestBidder = pl;
 			}
-
-			else { // no to bidding --> drop out
-			    bidderList.set(i, null); //set to null value as a placeholder
+		    }
+		    else {
+			if (currentBid >= pl.getCash()){ //if current player cannot afford to bid
+			    bidderList.set(i, null);
 			    dropOuts += 1;
 			    System.out.println( pl.getName() + " has dropped out!" );
 			    if ( dropOuts == bidderList.size() - 1 )
 				break;
 			}
-		    } // close player can afford to bid
-		} // close if not a dropped out bidder
-	    } // bid turn done
-	} // close while loop
+			else { //if current player can afford to bid
+			    System.out.println("People are bidding on " + p.getName() + "! The highest bid is "
+					       + currentBid + ". "
+					       + pl.getName() + ": Would you like to bid? y:1\tn:2");
+			    int input = parseInput(Keyboard.readString(), 2);
+			    //if player wants to bid, determine how much
+			    if (input == 1) { // yes to bid
+				if ( highestBidder == null ) // you are first bidder
+				    System.out.println("Start bidding. " + pl.getName()
+						       + ": How much would you like to bid?");
+				else
+				    System.out.println("Current bid: " + currentBid + " by "
+						       + highestBidder.getName() + ". "
+						       + pl.getName() + ": How much would you like to bid?");
+				int inputBid = parseInput(Keyboard.readString());
+				while (inputBid <= currentBid || inputBid > pl.getCash()) {
+				    System.out.println("Invalid bid! Try again.");
+				    inputBid = parseInput(Keyboard.readString());
+				}
+				
+				// set new bid to max bid so far
+				currentBid = inputBid;
+				highestBidder = pl;
+			    }
 
+			    else { // no to bidding --> drop out
+				bidderList.set(i, null); //set to null value as a placeholder
+				dropOuts += 1;
+				System.out.println( pl.getName() + " has dropped out!" );
+				if ( dropOuts == bidderList.size() - 1 )
+				    break;
+			    }// close dropout
+			} // close player can afford to bid
+		    }//close else
+		} // close if not a dropped out bidder
+	    }// bid turn done
+	}//close while
+	
 	highestBidder.giveProperty(p); //highest bidder wins property
 	highestBidder.charge(currentBid);
 	System.out.println("Congrats! " + highestBidder.getName() + " won the bid for " + currentBid + "!");
-    }		   
+    }//end auction		   
     
     public void play(){
 	setup();
