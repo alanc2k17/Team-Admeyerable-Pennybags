@@ -107,7 +107,7 @@ public class Monopoly implements UserInput{
     // reads data from the savefile.txt and sets up the game accordingly
     // returns true if data successfully loaded
     // false otherwise
-    public boolean loadFile(){
+    public boolean loadData(){
 	String contents = Savefile.readInfo();
 	if ( contents.equals("bad") ) // no existing savefile
 	    return false;
@@ -192,7 +192,7 @@ public class Monopoly implements UserInput{
 	    int choice = parseInput( Keyboard.readString(), 2 );
 	    if (choice == 1){ 
 		// load info from saved game
-		if ( loadFile() ) //successfully loads 
+		if ( loadData() ) //successfully loads 
 		    return; 
 		else{ // corrputed save file
 		    System.out.println("Your save file has been corrupted! Delete it and then reload the game. Exiting game...");
@@ -333,7 +333,7 @@ public class Monopoly implements UserInput{
 
     }
     
-    
+    // prints monopoly board
     public void printBoard(){
 	for ( int row = 0; row < board.length; row++ ){
 	    // loop through each row 3 times, since each element consumes 3 lines

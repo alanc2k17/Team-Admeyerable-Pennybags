@@ -11,8 +11,8 @@ o protected
 (n) other methods not yet implemented
 
 
-Monopoly (Driver! vroom vroom)
-----------------------
+Monopoly implements UserInput
+------------------------------
 INSTANCE VARIABLES
 (x) - int numPlayers, turns
 (x) - ArrayList<Player> playerList
@@ -23,31 +23,31 @@ CONSTRUCTORS
 
 METHODS
 (x) + int parseInput(String s, int range)
+(x) + int parseInput(String s)
 (x) + void clear()
+(x) + void saveData()
+(x) + boolean loadFile()
 (x) + void setupPlayers()
 (x) + void setup()
 (x) + void printBoard()
-(x) + void offerMortgageOptions(Player p)
-(x) + void jailTurn(Player p)
-(x) + void turn(Player p)
 (x) + void play()
-(p) + void playerOptions(Player p)
-(p) + void auction(Property p)
+(x) + void auction(Property p)
+(x) + main()
 
-
-Player
-----------------------
+Player implements UserInput
+----------------------------
 INSTANCE VARIABLES
 (x) o int _cashOnHand, _diceRoll, _jailTurns
 (x) o int[] _coordinate
 (x) o String _name, _symbol
-(x) o boolean _inJail, _bankrupt
+(x) o boolean _inJail
 (x) o Landable _squareOn
 (x) o ArrayList<Property> _propertiesOwned
 
 CONSTRUCTORS
 (x) + Player()
 (x) + Player(String newName, String symbol)
+(x) + Player(String newName, String symbol, int cor1, int cor2, int cash, boolean inJail, int  jailTurns)
 
 ACCESSORS
 (x) + String getName()
@@ -68,10 +68,14 @@ MUTATORS
 
 
 METHODS
+(x) + parseInput(String s, int range)
+(x) + parseInput(String s)
 (x) + Property removeProperty(Property p)
 (x) + int charge(int amt)
 (x) + int give(int amt)
+(x) - setCash(int amt)
 (x) + int buildHouse(NormalProperty p, int amt)
+(x) + int sellHouse(NormalProperty p, int amt)
 (x) + void move(Landable[][] board)
 (x) + void pay(Property p)
 (x) + void giveProperty(Property p)
@@ -79,8 +83,20 @@ METHODS
 (x) + boolean mortgage(Property p)
 (x) + boolean unMortgage(Property p)
 (x) + boolean canMortgage()
-(p) + void auction(Property p)
-(p) + void trade(Player p, Property a, Property b)
+(x) + void trade(Player otherP)
+(x) + void setSquareOn(Landable square)
+(x) + void jailTurn()
+(x) + void turn(Landable[][] board, Monopoly game)
+(x) + void executeLandOn(Landable[][] board, Monopoly game)
+(x) + goToJailAction(GoToJail square, board)
+(x) + chanceAction(Chance square, Landable[][] board, Monopoly game)
+(x) + communityAction(Community square, Landable[][] board, Monopoly game)
+(x) + propertyAction(Property square, Monopoly game)
+(x) + taxAction(Tax square)
+(x) + playerOptions(Monopoly game)
+(x) + bankruptOptions(Monopoly game)
+(x) + offerBuildOptions(int opt)
+(x) + offerMortgageOptions(int opt)
 
 
 Landable (abstract)
