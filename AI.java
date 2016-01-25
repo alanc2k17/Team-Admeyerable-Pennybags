@@ -1,3 +1,4 @@
+import cs1.Keyboard;
 import java.util.ArrayList;
 
 public class AI extends Player {
@@ -110,7 +111,7 @@ public class AI extends Player {
 		}
 		else
 		    return;
-	    mortgage(pr);
+		mortgage(pr);
 	    }
 	}
     }
@@ -125,13 +126,16 @@ public class AI extends Player {
 	    totalMortgageValue += pr.getMortgageValue();
 
 	//determine if bot would like to buy
-	if (getCash() > p.getBuyPrice())
+	if (getCash() > p.getBuyPrice()){
+	    System.out.println("Property bought!");
 	    return 1;
+	}
 	if (p instanceof NormalProperty) {
-	    if (checkMonopoly((NormalProperty)p) && totalMortgageValue + getCash() > p.getBuyPrice()) {
+	    if (checkMonopoly((NormalProperty)p) && (totalMortgageValue + getCash()) > p.getBuyPrice()) {
 		while (getCash() < p.getBuyPrice()) {
 		    autoMortgage(p.getBuyPrice());
 		}
+		System.out.println("Property bought!");
 		return 1;
 	    }
 	}
@@ -153,7 +157,9 @@ public class AI extends Player {
 	}
 	if (getCash() < 0 && canMortgage() == false)
 	    _bankrupt = true;
-	return _bankrupt;
+	System.out.println("Type any key then enter to end AI's turn");
+	Keyboard.readString();
+	return ! _bankrupt;
     }
 
     // executes a turn of this player if he is in jail
