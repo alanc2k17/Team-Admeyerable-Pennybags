@@ -334,8 +334,7 @@ public class Monopoly implements UserInput{
 	    for ( int i = 0; i < bidderList.size(); i++ ){ // for each bidder
 		if ( bidderList.get(i) != null ) { // if not a dropped out bidder
 		    Player pl = bidderList.get(i);
-		  
-		  
+		 		  
 		    if (currentBid >= pl.getCash()){ //if current player cannot afford to bid
 			bidderList.set(i, null);
 			dropOuts += 1;
@@ -346,7 +345,7 @@ public class Monopoly implements UserInput{
 		    else { //if current player can afford to bid
 			System.out.println("People are bidding on " + p.getName() + "! The highest bid is "
 					   + currentBid + ". "
-					   + pl.getName() + ": Would you like to bid? y:1\tn:2");
+					   + pl.getName() + ": Would you like to bid? 1.yes\t2.no");
 			int input = parseInput(Keyboard.readString(), 2);
 			//if player wants to bid, determine how much
 			if (input == 1) { // yes to bid
@@ -378,11 +377,11 @@ public class Monopoly implements UserInput{
 		    } // close player can afford to bid
 		} // close if not a dropped out bidder
 	    }// bid turn done
-	    
-	    highestBidder.giveProperty(p); //highest bidder wins property
-	    highestBidder.charge(currentBid);
-	    System.out.println("Congrats! " + highestBidder.getName() + " won the bid for " + currentBid + "!");
-	}//end while
+	}
+	 
+	highestBidder.giveProperty(p); //highest bidder wins property
+	highestBidder.charge(currentBid);
+	System.out.println("Congrats! " + highestBidder.getName() + " won the bid for " + currentBid + "!");
     }
 
     public void play(){
