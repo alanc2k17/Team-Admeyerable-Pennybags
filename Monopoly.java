@@ -361,10 +361,10 @@ public class Monopoly implements UserInput{
 				System.out.println("Current bid: " + currentBid + " by " + highestBidder.getName() + ". " + pl.getName() + ": How much would you like to bid?");
 
 			    int inputBid = parseInput(Keyboard.readString()); // needs new parseInput
-			    while (inputBid <= currentBid) {
-				System.out.println("Too low! Cheapskate! Bid again with an amount greater than: " + currentBid);
-				inputBid = parseInput(Keyboard.readString());
-			    }
+				while (inputBid <= currentBid || inputBid > pl.getCash()) {
+				    System.out.println("Invalid bid! Try again.");
+				    inputBid = parseInput(Keyboard.readString());
+				}
 			    // set new bid to max bid so far
 			    currentBid = inputBid;
 			    highestBidder = pl;
