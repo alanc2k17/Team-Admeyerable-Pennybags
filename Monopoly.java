@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.io.File;
+import java.io.IOException;
 import cs1.Keyboard;
 
 public class Monopoly implements UserInput{
@@ -110,68 +111,74 @@ public class Monopoly implements UserInput{
 	String contents = Savefile.readInfo();
 	if ( contents.equals("bad") ) // no existing savefile
 	    return false;
-	String propertyInfo = contents.substring(0, contents.indexOf("&&&"));
-	String playerInfo = contents.substring(contents.indexOf("&&&")+3, contents.length());
 	
-	// get data for specific Players
-	while (playerInfo.length() > 0){
-	    String set = playerInfo.substring(0, playerInfo.indexOf("|"));
-	    playerInfo = playerInfo.substring(playerInfo.indexOf("|")+1, playerInfo.length()); //cut
+	try{ //might throw error if corrupted
+	    String propertyInfo = contents.substring(0, contents.indexOf("&&&"));
+	    String playerInfo = contents.substring(contents.indexOf("&&&")+3, contents.length());
 	    
-	    // holds info for this Player in this order:
-	    // name, symbol, coordinate, cash, _inJail, _jailTurns
-	    String[] data = new String[7];
-	    //String[] data = {"a", "b", "c", "d", "e", "f", "g"}; //fill to avoid nullpointerexception
-	    
-	    for ( int i = 0; i < data.length; i++ ){
-		data[i] = set.substring(0, set.indexOf(",")); //get data parcel
-		set = set.substring(set.indexOf(",")+1, set.length()); //remove data parcel from data string
-	    }
-
-	    // instantiate player
-	    Player newPlayer =  new Player( data[0], //name 
-					    data[1], //symbol
-					    Integer.parseInt(data[2]), //cor1
-					    Integer.parseInt(data[3]), //cor2
-					    Integer.parseInt(data[4]), //cash
-					    Boolean.parseBoolean(data[5]), //inJail
-					    Integer.parseInt(data[6]) //jailTurns
-					    );
-	    
-	    // set player on square with same coordinate
-	    newPlayer.setSquareOn( new int[] { Integer.parseInt(data[2]), Integer.parseInt(data[3]) }, board );
-	    playerList.add( newPlayer );
+	    // get data for specific Players
+	    while (playerInfo.length() > 0){
+		String set = playerInfo.substring(0, playerInfo.indexOf("|"));
+		playerInfo = playerInfo.substring(playerInfo.indexOf("|")+1, playerInfo.length()); //cut
 		
+		// holds info for this Player in this order:
+		// name, symbol, coordinate, cash, _inJail, _jailTurns
+		String[] data = new String[7];
+		//String[] data = {"a", "b", "c", "d", "e", "f", "g"}; //fill to avoid nullpointerexception
+		
+		for ( int i = 0; i < data.length; i++ ){
+		    data[i] = set.substring(0, set.indexOf(",")); //get data parcel
+		    set = set.substring(set.indexOf(",")+1, set.length()); //remove data parcel from data string
+		}
+		
+		// instantiate player
+		Player newPlayer =  new Player( data[0], //name 
+						data[1], //symbol
+						Integer.parseInt(data[2]), //cor1
+						Integer.parseInt(data[3]), //cor2
+						Integer.parseInt(data[4]), //cash
+						Boolean.parseBoolean(data[5]), //inJail
+						Integer.parseInt(data[6]) //jailTurns
+						);
+		
+		// set player on square with same coordinate
+		newPlayer.setSquareOn( new int[] { Integer.parseInt(data[2]), Integer.parseInt(data[3]) }, board );
+		playerList.add( newPlayer );
+		
+	    }
+	    
+	    // get data for specific Properties
+	    while (propertyInfo.length() > 0){
+		String set = propertyInfo.substring(0, propertyInfo.indexOf("|"));
+		propertyInfo = propertyInfo.substring(propertyInfo.indexOf("|")+1, propertyInfo.length());
+		
+		// holds info for this Property in this order:
+		// row, col, owner(symbol), isMortgaged, houses
+		String[] data = {"a","b","c","d","e"}; //fill to avoid nullpointerexception
+		for ( int i = 0; i < data.length; i++ ){
+		    data[i] = set.substring(0, set.indexOf(",")); //get data parcel
+		    set = set.substring(set.indexOf(",")+1, set.length()); //remove data parcel from data string
+		}
+		
+		Property thisProperty = (Property)( board[ Integer.parseInt(data[0]) ][ Integer.parseInt(data[1]) ] );
+		Player owner = null;
+		// find owner of this property based on its symbol
+		for ( int i = 0; i < playerList.size(); i++ ){
+		    if ( playerList.get(i).getSymbol().equals( data[2] ) ) //symbols match
+			owner = playerList.get(i);
+		}
+		thisProperty.setOwner(owner);
+		thisProperty.setMortgage( Boolean.parseBoolean(data[3]) );
+		
+		if ( thisProperty instanceof NormalProperty )
+		    ( (NormalProperty) thisProperty ).setHouses( Integer.parseInt(data[4]) ); //set house num		
+	    }
+	    
+	    return true;
+	}// close try
+	catch (Exception e){
+	    return false;
 	}
-
-	// get data for specific Properties
-	while (propertyInfo.length() > 0){
-	    String set = propertyInfo.substring(0, propertyInfo.indexOf("|"));
-	    propertyInfo = propertyInfo.substring(propertyInfo.indexOf("|")+1, propertyInfo.length());
-	    
-	    // holds info for this Property in this order:
-	    // row, col, owner(symbol), isMortgaged, houses
-	    String[] data = {"a","b","c","d","e"}; //fill to avoid nullpointerexception
-	    for ( int i = 0; i < data.length; i++ ){
-		data[i] = set.substring(0, set.indexOf(",")); //get data parcel
-		set = set.substring(set.indexOf(",")+1, set.length()); //remove data parcel from data string
-	    }
-
-	    Property thisProperty = (Property)( board[ Integer.parseInt(data[0]) ][ Integer.parseInt(data[1]) ] );
-	    Player owner = null;
-	    // find owner of this property based on its symbol
-	    for ( int i = 0; i < playerList.size(); i++ ){
-		if ( playerList.get(i).getSymbol().equals( data[2] ) ) //symbols match
-		    owner = playerList.get(i);
-	    }
-	    thisProperty.setOwner(owner);
-	    thisProperty.setMortgage( Boolean.parseBoolean(data[3]) );
-	    
-	    if ( thisProperty instanceof NormalProperty )
-		( (NormalProperty) thisProperty ).setHouses( Integer.parseInt(data[4]) ); //set house num		
-	}	    
-
-	return true;
     }
 	
 	    
@@ -188,7 +195,7 @@ public class Monopoly implements UserInput{
 		if ( loadFile() ) //successfully loads 
 		    return; 
 		else{ // corrputed save file
-		    System.out.println("Your save file has been corrupted! Exiting game...");
+		    System.out.println("Your save file has been corrupted! Delete it and then reload the game. Exiting game...");
 		    System.out.println("Type any key and press enter to continue.");
 		    Keyboard.readString();
 		    System.exit(0); //quit game
@@ -318,12 +325,12 @@ public class Monopoly implements UserInput{
     	// initialize players 
 	setupPlayers();
 	// testing purposes only
-	/*
+
 	playerList.get(0).buy(newyork);
 	playerList.get(0).buy(tennessee);
 	playerList.get(0).buy(stjames);
-	playerList.get(0).setCash(-3000);
-	*/
+
+
     }
     
     

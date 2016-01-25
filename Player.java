@@ -259,7 +259,7 @@ public class Player implements UserInput{
     // executes a turn of this player if he is in jail
     public void jailTurn() {
 	//check if player can afford bail
-	System.out.println("Jail Turn: " + _jailTurns );
+	System.out.println(_name + "'s jail Turn: " + _jailTurns );
 	if (getCash() >= 50) {
 	    //prompt user input
 	    System.out.println("Would you like to pay bail? 1.yes\t2.no");
@@ -270,6 +270,10 @@ public class Player implements UserInput{
 		_jailTurns = 0;
 		_inJail = false;
 		charge(50);
+		if ( _jailTurns == 3 )
+		    System.out.println("Third turn! You had to bail out!");
+		else
+		    System.out.println("Bailed out!");
 	    }
 	    else
 		_jailTurns += 1;//add one to jailTurns
@@ -280,7 +284,8 @@ public class Player implements UserInput{
 	    if ( input == 1 || _jailTurns >= 3 ){
 		System.out.println("Mortgage until you get at least $50. If you do not do so or cannot do so and end mortgaging, you will lose.");
 		offerMortgageOptions(0);
-		charge(50);		
+		charge(50);
+		System.out.println("Bailed out!");
 	    }
 	    else
 		_jailTurns += 1;
@@ -424,7 +429,7 @@ public class Player implements UserInput{
 	    }
 	    int playerChoice = parseInput( Keyboard.readString(), game.getPlayerList().size() ) - 1;
 	    while ( game.getPlayerList().get(playerChoice) == this ){
-		System.out.println("You cannot choose yourself to trade with...");
+		System.out.println("You cannot choose yourself to trade with... Chose another.");
 		playerChoice = parseInput( Keyboard.readString(), game.getPlayerList().size() ) - 1;
 	    }
 	    this.trade( game.getPlayerList().get(playerChoice) );
