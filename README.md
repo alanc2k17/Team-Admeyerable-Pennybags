@@ -4,7 +4,7 @@ APCS1 Final Project
 The Pass-n-Play Monopoly!
 
 Welcome to Admeyerable Pennybags' Monopoly! Here, you can choose to play with up to three other friends by passing around your laptop! To run the game, simply type these commands into your terminal:
-- javac Monopoly.java
+- javac *.java
 - java Monopoly
 
 and you're good to go!
