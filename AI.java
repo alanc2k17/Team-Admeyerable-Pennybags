@@ -83,19 +83,6 @@ public class AI extends Player {
     //bidding algorithm for aiplayer
     //returns bid if decided to bid
     //-1 otherwise
-    public int autoAuction(NormalProperty p, int highestBid) {
-	if (highestBid > getCash())
-	    return -1;
-	while (highestBid <= 1.25 * p.getBuyPrice()) 
-	    return highestBid + 5;
-	while (checkMonopoly(p) && highestBid >= .9 * getCash()) 
-	    return highestBid + 5;
-	return -1;
-    }
-
-    //bidding algorithm for aiplayer
-    //returns bid if decided to bid
-    //-1 otherwise
     public int autoAuction(Property p, int highestBid) {
 	if (highestBid > getCash())
 	    return -1;
@@ -106,6 +93,28 @@ public class AI extends Player {
 		return highestBid + 5;
 	}
 	return -1;
+    }
+
+    //mortgage algorithm for aiplayer
+    //triggered when _cash < 0 or trying to buy property under certain conditions
+    //chooses properties based on least valuable to most valuable
+    public void autoMortgage(int targetCash) {
+	Property leastValuable = _propertiesOwned.get(0);
+	int cantMortgageCTR = 0;
+	
+	while (getCash() < targetCash) {
+	    //determine least valuable property
+	    for (Property pr : _propertiesOwned) {
+		if (canMortgage() == true && cantMortgageCTR != getPropertiesOwned().size() ) {
+		    if (pr.getBuyPrice() < leastValuable.getBuyPrice()) {
+			leastValuable = pr;
+		    }
+		}
+		else
+		    return;
+	    mortgage(pr);
+	    }
+	}
     }
 
     //buying algorithm for aiplayer
@@ -176,3 +185,4 @@ public class AI extends Player {
 	    pay( square ); // pay rent
 	}
 }//end class
+
