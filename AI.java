@@ -42,17 +42,25 @@ public class AI extends Player {
 	
 	//determine net worth of recieving properties/will get monopoly
 	for (Property pr : want) {
-	    if (checkMonopoly((NormalProperty)pr))
-		willGetMonopoly = true;
-	    netWorthWant += pr.getBuyPrice();
+	    if (pr instanceof NormalProperty) {
+		if (checkMonopoly((NormalProperty)pr))
+		    willGetMonopoly = true;
+		netWorthWant += pr.getBuyPrice();
+	    }
+	    else 
+		netWorthWant += pr.getBuyPrice();
 	}
+		
 	//determine net worth of giving properties/will give monopoly
 	for (Property pr : have) {
-	    if (checkMonopoly((NormalProperty)pr))
-		willGiveMonopoly = true;
-	    netWorthHave += pr.getBuyPrice();	    
+	    if (pr instanceof NormalProperty) {
+		if (checkMonopoly((NormalProperty)pr))
+		    willGiveMonopoly = true;
+		netWorthHave += pr.getBuyPrice();	    
+	    }
+	    else
+		netWorthHave += pr.getBuyPrice();
 	}
-
 	//algorithm to decide
 	//if giving ai property = monopoly for other player
 	//    if other's property will result in monopoly for me
