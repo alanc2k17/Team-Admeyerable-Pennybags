@@ -177,16 +177,13 @@ public class AI extends Player {
     //overridden property action
     public void propertyAction(Property square, Monopoly game){
 	if (square.getOwner() == null && square.getOwner() != this) { //unowned
-	    if (getCash() > square.getBuyPrice())
-		buy(square);
-	    else {
-		autoMortgage(square.getBuyPrice());
-		if (getCash() < square.getBuyPrice())
-		    game.auction(square);
-	    }
+	    autoBuy(square);
+	    if (getCash() < square.getBuyPrice())
+		game.auction(square);
 	}
 	else if ( square.getOwner() != this ) // property has an owner but not this player
 	    pay( square ); // pay rent
 	}
+}//end class
 }//end class
 
