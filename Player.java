@@ -409,8 +409,8 @@ public class Player implements UserInput{
 	System.out.println("4. Unmortgage property");
 	System.out.println("5. Initiate a trade");
 	System.out.println("6. End turn");
-	System.out.println("7. Save and exit game. NOT IMPLEMENTED");
-	if ( getCash() < 0 )
+	System.out.println("7. Save and exit game.");
+	if ( getCash() < 0 ) //warning if player is about to go bankrupt
 	    System.out.println("WARNING. YOU ARE IN DEBT. IF YOU DO NOT ACHIEVE A NON-NEGATIVE BALANCE AND END YOUR TURN, YOU WILL FORFEIT. IF YOU CANNOT REPAY YOUR DEBTS IN THIS TURN, YOU LOSE. Have a nice day.");
 	int choice = parseInput(Keyboard.readString(), 7);
 
@@ -443,8 +443,18 @@ public class Player implements UserInput{
 	    return true; // stop playerOptions
 	}
 
-	else if (choice == 7)
+	else if (choice == 7){ //save and quit
 	    game.saveData();
+	    System.out.println("Quitting...");
+	    try{ //wait 1.5 seconds before quitting
+		Thread.sleep(1500); 
+		System.exit(0);
+	    }
+	    catch (Exception e){ // Thread.sleep() exceptions must be caught
+		System.exit(0);
+	    }
+	}
+	
 
 	return playerOptions(game); // call player options again
     }
