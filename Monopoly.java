@@ -123,29 +123,22 @@ public class Monopoly implements UserInput{
 
 	System.out.print("How many players do you wish to have (1-4): ");
 	numPlayers = parseInput(Keyboard.readString(), 4);
-
-	//instantiate bots if less than 2 players
-        if (numPlayers < 2) {
-	    System.out.print("Player " + 1 + " " + symbolBank[0] + " name: ");
-	    String pName = Keyboard.readString();
-	    playerList.add(new Player(pName, symbolBank[0]));
-	    System.out.println("How many bots would you like?");
-	    int numBots = parseInput(Keyboard.readString(), 3);
-	    for (int i = 1; i < numBots + 1; i++) 
-		playerList.add(new AI("Bot " + i, symbolBank[i]));
+	while ( numPlayers < 2 ){
+	    System.out.println("Invalid range!");
+	    numPlayers = parseInput(Keyboard.readString(), 4);
 	}
-	else {
-	    //instantiate other players if more than 1
-	    for (int i = 0; i < numPlayers; i++){ // ask stuff about each player
 
-		System.out.print("Player " + (i+1) + " " + symbolBank[i] + " name: ");
-		String pName = Keyboard.readString();
+	//instantiate other players if more than 1
+	for (int i = 0; i < numPlayers; i++){ // ask stuff about each player
 	    
-		// call constructor and add to playerList
-		playerList.add( new Player(pName, symbolBank[i]) );
-	    }
+	    System.out.print("Player " + (i+1) + " " + symbolBank[i] + " name: ");
+	    String pName = Keyboard.readString();
+	    
+	    // call constructor and add to playerList
+	    playerList.add( new Player(pName, symbolBank[i]) );
 	}
     }
+
 	
     // sets up the game; instantiates properites, sets up boards and players
     public void setup() {
@@ -341,65 +334,57 @@ public class Monopoly implements UserInput{
 	    for ( int i = 0; i < bidderList.size(); i++ ){ // for each bidder
 		if ( bidderList.get(i) != null ) { // if not a dropped out bidder
 		    Player pl = bidderList.get(i);
-		    if (pl instanceof AI) { //if current player is a bot
-			if (((AI)pl).autoAuction(p, currentBid) == -1)
-			    bidderList.remove(pl);
-			else {
-			    currentBid = (((AI)pl).autoAuction(p, currentBid));
+		  
+		  
+		    if (currentBid >= pl.getCash()){ //if current player cannot afford to bid
+			bidderList.set(i, null);
+			dropOuts += 1;
+			System.out.println( pl.getName() + " has dropped out!" );
+			if ( dropOuts == bidderList.size() - 1 )
+				break;
+		    }
+		    else { //if current player can afford to bid
+			System.out.println("People are bidding on " + p.getName() + "! The highest bid is "
+					   + currentBid + ". "
+					   + pl.getName() + ": Would you like to bid? y:1\tn:2");
+			int input = parseInput(Keyboard.readString(), 2);
+			//if player wants to bid, determine how much
+			if (input == 1) { // yes to bid
+			    if ( highestBidder == null ) // you are first bidder
+				System.out.println("Start bidding. " + pl.getName()
+						   + ": How much would you like to bid?");
+			    else
+				System.out.println("Current bid: " + currentBid + " by "
+						   + highestBidder.getName() + ". "
+						   + pl.getName() + ": How much would you like to bid?");
+			    int inputBid = parseInput(Keyboard.readString());
+			    while (inputBid <= currentBid || inputBid > pl.getCash()) {
+				System.out.println("Invalid bid! Try again.");
+				inputBid = parseInput(Keyboard.readString());
+			    }
+			    
+			    // set new bid to max bid so far
+			    currentBid = inputBid;
 			    highestBidder = pl;
 			}
-		    }
-		    else {
-			if (currentBid >= pl.getCash()){ //if current player cannot afford to bid
-			    bidderList.set(i, null);
+			
+			else { // no to bidding --> drop out
+			    bidderList.set(i, null); //set to null value as a placeholder
 			    dropOuts += 1;
 			    System.out.println( pl.getName() + " has dropped out!" );
 			    if ( dropOuts == bidderList.size() - 1 )
 				break;
-			}
-			else { //if current player can afford to bid
-			    System.out.println("People are bidding on " + p.getName() + "! The highest bid is "
-					       + currentBid + ". "
-					       + pl.getName() + ": Would you like to bid? y:1\tn:2");
-			    int input = parseInput(Keyboard.readString(), 2);
-			    //if player wants to bid, determine how much
-			    if (input == 1) { // yes to bid
-				if ( highestBidder == null ) // you are first bidder
-				    System.out.println("Start bidding. " + pl.getName()
-						       + ": How much would you like to bid?");
-				else
-				    System.out.println("Current bid: " + currentBid + " by "
-						       + highestBidder.getName() + ". "
-						       + pl.getName() + ": How much would you like to bid?");
-				int inputBid = parseInput(Keyboard.readString());
-				while (inputBid <= currentBid || inputBid > pl.getCash()) {
-				    System.out.println("Invalid bid! Try again.");
-				    inputBid = parseInput(Keyboard.readString());
-				}
-				
-				// set new bid to max bid so far
-				currentBid = inputBid;
-				highestBidder = pl;
-			    }
-
-			    else { // no to bidding --> drop out
-				bidderList.set(i, null); //set to null value as a placeholder
-				dropOuts += 1;
-				System.out.println( pl.getName() + " has dropped out!" );
-				if ( dropOuts == bidderList.size() - 1 )
-				    break;
-			    }// close dropout
-			} // close player can afford to bid
-		    }//close else
+			}// close dropout
+		    } // close player can afford to bid
 		} // close if not a dropped out bidder
 	    }// bid turn done
-	}//close while
-	
-	highestBidder.giveProperty(p); //highest bidder wins property
-	highestBidder.charge(currentBid);
-	System.out.println("Congrats! " + highestBidder.getName() + " won the bid for " + currentBid + "!");
-    }//end auction		   
-    
+	    
+	    highestBidder.giveProperty(p); //highest bidder wins property
+	    highestBidder.charge(currentBid);
+	    System.out.println("Congrats! " + highestBidder.getName() + " won the bid for " + currentBid + "!");
+	}//end while
+    }
+
     public void play(){
 	setup();
 	// while there are at least 2 players in the game
@@ -410,14 +395,8 @@ public class Monopoly implements UserInput{
 	    while ( turnNumber < playerList.size() ){
 		if ( turnNumber >= playerList.size() ) //guard against out of bounds error
 		    break;
-		if ( playerList.get(turnNumber) instanceof AI) {  
-		    if ( ((AI)playerList.get(turnNumber)).botTurn(board, this) ) //if player is not bankrupt after turn
-			turnNumber += 1;
-		}
-		else {
-		    if ( playerList.get(turnNumber).turn(board, this) )
-			turnNumber += 1;
-		}
+		if ( playerList.get(turnNumber).turn(board, this) )
+		    turnNumber += 1;
 		// if player is bankrupt, do not increment, b/c next-in-line player shifts left to fill the spot
 	    }    
 	}

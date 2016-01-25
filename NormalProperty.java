@@ -44,23 +44,6 @@ public class NormalProperty extends Property{
 	setMortgageValue();
     }
     
-    // override toString to return info about this class
-    public String toString(){
-	String returnString = "";
-	if ( _owner == null ){
-	    returnString += "owner of " + _name + "(" + _initials + ") = No Owner\n";
-	    returnString += "buy price: " + getBuyPrice();
-	}
-	else{
-	    returnString += "owner of " + _name + "(" + _initials + ") " + _owner.getName() + "\n"; 
-	    returnString += "does the current owner have a monopoly in this color group?" + checkMonopoly() + "\n";
-	    returnString += "number of houses on this property: " + _houses + "\n";
-	    returnString += "current rent is: " + getRent() + "\n";
-	}
-	returnString += "mortgage value is: " + getMortgageValue();
-	return returnString;
-    }
-
     // accessor; returns # of houses
     public int getHouses(){
 	return _houses;

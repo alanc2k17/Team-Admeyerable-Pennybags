@@ -32,10 +32,20 @@ public abstract class Property extends Landable {
 
     public abstract int getMortgageValue();
 
-    // abstract b/c in one subclass, it needs to print houses
-    // in another, it needs not
-    public abstract String toString();
-  
+    public String toString(){
+	String returnString = "";
+	if ( _owner == null ){ //unowned
+	    returnString += _name + " (" + _initials + ") Owner: Not Owned\n";
+	    returnString += "Buy Price: " + getBuyPrice();
+	}
+	else{ //owned
+	    returnString += _name + " (" + _initials + ") Owner: " + _owner.getName() + "\n";
+	    returnString += "Rent: " + getRent() + "\n";
+	}
+
+	return returnString;
+    }
+
     // accessor method to return 
     public Player getOwner() {
 	return _owner;

@@ -19,22 +19,6 @@ public class Railroad extends Property{
 	setMortgageValue();
     }
 
-    //override toString; used to print Object to board
-    public String toString(){
-	String returnString = "";
-	if (_owner == null){
-	    returnString += "owner of " + _name + "(" + _initials + ") = No Owner\n";
-	    returnString += "buy price: " + getBuyPrice();
-	}
-	else{
-	    returnString += "owner of " + _name + "(" + _initials + ") =" + _owner.getName() + "\n";
-	    returnString += "current owner also owns " + railRoadsOwned() + " more railroads";
-	    returnString += "current rent is: " + getRent() + "\n";
-	}
-	returnString += "mortgage value is: " + _mortgageValue;
-	return returnString;
-    }
-
     // accessor method to get buy price
     public int getBuyPrice(){
 	return BUYPRICE;

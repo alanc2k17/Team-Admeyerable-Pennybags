@@ -625,6 +625,7 @@ public class Player implements UserInput{
 	    } //end else
 	} // end while | easter egg found! (3 of 3)
 
+
 	anotherOne = true;	
 	//promt user to choose properties to give
 	System.out.println("Please choose which properties you would like to give " + otherP.getName());
@@ -632,7 +633,7 @@ public class Player implements UserInput{
 	for ( int i = 0; i < this.getPropertiesOwned().size(); i++ ){
 	    System.out.println( (i+1) + ": " + this.getPropertiesOwned().get(i).getName() + " value: " + this.getPropertiesOwned().get(i).getBuyPrice() );
 	}
-
+	
 	while (anotherOne == true) {
 	    int input = parseInput(Keyboard.readString(), this.getPropertiesOwned().size())-1;
 	    if (want.contains(this.getPropertiesOwned().get(input)))
@@ -651,46 +652,38 @@ public class Player implements UserInput{
 		    anotherOne = false;
 		else if (another == 1)
 		    System.out.println("Choose another property");
-
+		
 	    } //end else 
 	} //end while
-	
-	//print out trade
-	if (otherP instanceof AI) {
-	    if (((AI)otherP).receiveTrade(this, want, give) == 1)
-		System.out.println("trade accepted!");
-	    if (((AI)otherP).receiveTrade(this, want, give) == -1)
-		System.out.println("trade declined!");
+
+	// print out trade summary info
+	System.out.println( this.getName() + " would like to trade with " + otherP.getName() + "!" );
+	System.out.println( "Does " + this.getName() + " agree to the trade? 1.yes\t2.no" );
+	int agree1 = parseInput(Keyboard.readString(), 2);
+	System.out.println( "Does " + otherP.getName() + " agree to the trade? 1.yes\t2.no" );
+	int agree2 = parseInput(Keyboard.readString(), 2);
+	//if both players agree to trade
+	if (agree1 == 1 && agree2 == 1) {
+	    System.out.println("Both players agreed to the trade!");
+	    System.out.println(this.getName() + " has newly acquired: ");
+	    for (Property pr : want) {
+		this.getPropertiesOwned().add(pr);
+		pr.setOwner(this);
+		otherP.getPropertiesOwned().remove(pr);
+		System.out.println(pr.getName());
+	    }
+	    System.out.println(otherP.getName() + " has newly acquired: ");
+	    for (Property pr : give) {
+		this.getPropertiesOwned().remove(pr);
+		pr.setOwner(otherP);
+		otherP.getPropertiesOwned().add(pr);
+		System.out.println(pr.getName());
+	    }
 	}
-	else {
-		System.out.println( this.getName() + " would like to trade with " + otherP.getName() + "!" );
-		System.out.println( "Does " + this.getName() + " agree to the trade? 1.yes\t2.no" );
-		int agree1 = parseInput(Keyboard.readString(), 2);
-		System.out.println( "Does " + otherP.getName() + " agree to the trade? 1.yes\2.no" );
-		int agree2 = parseInput(Keyboard.readString(), 2);
-		//if both players agree to trade
-		if (agree1 == 1 && agree2 == 1) {
-		    System.out.println("Both players agreed to the trade!");
-		    System.out.println(this.getName() + " has newly acquired: ");
-		    for (Property pr : want) {
-			this.getPropertiesOwned().add(pr);
-			pr.setOwner(this);
-			otherP.getPropertiesOwned().remove(pr);
-			System.out.println(pr.getName());
-		    }
-		    System.out.println(otherP.getName() + " has newly acquired: ");
-		    for (Property pr : give) {
-			this.getPropertiesOwned().remove(pr);
-			pr.setOwner(otherP);
-			otherP.getPropertiesOwned().add(pr);
-			System.out.println(pr.getName());
-		    }
-		}
-		//if one/both players do not agree to the trade
-		else 
-		    System.out.println("Oh no! One (or more) of the parties declined the trade! :C");
-	}
-    }//end trade
+	//if one/both players do not agree to the trade
+	else 
+	    System.out.println("Oh no! One (or more) of the parties declined the trade! :C");
+    } // end trade
 
 }
 

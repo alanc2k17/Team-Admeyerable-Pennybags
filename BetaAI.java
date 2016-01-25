@@ -5,12 +5,12 @@ public class BetaAI extends Player {
     boolean _bankrupt = false;
     
     //default constructor
-    public AI() {
+    public BetaAI() {
 	super();
     }
 
     //overloaded constructor
-    public AI(String name, String symbol) {
+    public BetaAI(String name, String symbol) {
 	super(name, symbol);
 	_name = name;
 	_symbol = symbol;
