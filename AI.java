@@ -73,10 +73,8 @@ public class AI extends Player {
 		return 1;
 	    return -1;
 	}
-	else {
-	    if (netWorthWant > netWorthHave)
-		return 1;
-	}
+	if (netWorthWant > netWorthHave)
+	    return 1;
 	return -1;
     }
 
