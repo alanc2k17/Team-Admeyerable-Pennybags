@@ -489,7 +489,10 @@ public class Monopoly implements UserInput{
 
 	    }    
 	}
-	System.out.println("Congratulations to our filthy rich winner: " + playerList.get(0).getName());
+	if ( playerList.size() == 0 )
+	    System.out.println("No winner... How did that happen?");
+	else
+	    System.out.println("Congratulations to our filthy rich winner: " + playerList.get(0).getName());
        	
     }
 
