@@ -13,5 +13,3 @@ Our current version features:
 -AI to play against you when your friends rage quit!
 -All of the awe-inspiring features from the original Monopoly!
 
-In our future versions!
--Minigames! Fight together in order to save your friendships!
