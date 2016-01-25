@@ -166,12 +166,27 @@ public class AI extends Player {
     public void botJailTurn() {
 	//check if player can afford bail
 	if (getCash() >= 50) {
-	    _jailTurns = 0;
-	    _inJail = false;
-	    charge(50);
+	    if (_jailTurns >= 3) {
+		_jailTurns = 0;
+		_inJail = false;
+		charge(50);
+	    }
+	    else
+		_jailTurns += 1;//add one to jailTurns
 	}
-	else // less than $50
-	    autoMortgage(50);
+	else { // less than $50
+	    if (_jailTurns >= 3 ){
+	        autoMortgage(50);
+		if ( getCash() < 50 )
+		    return;
+		else{
+		    charge(50);
+		    return;
+		}
+	    }
+	    else
+		_jailTurns += 1;
+	}
     }
 
     //overridden property action
