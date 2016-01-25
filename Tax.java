@@ -16,9 +16,7 @@ public class Tax extends Landable{
   
     // must be implemented
     public String toString() {
-	String returnString = "";
-	returnString += "current rent is: " + getRent();
-	return returnString;
+	return _name + "amount: " + _payAmount;
     }
   
     //accessor; returns tax amount
