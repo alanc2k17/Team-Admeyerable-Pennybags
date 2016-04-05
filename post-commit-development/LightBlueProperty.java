@@ -1,0 +1,35 @@
+public class LightBlueProperty extends NormalProperty{
+   
+    //default constructor
+    public LightBlueProperty(){
+	super();
+	setInfo();
+    }
+
+    //overloaded constructor
+    public LightBlueProperty(String name, String initials, boolean expensive){
+	super(name, initials, expensive);
+	setInfo();
+    }
+
+    //set rent prices, buy prices, house costs, and mortgage values
+    public void setInfo(){
+	// set rent prices, index corresponds w/ # of houses
+	_rent1 = new int[] {6, 30, 90, 270, 400, 550}; //oriental and vermont
+	_rent2 = new int[] {8, 40, 100, 300, 450, 600}; //connecticut
+	
+	// number of other properties in group
+	_others = 3;
+
+	// set buy prices
+	_buyPrice1 = 100; 
+	_buyPrice2 = 120; 
+
+	setMortgageValue();
+
+	//set house cost
+	_houseCost = 50;
+    }
+}
+
+    

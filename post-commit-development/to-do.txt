@@ -1,0 +1,12 @@
+Team Admeyerable Pennybags -- Alan Chen and Calvin Vuong
+Monopoly: Project To-Do List
+
+1. Alan and Calvin: implement ability for Player to choose options after rolling (e.g. mortgaging, building houses) (Thur-Fri)
+2. Calvin           : restructure the board printing so that it fits into the screen
+3. Alan and Calvin: implement trade and auctioning mechanisms (Thur-Fri)
+4. Alan and Calvin: implement game saving system using Java I/O (Sat)
+
+NON-ESSENTIAL (in order; just for the lolz)
+- Alan and Calvin: develop computer AI player (Fri-Sun)
+- Alan and Calvin: develop free-parking minigames (Sat-Sun)
+- Alan and Calvin: look for areas to optimize code (Sun-Mon?)

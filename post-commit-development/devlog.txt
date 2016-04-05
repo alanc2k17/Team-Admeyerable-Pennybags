@@ -1,0 +1,55 @@
+2016-01-24
+-Alan: wrote and incorporated AI.java into Monopoly; debugged trading, auctioning, mortgaging
+- Calvin: debugged; improved control flow; implemented game saving and game loading mechanism; STAYED UP UNTIL 2:08 TRYING TO FIGURE OUT A NULLPOINTEREXCEPTIONERROR JUST BECAUSE I FORGOT TO CALL this() (tbh, I was looking in the wrong place 4/5 of the time); finalized game
+
+2016-01-23
+- Calvin: wrote an outline of the general AI decision-making process; moved many of Monopoly's methods to Player b/c it makes more sense
+- Alan: wrote trade(Player p) in class Player
+
+2016-01-22
+- Calvin: debugged Alan's auctioning system; redesigned board to allow for better user interface; debugged multiple mechanisms in general 
+- Alan: wrote auction(Property p) in class Player
+
+2016-01-21
+- Alan and Calvin: progress in implementing player options; wrote first two options together in class
+- Calvin: finished incorporation of mortgage and unmortgage in player options; debugged; reworked flowchart to better plan turn() method and designed a better board
+- Alan: reworked UML diagram
+
+2016-01-20
+- Calvin and Alan: deliberated on poorly written jailTurn() in class
+- Alan: rewrote poorly written jailTurn() (is now properly written), completed class Community
+- Calvin: debugged and implemented Chance/Community into Java; implemented GoToJail; fortified turn-based mechanism to make it more robust and more easy flowing; implemented actions if Player lands on certain other spaces
+ 
+2016-01-19
+- Alan: wrote Chance class and jailTurn() in Monopoly class
+
+2016-01-18
+- Calvin: implemented basic parts of turn based mechanism; debugged; reworked some Property architecture
+
+2016-01-17
+- Calvin: debugged
+
+2016-01-16
+- Alan and Calvin: decided on new coordinate system
+- Calvin: edited & revised parts of Player
+- Alan: wrote class Player, revised Property subclasses, toString methods for properties
+
+2016-01-14
+- Alan and Calvin: reworked board structure in class
+- Calvin: wrote mortgage() and unmortgage() in appropriate classes
+
+2016-01-13
+- Alan and Calvin: wrote Landable and Tax in class
+- Calvin: removed extraneous code in color group classes
+- Calvin: wrote classes Property and NormalProperty
+- Alan: began coding gameplay mechanism
+
+2016-01-12
+- Alan and Calvin: finalized Monopoly board structure and how to access Property Player has landed on in class
+- Calvin: initialized all files under Property and created directory structure for organization
+- Calvin: wrote classes BrownProperty, LightBlueProperty, and Railroad
+- Alan: wrote classes (Blue\Green\Orange\Pink\Red\Yellow)Property
+
+2016-01-11
+- Alan and Calvin: discusssed/developed possible class structure (attributes/methods) and board display mechanism in class
+- Calvin: started creating preliminary UML diagrams for Landable, Tax, and all classes under Property
